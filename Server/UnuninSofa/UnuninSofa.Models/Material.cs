@@ -4,10 +4,10 @@ namespace UnuninSofa.Models
 {
     public class Material : BaseEntity
     {
-        public int ProductDetailId { get; set; }
-
-        public virtual ProductDetail ProductDetail { get; set; }
-
         public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public virtual ICollection<ProductDetail> ProductDetails { get; set;}
     }
 }

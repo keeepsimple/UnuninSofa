@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnuninSofa.Data;
 
@@ -11,9 +12,10 @@ using UnuninSofa.Data;
 namespace UnuninSofa.Data.Migrations
 {
     [DbContext(typeof(UnuninSofaContext))]
-    partial class UnuninSofaContextModelSnapshot : ModelSnapshot
+    [Migration("20221208034517_ConfigManyToManyMaterialAndProduct")]
+    partial class ConfigManyToManyMaterialAndProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace UnuninSofa.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ColorProductDetail", b =>
-                {
-                    b.Property<int>("ColorsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductDetailsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ColorsId", "ProductDetailsId");
-
-                    b.HasIndex("ProductDetailsId");
-
-                    b.ToTable("ColorProductDetail");
-                });
 
             modelBuilder.Entity("MaterialProductDetail", b =>
                 {
@@ -82,14 +69,14 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = "56016200-6e5a-41ae-83ba-a9759ac9e6b5",
-                            ConcurrencyStamp = "c6a4240e-abbf-445f-8b07-f0cea6e86f79",
+                            ConcurrencyStamp = "f6770be9-83da-4c94-8872-a7b07c56fddd",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "99e62bd0-505e-4c7c-9533-3d0177220cec",
-                            ConcurrencyStamp = "9879ebdc-8e9c-4110-911b-477f774ca2ee",
+                            ConcurrencyStamp = "0f21465e-0942-487d-8391-f4747eb00be1",
                             Name = "User",
                             NormalizedName = "User"
                         });
@@ -308,7 +295,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 12, 8, 10, 55, 29, 146, DateTimeKind.Local).AddTicks(4846),
+                            CreatedAt = new DateTime(2022, 12, 8, 10, 45, 16, 737, DateTimeKind.Local).AddTicks(7303),
                             IsDeleted = false,
                             Name = "Sofa",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -316,7 +303,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 12, 8, 10, 55, 29, 146, DateTimeKind.Local).AddTicks(4868),
+                            CreatedAt = new DateTime(2022, 12, 8, 10, 45, 16, 737, DateTimeKind.Local).AddTicks(7326),
                             IsDeleted = false,
                             Name = "Phòng khách",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -324,7 +311,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 12, 8, 10, 55, 29, 146, DateTimeKind.Local).AddTicks(4870),
+                            CreatedAt = new DateTime(2022, 12, 8, 10, 45, 16, 737, DateTimeKind.Local).AddTicks(7329),
                             IsDeleted = false,
                             Name = "Phòng ăn",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -332,7 +319,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 12, 8, 10, 55, 29, 146, DateTimeKind.Local).AddTicks(4871),
+                            CreatedAt = new DateTime(2022, 12, 8, 10, 45, 16, 737, DateTimeKind.Local).AddTicks(7331),
                             IsDeleted = false,
                             Name = "Phòng ngủ",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -357,10 +344,15 @@ namespace UnuninSofa.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProductDetailId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductDetailId");
 
                     b.ToTable("Colors");
                 });
@@ -779,34 +771,19 @@ namespace UnuninSofa.Data.Migrations
                         {
                             Id = "8967c0da-1606-447b-b91b-10c9f7e87418",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "73db84c8-80ca-401d-8120-8d88ac685122",
+                            ConcurrencyStamp = "a0fe2914-32ae-4e0d-b666-7abca3f8cbf8",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEALgXUK2sVY6XdgxhCXaKbwY8Pq3LaISFiGUjrqAk6iAeo4Bj8wvqkkoi9yeqnGHLA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP8N3b0LYKh+xBPeUgxcRkBd/wxyiZO/9FMb39MSG6GwJ4RCVPxSHAENQ8Jlqi4ijA==",
                             PhoneNumber = "09191991999",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a08939a4-2ace-4b05-b03e-b413578e9a9d",
+                            SecurityStamp = "6b9ace9d-e854-4c06-b76c-95d3a9b409ff",
                             TwoFactorEnabled = false,
                             UserName = "admin",
                             Address = "O dau khong noi"
                         });
-                });
-
-            modelBuilder.Entity("ColorProductDetail", b =>
-                {
-                    b.HasOne("UnuninSofa.Models.Color", null)
-                        .WithMany()
-                        .HasForeignKey("ColorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UnuninSofa.Models.ProductDetail", null)
-                        .WithMany()
-                        .HasForeignKey("ProductDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("MaterialProductDetail", b =>
@@ -873,6 +850,17 @@ namespace UnuninSofa.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("UnuninSofa.Models.Color", b =>
+                {
+                    b.HasOne("UnuninSofa.Models.ProductDetail", "ProductDetail")
+                        .WithMany("Colors")
+                        .HasForeignKey("ProductDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductDetail");
                 });
 
             modelBuilder.Entity("UnuninSofa.Models.Image", b =>
@@ -1003,6 +991,8 @@ namespace UnuninSofa.Data.Migrations
 
             modelBuilder.Entity("UnuninSofa.Models.ProductDetail", b =>
                 {
+                    b.Navigation("Colors");
+
                     b.Navigation("Images");
                 });
 

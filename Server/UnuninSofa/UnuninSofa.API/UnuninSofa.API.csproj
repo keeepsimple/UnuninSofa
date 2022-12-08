@@ -22,11 +22,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\UnuninSofa.BusinessLayer\UnuninSofa.BusinessLayer.csproj" />
+    <ProjectReference Include="..\UnuninSofa.Common\UnuninSofa.Common.csproj" />
+    <ProjectReference Include="..\UnuninSofa.Data\UnuninSofa.Data.csproj" />
+    <ProjectReference Include="..\UnuninSofa.Models\UnuninSofa.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UnuninSofa.Data\UnuninSofa.Data.csproj" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using UnuninSofa.BusinessLayer.IServices;
+using UnuninSofa.BusinessLayer.Services;
 using UnuninSofa.Data;
+using UnuninSofa.Data.Infrastructure;
 using UnuninSofa.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +33,19 @@ builder.Services.Configure<IdentityOptions>(opt =>
     opt.SignIn.RequireConfirmedEmail = false;
 });
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
+builder.Services.AddScoped<IProductDetailService, ProductDetailService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<ISaleService, SaleService>();
+builder.Services.AddScoped<IColorService, ColorService>();
+builder.Services.AddScoped<IMaterialService, MaterialService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers();
@@ -85,7 +101,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseCors("Policy");
 
