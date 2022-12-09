@@ -1,0 +1,56 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ffffff;
+  font-family: "Roboto", "Helvetica Neue";
+}
+
+.background{
+ background-color: #f6f9fc;
+ padding: 50px 0;
+}
+
+.container{
+  max-width: 90%;
+  margin: auto;
+}
+
+.d-flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.c-flex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.f-flex{
+  display: flex;
+}
+
+a{
+  text-decoration: none;
+  color: #ffffff;
+}
+
+li{
+  list-style: none;
+}
+
+.uppercase{
+  text-transform: uppercase;
+}
+
+.capitalize{
+  text-transform: capitalize;
+}
+
+.RText{
+  text-align: right;
+}
