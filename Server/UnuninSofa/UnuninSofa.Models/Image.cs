@@ -11,7 +11,9 @@ namespace UnuninSofa.Models
         public string ImageUrl { get; set; }
 
         public string Name { get; set; }
+
+        public int ImageCategoryId { get; set; }
+
+        public virtual ImageCategory ImageCategory { get; set; }
     }
-
-
 }

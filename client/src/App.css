@@ -15,8 +15,9 @@ body {
 }
 
 .container{
-  max-width: 90%;
+  max-width: 100%;
   margin: auto;
+  overflow: hidden;
 }
 
 .d-flex{
@@ -36,7 +37,7 @@ body {
 
 a{
   text-decoration: none;
-  color: #ffffff;
+  color: #000000;
 }
 
 li{
@@ -53,4 +54,16 @@ li{
 
 .RText{
   text-align: right;
+}
+
+.row{
+  width: 50%;
+}
+
+.icon-circle {
+  line-height: 50px;
+  background: #f3f5f9;
+  margin-left: 20px;
+  text-align: center;
+  border-radius: 50%;
 }
