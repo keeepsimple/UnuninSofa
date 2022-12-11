@@ -1,7 +1,7 @@
 import { Dehaze } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import Categories from "../../features/Categories/Categories";
 
 function Navbar(props) {
@@ -24,20 +24,52 @@ function Navbar(props) {
               onClick={() => setMobileToggle(false)}
             >
               <li>
-                <Link to="/">Trang chủ</Link>
+                <NavLink
+                  style={({ isActive }) => ({
+                    color: isActive ? "white" : "black",
+                    backgroundColor: isActive ? "#ff014f" : "#fff",
+                  })}
+                  to="/"
+                >
+                  Trang chủ
+                </NavLink>
               </li>
               <li>
                 <Link to="#">Danh mục sản phẩm</Link>
                 <Categories />
               </li>
               <li>
-                <Link to="/users">Tài khoản</Link>
+                <NavLink
+                  style={({ isActive }) => ({
+                    color: isActive ? "white" : "black",
+                    backgroundColor: isActive ? "#ff014f" : "#fff",
+                  })}
+                  to="/users"
+                >
+                  Tài khoản
+                </NavLink>
               </li>
               <li>
-                <Link to="/track">Theo dõi đơn hàng</Link>
+                <NavLink
+                  style={({ isActive }) => ({
+                    color: isActive ? "white" : "black",
+                    backgroundColor: isActive ? "#ff014f" : "#fff",
+                  })}
+                  to="/track"
+                >
+                  Theo dõi đơn hàng
+                </NavLink>
               </li>
               <li>
-                <Link to="/contact">Liên hệ</Link>
+                <NavLink
+                  style={({ isActive }) => ({
+                    color: isActive ? "white" : "black",
+                    backgroundColor: isActive ? "#ff014f" : "#fff",
+                  })}
+                  to="/contact"
+                >
+                  Liên hệ
+                </NavLink>
               </li>
             </ul>
             <button

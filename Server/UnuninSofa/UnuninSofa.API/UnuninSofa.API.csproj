@@ -28,4 +28,8 @@
     <ProjectReference Include="..\UnuninSofa.Models\UnuninSofa.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\SubCategory\" />
+  </ItemGroup>
+
 </Project>

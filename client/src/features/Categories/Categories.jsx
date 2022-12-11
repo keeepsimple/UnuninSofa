@@ -18,7 +18,7 @@ function Categories(props) {
     <>
       <ul className="menu">
         {categories.map((category) => (
-          <li>
+          <li key={category.id}>
             <Link to={"/category/" + category.id}>{category.name}</Link>
             <SubCategory cateId={category.id} />
           </li>
