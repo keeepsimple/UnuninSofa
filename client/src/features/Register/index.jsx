@@ -2,8 +2,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useSnackbar } from "notistack";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import authenApi from "../../api/AuthenApi";
+import StorageKeys from "../../configs/storageKey";
 import RegisterForm from "./RegisterForm";
 
 function Register(props) {
@@ -43,15 +45,17 @@ function Register(props) {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate();
   const onSubmit = async (data) => {
     try {
       const token = await authenApi.register(data);
       if (token !== null) {
-        localStorage.setItem("token", token);
+        localStorage.setItem(StorageKeys.TOKEN, token);
         enqueueSnackbar("Đăng ký thành công!", { variant: "success" });
+        navigate("/");
       }
     } catch (err) {
-      console.log(err);
+      enqueueSnackbar(err, { variant: "error" });
     }
   };
 

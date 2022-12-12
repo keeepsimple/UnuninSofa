@@ -2,10 +2,16 @@ import { Dehaze } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
+import StorageKeys from "../../configs/storageKey";
 import Categories from "../../features/Categories/Categories";
 
 function Navbar(props) {
   const [isMobileToggle, setMobileToggle] = useState(false);
+  const isLoggedIn = () => {
+    if (localStorage.getItem(StorageKeys.TOKEN) !== null) return true;
+    else return false;
+  };
+
   function handleClickToggleModible() {
     return setMobileToggle(!isMobileToggle);
   }
@@ -38,17 +44,30 @@ function Navbar(props) {
                 <Link to="#">Danh mục sản phẩm</Link>
                 <Categories />
               </li>
-              <li>
-                <NavLink
-                  style={({ isActive }) => ({
-                    color: isActive ? "white" : "black",
-                    backgroundColor: isActive ? "#ff014f" : "#fff",
-                  })}
-                  to="/users"
-                >
-                  Tài khoản
-                </NavLink>
-              </li>
+
+              {isLoggedIn() ? (
+                <li>
+                  <NavLink
+                    style={({ isActive }) => ({
+                      color: isActive ? "white" : "black",
+                      backgroundColor: isActive ? "#ff014f" : "#fff",
+                    })}
+                    to="/users"
+                  >
+                    Tài khoản
+                  </NavLink>
+                </li>
+              ) : (
+                <>
+                  <li>
+                    <Link to="/register">Đăng ký</Link>
+                  </li>
+                  <li>
+                    <Link to="/login">Đăng nhập</Link>
+                  </li>
+                </>
+              )}
+
               <li>
                 <NavLink
                   style={({ isActive }) => ({

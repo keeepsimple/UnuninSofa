@@ -43,11 +43,11 @@ namespace UnuninSofa.API.Controllers
             }
             if (result.IsLockedOut)
             {
-                return Ok("Your account is locked.");
+                return Ok(new {mess= "Tài khoản của bạn đã bị khoá!"});
             }
             else
             {
-                return Unauthorized(new {mess = "Invalid login attemp!"});
+                return Unauthorized(new {mess = "Mật khẩu hoặc tên đăng nhập sai!"});
             }
         }
 
@@ -57,7 +57,7 @@ namespace UnuninSofa.API.Controllers
             var userExist = await _userManager.FindByNameAsync(model.Username);
             if (userExist != null)
             {
-                return BadRequest(new {mess = "User exist!"});
+                return BadRequest(new {mess = "Người dùng đã tồn tại vui lòng dùng tên đăng nhập khác!"});
             }
          
             var user = _mapper.Map<User>(model);
@@ -71,7 +71,7 @@ namespace UnuninSofa.API.Controllers
             }
             else
             {
-                return BadRequest("User created failed.");
+                return BadRequest(new {mess= "Tạo tài khoản thất bại" });
             }
         }
 
