@@ -12,6 +12,7 @@ namespace UnuninSofa.API.Helper
             CreateMap<SubCategoryDTO, SubCategory>().ForMember(des=>des.CreatedAt, act => act.Ignore()).ReverseMap();
             CreateMap<MaterialDTO, Material>().ForMember(des=>des.CreatedAt, act => act.Ignore()).ReverseMap();
             CreateMap<ColorDTO, Color>().ForMember(des=>des.CreatedAt, act => act.Ignore()).ReverseMap();
+            CreateMap<User, RegisterDTO>().ReverseMap();
         }
     }
 }

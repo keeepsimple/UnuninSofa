@@ -6,6 +6,10 @@ const subCategoryApi = {
     const url = baseApiUrl + "/Subcategory";
     return axiosClient.get(url);
   },
+  get(id) {
+    const url = baseApiUrl + `/SubCategory/${id}`;
+    return axiosClient.get(url);
+  }
 };
 
 export default subCategoryApi;

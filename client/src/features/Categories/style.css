@@ -1,34 +1,10 @@
-.category{
-  box-shadow: rgb(43 52 69 / 10%) 0px 4px 16px;
-  background-color: #fff;
-  width: 15%;
-  height: 620px;
-  padding: 15px 0;
-  border-radius: 5px;
-  margin-top: 5px;
-}
-
-.category span {
-    margin: 10px 20px;
-    text-transform: capitalize;
-  }
-
-  .category .box {
-    transition: 0.5s;
-    padding: 0 20px;
-  }
-  .category .box:hover {
-    background-color: #ffe1e6;
-    cursor: pointer;
-  }
-
   .menu{
     position: relative;
     background-color: #fffdfd;
     width: 200px;
     left: 0;
     padding-top: 20px;
-    z-index: 1000;
+    z-index: 99000;
     display: none;
     border-radius: 5px;
   }

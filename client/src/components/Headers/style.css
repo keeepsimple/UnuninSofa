@@ -18,6 +18,11 @@
     font-size:13px;
 }
 
+.navbar{
+  background-color: #fff;
+  
+}
+
 .sale-message {
   font-size: calc(20px);
   line-height: calc(30px);
@@ -186,6 +191,8 @@ header ul li a:hover {
   background-color: #ff014f;
 }
 
+
+
 .search .active {
   height: 12vh;
   position: fixed;
@@ -261,4 +268,10 @@ header ul li a:hover {
   .header .active {
     height: 10vh;
   }
+}
+
+.sticky{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }

@@ -1,14 +1,69 @@
-import React from "react";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import { Grid, Paper } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import subCategoryApi from "../../api/SubCategoryApi";
+import { baseImagePath } from "../../configs/serverUrl";
+import "./style.css";
 
 function SubCategoryFeature(props) {
   const match = useParams();
   const id = match.subcateId;
-  console.log(id);
+  const [isReadMore, setIsReadMore] = useState(true);
+  const toggleReadMore = () => {
+    setIsReadMore(!isReadMore);
+  };
+
+  const [subCategory, setSubCategory] = useState({});
+  useEffect(() => {
+    const fetchSubCategory = async () => {
+      const subCate = await subCategoryApi.get(id);
+      setSubCategory(subCate);
+    };
+
+    fetchSubCategory();
+    setIsReadMore(true);
+  }, [id]);
+
+  const renderText = (text) => {
+    return (
+      <p className="text">
+        {text === null ? "" : isReadMore ? text.slice(0, 300) : text}
+        <span onClick={toggleReadMore} className="hideShow">
+          {isReadMore ? <KeyboardArrowDown /> : <KeyboardArrowUp />}
+        </span>
+      </p>
+    );
+  };
+
   return (
-    <>
-      <h1>Sub Cate</h1>
-    </>
+    <Grid container spacing={2} sx={{ overflow: "hidden" }}>
+      <Grid item xs={12}>
+        {subCategory.imageUrl != null ? (
+          <img
+            src={baseImagePath + "SubCategory/" + subCategory.imageUrl}
+            alt={subCategory.name}
+          />
+        ) : (
+          ""
+        )}
+      </Grid>
+
+      <Grid item xs={4}></Grid>
+      <Grid item xs={4}>
+        <h1 className="title">{subCategory.name}</h1>
+      </Grid>
+      <Grid item xs={4}></Grid>
+      <Grid item xs={2}></Grid>
+      <Grid item component={Paper} elevation={1} xs={8}>
+        {!subCategory
+          ? ""
+          : subCategory.description
+          ? renderText(subCategory.description)
+          : ""}
+      </Grid>
+      <Grid item xs={2}></Grid>
+    </Grid>
   );
 }
 

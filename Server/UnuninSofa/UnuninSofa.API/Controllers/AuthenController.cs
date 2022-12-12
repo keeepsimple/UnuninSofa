@@ -65,7 +65,9 @@ namespace UnuninSofa.API.Controllers
             if(result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "User");
-                return Ok("User created successfull.");
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var token = GenerateToken(user, userRoles);
+                return Ok(token);
             }
             else
             {

@@ -21,5 +21,12 @@ namespace UnuninSofa.API.Controllers
             var subCates = await _subCategoryService.GetAllAsync();
             return Ok(subCates);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var subCate = await _subCategoryService.GetByIdAsync(id);
+            return Ok(subCate);
+        }
     }
 }
