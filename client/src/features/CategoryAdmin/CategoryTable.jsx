@@ -9,11 +9,10 @@ import TableRow from "@mui/material/TableRow";
 import moment from "moment";
 import "moment/locale/vi";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import DeleteCategory from "./Delete";
-import EditCategory from "./Edit";
 
 const CategoryTable = ({ listCate }) => {
-  const [openedEdit, setOpenEdit] = useState(false);
   const [openedDelete, setOpenDelete] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
   const [name, setName] = useState("");
@@ -47,11 +46,8 @@ const CategoryTable = ({ listCate }) => {
                   <Grid container spacing={2}>
                     <Grid item xs={2}>
                       <Button
-                        onClick={() => {
-                          setOpenEdit(true);
-                          setSelectedId(cate.id);
-                          setName(cate.name);
-                        }}
+                        component={Link}
+                        to={"/admin/category/edit/" + cate.id}
                         variant="outlined"
                         color="primary"
                       >
@@ -78,17 +74,11 @@ const CategoryTable = ({ listCate }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <EditCategory
-        open={openedEdit}
-        close={() => setOpenEdit(false)}
-        name={name}
-        id={selectedId}
-      />
       <DeleteCategory
         open={openedDelete}
         close={() => setOpenDelete(false)}
-        name={name}
         id={selectedId}
+        name={name}
       />
     </>
   );

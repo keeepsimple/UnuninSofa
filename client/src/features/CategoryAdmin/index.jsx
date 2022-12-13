@@ -1,12 +1,11 @@
 import { Button, Grid, Pagination, Stack, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import categoryAdminApi from "../../api/CategoryAdminApi";
 import useDebounceCallback from "../../components/SetDelay/SetDelay";
 import CategoryTable from "./CategoryTable";
-import CreateCategory from "./Create";
 
 const CategoryAdmin = () => {
-  const [opened, setOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [totalItem, setTotalItem] = useState(1);
@@ -46,9 +45,10 @@ const CategoryAdmin = () => {
           <Grid item xs={1}></Grid>
           <Grid item xs={3}>
             <Button
-              onClick={() => setOpen(true)}
               variant="outlined"
               color="success"
+              component={Link}
+              to="/admin/category/create"
             >
               Tạo
             </Button>
@@ -82,7 +82,6 @@ const CategoryAdmin = () => {
           <Grid item xs></Grid>
         </Grid>
       </form>
-      <CreateCategory open={opened} close={() => setOpen(false)} />
     </>
   );
 };

@@ -1,25 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Grid, Modal, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { useSnackbar } from "notistack";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import categoryAdminApi from "../../api/CategoryAdminApi";
-import * as yup from "yup";
-import { useSnackbar } from "notistack";
-import InputField from "../../components/FormControl/InputField";
 import { useNavigate } from "react-router-dom";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 500,
-  bgcolor: "background.paper",
-  borderRadius: "5px",
-  boxShadow: 24,
-  p: 6,
-};
+import * as yup from "yup";
+import categoryAdminApi from "../../api/CategoryAdminApi";
+import InputField from "../../components/FormControl/InputField";
 
 const CreateCategory = (props) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -39,41 +27,50 @@ const CreateCategory = (props) => {
     try {
       await categoryAdminApi.add(data);
       enqueueSnackbar("Tạo danh mục thành công!", { variant: "success" });
-      navigate(0);
+      navigate("/admin/category");
     } catch (err) {
       enqueueSnackbar(err, { variant: "error" });
     }
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
-    <Modal
-      open={props.open}
-      onClose={props.close}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <Box sx={style}>
-            <Grid container spacing={6}>
-              <Grid item xs={12}>
-                <Typography id="modal-modal-title" variant="h5" component="h2">
-                  Tạo danh mục
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <InputField name="name" label="Tên" />
-              </Grid>
-              <Grid item xs={12}>
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <Box>
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            spacing={6}
+          >
+            <Grid item xs={12}></Grid>
+            <Grid item xs={12}>
+              <Typography id="modal-modal-title" variant="h5" component="h2">
+                Tạo danh mục
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <InputField name="name" label="Tên" />
+            </Grid>
+            <Grid item xs={12}>
+              <Stack spacing={3} direction="row">
                 <Button type="submit" variant="contained" color="success">
                   Tạo
                 </Button>
-              </Grid>
+                <Button onClick={handleBack} variant="outlined">
+                  Trở về
+                </Button>
+              </Stack>
             </Grid>
-          </Box>
-        </form>
-      </FormProvider>
-    </Modal>
+          </Grid>
+        </Box>
+      </form>
+    </FormProvider>
   );
 };
 

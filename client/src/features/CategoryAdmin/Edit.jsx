@@ -1,32 +1,24 @@
-import { Button, Grid, Modal, Typography } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import { useSnackbar } from "notistack";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import * as yup from "yup";
 import categoryAdminApi from "../../api/CategoryAdminApi";
 import InputField from "../../components/FormControl/InputField";
-import * as yup from "yup";
-import { useSnackbar } from "notistack";
-import { yupResolver } from "@hookform/resolvers/yup";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 900,
-  bgcolor: "background.paper",
-  borderRadius: "5px",
-  boxShadow: 24,
-  p: 15,
-};
-
+import isEmpty from "lodash/isEmpty";
 const EditCategory = (props) => {
-  const { id, open, close, name } = props;
-  const { value, SetValue } = useState(name);
+  const match = useParams();
+  const id = match.cateId;
+  const [category, setCategory] = useState({});
+  const [name, setName] = useState();
   const { enqueueSnackbar } = useSnackbar();
   const schema = yup.object().shape({
-    name: yup.string().required("Tên không được bỏ trống"),
+    id: yup.string(),
+    name: yup.string(),
+    // .required("Tên không được bỏ trống"),
   });
 
   const form = useForm({
@@ -37,56 +29,86 @@ const EditCategory = (props) => {
     resolver: yupResolver(schema),
   });
 
-  const navigate = useNavigate();
-  const onSubmit = async (data) => {
-    const update = {
-      ...data,
-      id,
+  useEffect(() => {
+    const fetchCategory = async () => {
+      const cate = await categoryAdminApi.get(id);
+      setCategory(cate);
+      setName(cate.name);
     };
-    try {
-      await categoryAdminApi.update(update);
-      enqueueSnackbar("Tạo danh mục thành công!", { variant: "success" });
-      navigate(0);
-    } catch (err) {
-      enqueueSnackbar(err, { variant: "error" });
-    }
+
+    fetchCategory();
+  }, [id]);
+  const navigate = useNavigate();
+  const onSubmit = async () => {
+    const update = {
+      id,
+      name,
+    };
+
+    // try {
+    //   await categoryAdminApi.update(update);
+    //   enqueueSnackbar("Sửa danh mục thành công!", { variant: "success" });
+    //   navigate(-1);
+    // } catch (err) {
+    //   enqueueSnackbar(err, { variant: "error" });
+    // }
   };
 
-  const handleOnChange = () => {};
+  const handleChange = (e) => {
+    const data = e.target.value;
+    setName(data);
+  };
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
-    <Modal
-      open={open}
-      onClose={close}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <Box sx={style}>
-            <Grid container spacing={6}>
-              <Grid item xs={12}>
-                <Typography id="modal-modal-title" variant="h5" component="h2">
-                  Sửa danh mục
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <InputField
-                  name="name"
-                  label="Tên"
-                  value={value}
-                  onChange={handleOnChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <Box>
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            spacing={6}
+          >
+            <Grid item xs={12} />
+            <Grid item xs={12}>
+              <Typography id="modal-modal-title" variant="h5" component="h2">
+                Sửa danh mục
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <InputField
+                name="id"
+                value={!isEmpty(category) ? category.id : ""}
+                type="hidden"
+              />
+              <InputField
+                fullWidth
+                name="name"
+                label="Tên"
+                value={!isEmpty(category) ? name : ""}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Stack spacing={3} direction="row">
                 <Button type="submit" variant="contained" color="primary">
                   Sửa
                 </Button>
-              </Grid>
+                <Button onClick={handleBack} variant="outlined">
+                  Trở về
+                </Button>
+              </Stack>
             </Grid>
-          </Box>
-        </form>
-      </FormProvider>
-    </Modal>
+          </Grid>
+        </Box>
+      </form>
+    </FormProvider>
   );
 };
 
