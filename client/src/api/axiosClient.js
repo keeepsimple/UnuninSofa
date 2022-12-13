@@ -1,10 +1,13 @@
 import axios from "axios";
 import { baseApiUrl } from "../configs/serverUrl";
+import StorageKeys from "../configs/storageKey";
 
+const token = localStorage.getItem(StorageKeys.TOKEN);
 const axiosClient = axios.create({
   baseURL: `${baseApiUrl}`,
   headers: {
     "Content-Type": "application/json",
+    "Authorization": `bearer ${token}`,
   },
 });
 

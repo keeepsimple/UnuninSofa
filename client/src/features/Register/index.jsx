@@ -48,12 +48,11 @@ function Register(props) {
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     try {
-      const token = await authenApi.register(data);
-      if (token !== null) {
-        localStorage.setItem(StorageKeys.TOKEN, token);
-        enqueueSnackbar("Đăng ký thành công!", { variant: "success" });
-        navigate("/");
-      }
+      const response = await authenApi.register(data);
+      localStorage.setItem(StorageKeys.TOKEN, response.token);
+      localStorage.setItem(StorageKeys.ROLE, response.userRoles[0]);
+      enqueueSnackbar("Đăng ký thành công!", { variant: "success" });
+      navigate(-1);
     } catch (err) {
       enqueueSnackbar(err, { variant: "error" });
     }

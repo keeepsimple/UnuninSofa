@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Linq.Expressions;
 using UnuninSofa.API.DTO;
 using UnuninSofa.BusinessLayer.IServices;
@@ -8,6 +10,7 @@ using UnuninSofa.Models;
 namespace UnuninSofa.API.Admin
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class MaterialManagementController : ControllerBase
     {

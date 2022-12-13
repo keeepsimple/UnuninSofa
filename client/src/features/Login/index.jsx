@@ -21,16 +21,15 @@ function Login(props) {
     },
     resolver: yupResolver(schema),
   });
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const onSubmit = async (data) => {
     try {
-      const token = await authenApi.login(data);
-      if (token !== null) {
-        localStorage.setItem(StorageKeys.TOKEN, token);
-        enqueueSnackbar("Đăng nhập thành công!", { variant: "success" });
-        navigate("/");
-      }
+      const response = await authenApi.login(data);
+      localStorage.setItem(StorageKeys.TOKEN, response.token);
+      localStorage.setItem(StorageKeys.ROLE, response.userRoles[0]);
+      enqueueSnackbar("Đăng nhập thành công!", { variant: "success" });
+      navigate(-1);
     } catch (err) {
       enqueueSnackbar(err, { variant: "error" });
     }

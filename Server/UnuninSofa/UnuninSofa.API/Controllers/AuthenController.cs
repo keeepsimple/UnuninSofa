@@ -39,7 +39,11 @@ namespace UnuninSofa.API.Controllers
                 var user = await _userManager.FindByNameAsync(model.Username);
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var token = GenerateToken(user, userRoles);
-                return Ok(token);
+                return Ok(new 
+                {
+                    token,
+                    userRoles
+                });
             }
             if (result.IsLockedOut)
             {
@@ -67,7 +71,11 @@ namespace UnuninSofa.API.Controllers
                 await _userManager.AddToRoleAsync(user, "User");
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var token = GenerateToken(user, userRoles);
-                return Ok(token);
+                return Ok(new
+                {
+                    token,
+                    userRoles
+                });
             }
             else
             {
