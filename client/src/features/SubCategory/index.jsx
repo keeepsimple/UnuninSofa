@@ -1,5 +1,6 @@
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { Grid, Paper } from "@mui/material";
+import { Markup } from "interweave";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import subCategoryApi from "../../api/SubCategoryApi";
@@ -28,7 +29,13 @@ function SubCategoryFeature(props) {
   const renderText = (text) => {
     return (
       <p className="text">
-        {text === null ? "" : isReadMore ? text.slice(0, 300) : text}
+        {text === null ? (
+          ""
+        ) : isReadMore ? (
+          <Markup content={text.slice(0, 300)} />
+        ) : (
+          <Markup content={text} />
+        )}
         <span onClick={toggleReadMore} className="hideShow">
           {isReadMore ? <KeyboardArrowDown /> : <KeyboardArrowUp />}
         </span>

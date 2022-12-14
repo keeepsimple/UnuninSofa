@@ -10,6 +10,9 @@ import EditCategory from "./features/CategoryAdmin/Edit";
 import Login from "./features/Login";
 import Register from "./features/Register";
 import SubCategoryFeature from "./features/SubCategory/index";
+import SubCategoryAdmin from "./features/SubCategoryAdmin";
+import CreateSubCategory from "./features/SubCategoryAdmin/Create";
+import EditSubCategory from "./features/SubCategoryAdmin/Edit";
 import DashBoardMain from "./pages/Dashboard";
 import Home from "./pages/Home/Home";
 
@@ -34,6 +37,9 @@ function App() {
             element={<EditCategory />}
           />
           <Route path="/admin/category/create" element={<CreateCategory />} />
+          <Route path="/admin/subcategory" element={<SubCategoryAdmin />} />
+          <Route path="/admin/subcategory/create" element={<CreateSubCategory />} />
+          <Route path="/admin/subcategory/edit/:id" element={<EditSubCategory />} />
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

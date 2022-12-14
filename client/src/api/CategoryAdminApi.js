@@ -6,6 +6,10 @@ const categoryAdminApi = {
         const url = baseApiUrl + `/CategoryManagement/GetPaging/${pageNum}`
         return axiosClient.get(url, { params: params })
     },
+    getAll() {
+        const url = `/CategoryManagement`;
+        return axiosClient.get(url);
+    },
     get(id) {
         const url = `/CategoryManagement/${id}`;
         return axiosClient.get(url);

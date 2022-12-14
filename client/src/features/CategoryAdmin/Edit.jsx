@@ -9,6 +9,7 @@ import * as yup from "yup";
 import categoryAdminApi from "../../api/CategoryAdminApi";
 import InputField from "../../components/FormControl/InputField";
 import isEmpty from "lodash/isEmpty";
+
 const EditCategory = (props) => {
   const match = useParams();
   const id = match.cateId;
@@ -45,13 +46,13 @@ const EditCategory = (props) => {
       name,
     };
 
-    // try {
-    //   await categoryAdminApi.update(update);
-    //   enqueueSnackbar("Sửa danh mục thành công!", { variant: "success" });
-    //   navigate(-1);
-    // } catch (err) {
-    //   enqueueSnackbar(err, { variant: "error" });
-    // }
+    try {
+      await categoryAdminApi.update(update);
+      enqueueSnackbar("Sửa danh mục thành công!", { variant: "success" });
+      navigate(-1);
+    } catch (err) {
+      enqueueSnackbar(err, { variant: "error" });
+    }
   };
 
   const handleChange = (e) => {

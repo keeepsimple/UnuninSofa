@@ -35,12 +35,12 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Danh mục" />
         </ListItemButton></a>
-        <ListItemButton>
+        <a href="/admin/subcategory"><ListItemButton>
             <ListItemIcon>
                 <SubdirectoryArrowRightIcon />
             </ListItemIcon>
             <ListItemText primary="Tiểu mục" />
-        </ListItemButton>
+        </ListItemButton></a>
         <ListItemButton>
             <ListItemIcon>
                 <ChairIcon />

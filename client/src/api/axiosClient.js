@@ -11,6 +11,14 @@ const axiosClient = axios.create({
   },
 });
 
+export const axiosMedia = axios.create({
+  baseURL: `${baseApiUrl}`,
+  headers: {
+    "Authorization": `bearer ${token}`,
+    "content-type": "multipart/form-data",
+  },
+})
+
 // Add a request interceptor
 axiosClient.interceptors.request.use(
   function (config) {
@@ -29,7 +37,37 @@ axiosClient.interceptors.response.use(
     return response.data;
   },
   function (error) {
-    return Promise.reject(error.response.data.mess);
+    if (error.response.data.mess !== undefined) {
+      return Promise.reject(error.response.data.mess);
+    } else {
+      return Promise.reject(error.response.data.title);
+    }
+  }
+);
+
+// Add a request interceptor
+axiosMedia.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
+
+// Add a response interceptor
+axiosMedia.interceptors.response.use(
+  function (response) {
+    return response.data;
+  },
+  function (error) {
+    if (error.response.data.mess !== undefined) {
+      return Promise.reject(error.response.data.mess);
+    } else {
+      return Promise.reject(error.response.data.title);
+    }
   }
 );
 
