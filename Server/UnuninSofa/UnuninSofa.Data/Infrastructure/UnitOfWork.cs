@@ -33,8 +33,8 @@ namespace UnuninSofa.Data.Infrastructure
         private ICoreRepository<Image> _imageRepository;
         public ICoreRepository<Image> ImageRepository => _imageRepository ?? new CoreRepository<Image>(_dbContext);
 
-        private ICoreRepository<ImageCategory> _imageCategoryRepository;
-        public ICoreRepository<ImageCategory> ImageCategoryRepository => _imageCategoryRepository ?? new CoreRepository<ImageCategory>(_dbContext);
+        private ICoreRepository<Slider> _sliderRepository;
+        public ICoreRepository<Slider> SliderRepository => _sliderRepository ?? new CoreRepository<Slider>(_dbContext);
 
         private ICoreRepository<Order> _orderRepository;
         public ICoreRepository<Order> OrderRepository => _orderRepository ?? new CoreRepository<Order>(_dbContext);

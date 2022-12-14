@@ -5,9 +5,9 @@ using UnuninSofa.Models;
 
 namespace UnuninSofa.BusinessLayer.Services
 {
-    public class ImageCategoryService : BaseService<ImageCategory>, IImageCategoryService
+    public class SliderService : BaseService<Slider>, ISliderService
     {
-        public ImageCategoryService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public SliderService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
     }

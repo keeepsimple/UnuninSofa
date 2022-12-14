@@ -28,7 +28,7 @@ namespace UnuninSofa.Data.Infrastructure
 
         ICoreRepository<Image> ImageRepository { get; }
 
-        ICoreRepository<ImageCategory> ImageCategoryRepository { get; }
+        ICoreRepository<Slider> SliderRepository { get; }
 
         ICoreRepository<Order> OrderRepository { get; }
 

@@ -13,6 +13,7 @@ namespace UnuninSofa.API.Helper
             CreateMap<MaterialDTO, Material>().ForMember(des=>des.CreatedAt, act => act.Ignore()).ReverseMap();
             CreateMap<ColorDTO, Color>().ForMember(des=>des.CreatedAt, act => act.Ignore()).ReverseMap();
             CreateMap<User, RegisterDTO>().ReverseMap();
+            CreateMap<SliderDTO, Slider>().ForMember(des => des.CreatedAt, act => act.Ignore()).ReverseMap();
         }
     }
 }

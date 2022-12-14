@@ -25,7 +25,7 @@ namespace UnuninSofa.Data
 
         public DbSet<Image> Images { get; set; }
 
-        public DbSet<ImageCategory> ImageCategories { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
 
         public DbSet<Color> Colors { get; set; }
 
@@ -114,45 +114,7 @@ namespace UnuninSofa.Data
                 }
                 );
 
-            builder.Entity<ImageCategory>().HasData(
-                new ImageCategory
-                {
-                    Id = 1,
-                    Name = "Sliders",
-                    CreatedAt = DateTime.Now
-                },
-                new ImageCategory
-                {
-                    Id = 2,
-                    Name = "Products",
-                    CreatedAt = DateTime.Now,
-                }
-                );
-
-            builder.Entity<Image>().HasData(
-                new Image
-                {
-                    Id = 1,
-                    Name = "Sofa chinh dien",
-                    CreatedAt = DateTime.Now,
-                    ImageCategoryId = 1,
-                    ImageUrl = "sofachinhdien.jpg"
-                }, new Image
-                {
-                    Id = 2,
-                    Name = "Made in Italy Sofa",
-                    CreatedAt = DateTime.Now,
-                    ImageCategoryId = 1,
-                    ImageUrl = "madeinitalysofa.jpg"
-                }, new Image
-                {
-                    Id = 3,
-                    Name = "Bo Ban An Ceramic",
-                    CreatedAt = DateTime.Now,
-                    ImageCategoryId = 1,
-                    ImageUrl = "bobananceramic.jpg"
-                }
-                );
+            
         }
 
         public override int SaveChanges()

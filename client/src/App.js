@@ -8,7 +8,13 @@ import CategoryAdmin from "./features/CategoryAdmin";
 import CreateCategory from "./features/CategoryAdmin/Create";
 import EditCategory from "./features/CategoryAdmin/Edit";
 import Login from "./features/Login";
+import ProductAdminFeatures from "./features/ProductAdmin";
+import CreateProduct from "./features/ProductAdmin/Create";
+import EditProduct from "./features/ProductAdmin/Edit";
 import Register from "./features/Register";
+import SliderFeatures from "./features/SliderAdmin";
+import CreateSlider from "./features/SliderAdmin/Create";
+import EditSlider from "./features/SliderAdmin/Edit";
 import SubCategoryFeature from "./features/SubCategory/index";
 import SubCategoryAdmin from "./features/SubCategoryAdmin";
 import CreateSubCategory from "./features/SubCategoryAdmin/Create";
@@ -40,6 +46,13 @@ function App() {
           <Route path="/admin/subcategory" element={<SubCategoryAdmin />} />
           <Route path="/admin/subcategory/create" element={<CreateSubCategory />} />
           <Route path="/admin/subcategory/edit/:id" element={<EditSubCategory />} />
+          <Route path="/admin/product" element={<ProductAdminFeatures />} />
+          <Route path="/admin/product/create" element={<CreateProduct />} />
+          <Route path="/admin/product/edit/:id" element={<EditProduct />} />
+          <Route path="/admin/slider" element={<SliderFeatures />} />
+          <Route path="/admin/slider/create" element={<CreateSlider />} />
+          <Route path="/admin/slider/edit/:id" element={<EditSlider />} />
+
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

@@ -5,6 +5,7 @@ import WindowIcon from '@mui/icons-material/Window';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import PhotoIcon from '@mui/icons-material/Photo';
 import * as React from 'react';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import ChairIcon from '@mui/icons-material/Chair';
@@ -41,11 +42,17 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Tiểu mục" />
         </ListItemButton></a>
-        <ListItemButton>
+        <a href="/admin/product"><ListItemButton>
             <ListItemIcon>
                 <ChairIcon />
             </ListItemIcon>
             <ListItemText primary="Sản phẩm" />
-        </ListItemButton>
+        </ListItemButton></a>
+        <a href="/admin/slider"><ListItemButton>
+            <ListItemIcon>
+                <PhotoIcon />
+            </ListItemIcon>
+            <ListItemText primary="Slider" />
+        </ListItemButton></a>
     </React.Fragment>
 );
