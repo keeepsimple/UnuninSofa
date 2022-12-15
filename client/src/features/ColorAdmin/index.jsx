@@ -6,6 +6,7 @@ import useDebounceCallback from "../../components/SetDelay/SetDelay";
 import ColorTable from "./ColorTable";
 
 const ColorFeatures = () => {
+  document.title = `Màu - Ununin Sofa`;
   const [colors, setColors] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [totalItem, setTotalItem] = useState(1);

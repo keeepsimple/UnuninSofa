@@ -6,6 +6,7 @@ import useDebounceCallback from "../../components/SetDelay/SetDelay";
 import SubCategoryTable from "./SubCategoryTable";
 
 export default function SubCategoryAdmin() {
+  document.title = `Tiểu mục - Ununin Sofa`;
   const [subCategories, setSubCategories] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [totalItem, setTotalItem] = useState(1);

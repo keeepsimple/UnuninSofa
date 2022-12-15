@@ -1,19 +1,26 @@
+import ChairIcon from '@mui/icons-material/Chair';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import OpacityIcon from '@mui/icons-material/Opacity';
 import PeopleIcon from '@mui/icons-material/People';
+import PhotoIcon from '@mui/icons-material/Photo';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import WindowIcon from '@mui/icons-material/Window';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import PhotoIcon from '@mui/icons-material/Photo';
+import HomeIcon from '@mui/icons-material/Home';
 import * as React from 'react';
-import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
-import ChairIcon from '@mui/icons-material/Chair';
-import ColorLensIcon from '@mui/icons-material/ColorLens';
-import OpacityIcon from '@mui/icons-material/Opacity';
 
 export const mainListItems = (
     <React.Fragment>
+        <a href='/'> <ListItemButton>
+            <ListItemIcon>
+                <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Trang chủ"></ListItemText>
+        </ListItemButton></a>
         <a href='/admin/dashboard'> <ListItemButton>
             <ListItemIcon>
                 <DashboardIcon />
@@ -32,6 +39,11 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Khách hàng" />
         </ListItemButton>
+    </React.Fragment>
+);
+
+export const secondaryListItems = (
+    <React.Fragment>
         <a href="/admin/category"> <ListItemButton>
             <ListItemIcon>
                 <WindowIcon />

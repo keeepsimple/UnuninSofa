@@ -6,6 +6,7 @@ import useDebounceCallback from "../../components/SetDelay/SetDelay";
 import MaterialTable from "./MaterialTable";
 
 const MaterialFeatures = () => {
+  document.title = `Chất liệu - Ununin Sofa`;
   const [materials, setMaterials] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [totalItem, setTotalItem] = useState(1);

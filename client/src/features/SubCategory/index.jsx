@@ -4,7 +4,7 @@ import { Markup } from "interweave";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import subCategoryApi from "../../api/SubCategoryApi";
-import { baseImagePath } from "../../configs/serverUrl";
+import { subCategoryImagePath } from "../../configs/serverUrl";
 import "./style.css";
 
 function SubCategoryFeature(props) {
@@ -20,6 +20,7 @@ function SubCategoryFeature(props) {
     const fetchSubCategory = async () => {
       const subCate = await subCategoryApi.get(id);
       setSubCategory(subCate);
+      document.title = `${subCate.name} - Ununin Sofa`;
     };
 
     fetchSubCategory();
@@ -48,7 +49,7 @@ function SubCategoryFeature(props) {
       <Grid item xs={12}>
         {subCategory.imageUrl != null ? (
           <img
-            src={baseImagePath + "SubCategory/" + subCategory.imageUrl}
+            src={subCategoryImagePath + subCategory.imageUrl}
             alt={subCategory.name}
           />
         ) : (

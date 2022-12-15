@@ -6,6 +6,7 @@ import useDebounceCallback from "../../components/SetDelay/SetDelay";
 import SliderTable from "./SliderTable";
 
 const SliderFeatures = () => {
+  document.title = `Slider - Ununin Sofa`;
   const [sliders, setSliders] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [totalItem, setTotalItem] = useState(1);

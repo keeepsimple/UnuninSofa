@@ -32,6 +32,7 @@ function Register(props) {
         return this.parent.password === value;
       }),
   });
+  document.title = "Đăng ký - Ununin Sofa";
 
   const form = useForm({
     defaultValues: {

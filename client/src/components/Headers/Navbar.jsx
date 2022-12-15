@@ -11,6 +11,10 @@ function Navbar(props) {
     if (localStorage.getItem(StorageKeys.TOKEN) !== null) return true;
     else return false;
   };
+  const isAdmin = () => {
+    if (localStorage.getItem(StorageKeys.ROLE) === "Admin") return true;
+    else return false;
+  };
 
   function handleClickToggleModible() {
     return setMobileToggle(!isMobileToggle);
@@ -67,7 +71,11 @@ function Navbar(props) {
                   </li>
                 </>
               )}
-
+              {isAdmin() ? (
+                <li>
+                  <Link to="/admin/dashboard">Dashboard</Link>
+                </li>
+              ) : null}
               <li>
                 <NavLink
                   style={({ isActive }) => ({

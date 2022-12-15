@@ -13,7 +13,10 @@ import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { mainListItems } from "../../pages/Dashboard/ListItem";
+import {
+  mainListItems,
+  secondaryListItems,
+} from "../../pages/Dashboard/ListItem";
 
 const drawerWidth = 240;
 
@@ -124,6 +127,7 @@ function AdminLayout({ allowedRole }) {
             <List component="nav">
               {mainListItems}
               <Divider sx={{ my: 1 }} />
+              {secondaryListItems}
             </List>
           </Drawer>
           <Box

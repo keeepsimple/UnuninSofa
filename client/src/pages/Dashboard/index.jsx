@@ -2,6 +2,7 @@ import { Container, Grid, Paper } from "@mui/material";
 import * as React from "react";
 
 export default function DashBoardMain() {
+  document.title = `Dashboard - Ununin Sofa`;
   return (
     <div>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>

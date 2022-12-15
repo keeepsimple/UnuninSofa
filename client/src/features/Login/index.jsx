@@ -10,6 +10,7 @@ import LoginForm from "./LoginForm";
 
 function Login(props) {
   const { enqueueSnackbar } = useSnackbar();
+  document.title = "Đăng nhập - Ununin Sofa";
   const schema = yup.object().shape({
     username: yup.string().required("Tên đăng nhập không được bỏ trống"),
     password: yup.string().required("Mật khẩu không được bỏ trống"),

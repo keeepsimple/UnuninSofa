@@ -1,4 +1,5 @@
-﻿using UnuninSofa.BusinessLayer.BaseServices;
+﻿using Microsoft.EntityFrameworkCore;
+using UnuninSofa.BusinessLayer.BaseServices;
 using UnuninSofa.BusinessLayer.IServices;
 using UnuninSofa.Data.Infrastructure;
 using UnuninSofa.Models;
@@ -9,6 +10,11 @@ namespace UnuninSofa.BusinessLayer.Services
     {
         public ProductDetailService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
+        }
+
+        public async Task<ProductDetail> GetProductDetailByProductAsync(int productId)
+        {
+            return await _unitOfWork.ProductDetailRepository.GetQuery(x=>x.ProductId == productId).FirstOrDefaultAsync();
         }
     }
 }

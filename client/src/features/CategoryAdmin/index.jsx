@@ -6,6 +6,7 @@ import useDebounceCallback from "../../components/SetDelay/SetDelay";
 import CategoryTable from "./CategoryTable";
 
 const CategoryAdmin = () => {
+  document.title = `Danh mục - Ununin Sofa`;
   const [categories, setCategories] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [totalItem, setTotalItem] = useState(1);
