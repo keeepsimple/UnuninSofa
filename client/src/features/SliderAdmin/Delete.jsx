@@ -25,7 +25,7 @@ const DeleteSlider = (props) => {
     try {
       await sliderAdminApi.remove(id);
       enqueueSnackbar("Xoá ảnh slider thành công!", { variant: "success" });
-      navigate(0);
+      setTimeout(navigate(0), 1000);
     } catch (err) {
       enqueueSnackbar(err, { variant: "error" });
     }

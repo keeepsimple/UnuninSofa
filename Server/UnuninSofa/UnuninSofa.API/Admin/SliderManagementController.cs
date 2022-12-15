@@ -73,6 +73,7 @@ namespace UnuninSofa.API.Admin
             }
             var slider = _mapper.Map<Slider>(model);
             slider.ImageUrl = model.ImageUrl.FileName;
+            slider.IsPublished = true;
             var result = await _sliderService.AddAsync(slider);
 
             if (result > 0) return Ok("Create success");

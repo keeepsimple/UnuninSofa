@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Grid, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import sliderAdminApi from "../../api/SliderAdminApi";
@@ -15,6 +24,7 @@ const EditSlider = () => {
   const [image, setImage] = useState(null);
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
+  const [isPublished, setIsPublished] = useState(true);
 
   const navigate = useNavigate();
 
@@ -24,6 +34,7 @@ const EditSlider = () => {
       setName(data.name);
       setLink(data.link);
       setSlider(data);
+      setIsPublished(data.isPublished);
     };
     fetchSliders();
   }, [id]);
@@ -35,6 +46,7 @@ const EditSlider = () => {
       name: name,
       imageUrl: !image ? slider.imageUrl : image,
       link: link,
+      isPublished: isPublished,
     };
 
     try {
@@ -52,6 +64,11 @@ const EditSlider = () => {
       enqueueSnackbar("Tên không được bỏ trống", { variant: "error" });
     }
     setName(data);
+  };
+
+  const handleIsPublished = (e) => {
+    const data = e.target.value;
+    setIsPublished(data);
   };
 
   const handleBack = () => {
@@ -86,6 +103,21 @@ const EditSlider = () => {
             onChange={(e) => setLink(e.target.value)}
           />
         </Grid>
+        <Grid item xs={12}>
+          <FormLabel id="demo-row-radio-buttons-group-label">
+            Bạn có muốn hiện lên trang chủ?
+          </FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+            value={isPublished}
+            onChange={handleIsPublished}
+          >
+            <FormControlLabel value="true" control={<Radio />} label="Có" />
+            <FormControlLabel value="false" control={<Radio />} label="Không" />
+          </RadioGroup>
+        </Grid>
         <Grid item xs={6}>
           {image && (
             <div>
@@ -100,7 +132,7 @@ const EditSlider = () => {
             <div>
               <img
                 alt="not found"
-                width={"500px"}
+                width={"500px !important"}
                 src={!isEmpty(slider) ? sliderImagePath + slider.imageUrl : ""}
               />
             </div>

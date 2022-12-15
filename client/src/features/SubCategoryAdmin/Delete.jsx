@@ -25,7 +25,7 @@ const DeleteSubCategory = (props) => {
     try {
       await subCategoryAdminApi.remove(id);
       enqueueSnackbar("Xoá tiểu mục thành công!", { variant: "success" });
-      navigate(0);
+      setTimeout(navigate(0), 1000);
     } catch (err) {
       enqueueSnackbar(err, { variant: "error" });
     }

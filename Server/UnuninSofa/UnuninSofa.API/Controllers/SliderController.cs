@@ -20,7 +20,7 @@ namespace UnuninSofa.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var sliders = await _sliderService.GetAllAsync();
+            var sliders = await _sliderService.GetPublishedSliderAsync();
             return Ok(sliders);
         }
     }

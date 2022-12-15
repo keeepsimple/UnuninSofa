@@ -25,7 +25,7 @@ const DeleteCategory = (props) => {
     try {
       await categoryAdminApi.remove(id);
       enqueueSnackbar("Xoá danh mục thành công!", { variant: "success" });
-      navigate(0);
+      setTimeout(navigate(0), 1000);
     } catch (err) {
       enqueueSnackbar(err, { variant: "error" });
     }
