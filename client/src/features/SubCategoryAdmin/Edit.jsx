@@ -167,7 +167,6 @@ const EditSubCategory = () => {
               hidden
               onChange={(e) => setImage(e.target.files[0])}
               accept="image/*"
-              multiple
               type="file"
             />
           </Button>

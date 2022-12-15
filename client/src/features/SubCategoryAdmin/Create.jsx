@@ -20,7 +20,7 @@ const CreateSubCategory = () => {
     setAddData(data);
   };
   const navigate = useNavigate();
-
+  console.log(typeof image);
   useEffect(() => {
     const fetchCategory = async () => {
       const data = await categoryAdminApi.getAll();
@@ -120,9 +120,10 @@ const CreateSubCategory = () => {
               name="imageUrl"
               id="imageUrl"
               hidden
-              onChange={(e) => setImage(e.target.files[0])}
+              onChange={(e) => {
+                setImage(e.target.files[0]);
+              }}
               accept="image/*"
-              multiple
               type="file"
             />
           </Button>

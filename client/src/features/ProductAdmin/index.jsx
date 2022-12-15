@@ -25,7 +25,6 @@ const ProductFeatures = () => {
         pageSize: `${pageSize}`,
         searchString: `${searchString}`,
       });
-      console.log(data);
       setProducts(data.list);
       setTotalItem(data.count);
     };

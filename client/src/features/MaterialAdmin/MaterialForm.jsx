@@ -52,7 +52,6 @@ const MaterialForm = (props) => {
             label="Mô tả"
             value={getDescription}
             onChange={(e) => setDescription(e.target.value)}
-            required
           />
         </Grid>
         <Grid item xs={12}>
