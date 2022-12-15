@@ -9,6 +9,8 @@ import PhotoIcon from '@mui/icons-material/Photo';
 import * as React from 'react';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import ChairIcon from '@mui/icons-material/Chair';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
+import OpacityIcon from '@mui/icons-material/Opacity';
 
 export const mainListItems = (
     <React.Fragment>
@@ -53,6 +55,18 @@ export const mainListItems = (
                 <PhotoIcon />
             </ListItemIcon>
             <ListItemText primary="Slider" />
+        </ListItemButton></a>
+        <a href="/admin/material"><ListItemButton>
+            <ListItemIcon>
+                <OpacityIcon />
+            </ListItemIcon>
+            <ListItemText primary="Chất liệu" />
+        </ListItemButton></a>
+        <a href="/admin/color"><ListItemButton>
+            <ListItemIcon>
+                <ColorLensIcon />
+            </ListItemIcon>
+            <ListItemText primary="Màu" />
         </ListItemButton></a>
     </React.Fragment>
 );

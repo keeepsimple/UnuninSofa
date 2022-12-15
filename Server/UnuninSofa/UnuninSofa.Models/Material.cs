@@ -6,7 +6,7 @@ namespace UnuninSofa.Models
     {
         public string Name { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public virtual ICollection<ProductDetail> ProductDetails { get; set;}
     }

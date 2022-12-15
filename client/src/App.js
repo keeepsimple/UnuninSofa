@@ -7,7 +7,13 @@ import NoMatch from "./components/NoMatch/NoMatch";
 import CategoryAdmin from "./features/CategoryAdmin";
 import CreateCategory from "./features/CategoryAdmin/Create";
 import EditCategory from "./features/CategoryAdmin/Edit";
+import ColorFeatures from "./features/ColorAdmin";
+import CreateColor from "./features/ColorAdmin/Create";
+import EditColor from "./features/ColorAdmin/Edit";
 import Login from "./features/Login";
+import MaterialFeatures from "./features/MaterialAdmin";
+import CreateMaterial from "./features/MaterialAdmin/Create";
+import EditMaterial from "./features/MaterialAdmin/Edit";
 import ProductAdminFeatures from "./features/ProductAdmin";
 import CreateProduct from "./features/ProductAdmin/Create";
 import EditProduct from "./features/ProductAdmin/Edit";
@@ -52,6 +58,12 @@ function App() {
           <Route path="/admin/slider" element={<SliderFeatures />} />
           <Route path="/admin/slider/create" element={<CreateSlider />} />
           <Route path="/admin/slider/edit/:id" element={<EditSlider />} />
+          <Route path="/admin/material" element={<MaterialFeatures />} />
+          <Route path="/admin/material/create" element={<CreateMaterial />} />
+          <Route path="/admin/material/edit/:id" element={<EditMaterial />} />
+          <Route path="/admin/color" element={<ColorFeatures />} />
+          <Route path="/admin/color/create" element={<CreateColor />} />
+          <Route path="/admin/color/edit/:id" element={<EditColor />} />
 
         </Route>
         <Route path="login" element={<Login />} />
