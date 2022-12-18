@@ -9,8 +9,17 @@ const CreateProduct = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    const formData = new FormData();
+    data.uploadFiles.forEach((x) => {
+      formData.append("uploadFiles", x);
+    });
+    const create = {
+      product: data.product,
+      productDetail: data.productDetail,
+      uploadFiles: formData,
+    };
     try {
-      await productAdminApi.add(data);
+      await productAdminApi.add(create);
       enqueueSnackbar("Tạo sản phẩm thành công!", { variant: "success" });
       navigate("/admin/product");
     } catch (err) {

@@ -20,7 +20,6 @@ const CreateSubCategory = () => {
     setAddData(data);
   };
   const navigate = useNavigate();
-  console.log(typeof image);
   useEffect(() => {
     const fetchCategory = async () => {
       const data = await categoryAdminApi.getAll();
@@ -42,7 +41,7 @@ const CreateSubCategory = () => {
       imageUrl: image,
       categoryId: getCategory,
     };
-
+    console.log(data);
     try {
       await subCategoryAdminApi.add(data);
       enqueueSnackbar("Tạo danh mục thành công!", { variant: "success" });

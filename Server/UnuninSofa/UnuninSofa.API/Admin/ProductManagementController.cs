@@ -60,7 +60,7 @@ namespace UnuninSofa.API.Admin
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] ProductAndProductDetailDTO model)
+        public async Task<IActionResult> Create([FromForm] MainProductDTO model)
         {
             var subCate = await _subCategoryService.GetByIdAsync(model.Product.SubCategoryId);
             if (subCate == null) return BadRequest(new { mess = "Không tìm thấy tiểu mục" });
@@ -74,7 +74,7 @@ namespace UnuninSofa.API.Admin
             productDetail.ProductId = product.Id;
             var resultPDetail = await _productDetailService.AddAsync(productDetail);
 
-            foreach (var item in model.Images)
+            foreach (var item in model.UploadFiles)
             {
                 await AddImageToProduct(item, productDetail.Id, product.Code);
             }
@@ -119,21 +119,23 @@ namespace UnuninSofa.API.Admin
             return colors;
         }
 
-        private async Task AddImageToProduct(ImageDTO model, int productDetailId, string productCode)
+        private async Task AddImageToProduct(IFormFile upload, int productDetailId, string productCode)
         {
             string folderPath = _webHost.WebRootPath + "\\images\\Products\\" + productCode + "\\";
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);
             }
-            var file = Path.Combine(_webHost.WebRootPath, folderPath, model.ImageUrl.FileName);
+            var file = Path.Combine(_webHost.WebRootPath, folderPath, upload.FileName);
             using (var fileStream = new FileStream(file, FileMode.Create))
             {
-                await model.ImageUrl.CopyToAsync(fileStream);
+                await upload.CopyToAsync(fileStream);
             }
-            var image = _mapper.Map<Image>(model);
-            image.ImageUrl = model.ImageUrl.FileName;
-            image.ProductDetailId = productDetailId;
+            var image = new Image
+            {
+                ImageUrl = upload.FileName,
+                ProductDetailId = productDetailId
+            };
             await _imageService.AddAsync(image);
         }
     }

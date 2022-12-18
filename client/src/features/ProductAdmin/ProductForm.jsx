@@ -52,6 +52,7 @@ export const ProductForm = (props) => {
   const [subCategories, setSubCategories] = useState([]);
   const [listMaterial, setListMaterial] = useState([]);
   const [listColor, setListColor] = useState([]);
+  const [previewImage, setPreviewImage] = useState([]);
 
   useEffect(() => {
     setName(name ? name : "");
@@ -134,21 +135,41 @@ export const ProductForm = (props) => {
     const listImg = [];
     listImg.push(e.target.files);
     Object.values(listImg[0]).map((img) => {
-      getImages.push(URL.createObjectURL(img));
+      setPreviewImage((x) => [...x, URL.createObjectURL(img)]);
     });
+    getImages.push(...e.target.files);
   };
 
-  const handleRemoveImage = (item) => {
-    getImages.map((val, index) => {
-      if (val.name === item.name) {
-        getImages.splice(index - 1, index);
-      }
-    });
-  };
+  // const handleRemoveImage = (item) => {
+  //   getImages.map((val, index) => {
+  //     console.log("11111", val);
+  //     console.log("2222", item.target.value);
+  //     if (val === item) {
+  //       getImages.splice(index - 1, index);
+  //       previewImage.splice(index - 1, index);
+  //     }
+  //   });
+  // };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // handleSubmit({ name: getName, description: getDescription });
+    handleSubmit({
+      product: {
+        code: getCode,
+        name: getName,
+        description: getDescription,
+        price: getPrice,
+        status: getStatus,
+        subCategoryId: getSubCategory,
+      },
+      productDetail: {
+        detail: getDetail,
+        size: getSize,
+        materialIds: getMaterials,
+        colorIds: getColors,
+      },
+      uploadFiles: getImages,
+    });
   };
   return (
     <Box component="form" onSubmit={onSubmit}>
@@ -307,17 +328,26 @@ export const ProductForm = (props) => {
         </Grid>
 
         <Grid item xs={12}>
-          <div>
-            {getImages.map((item) => (
+          {previewImage &&
+            previewImage.map((item) => (
               <img
                 key={item}
+                // onClick={handleRemoveImage}
                 alt="preview"
-                width={"200px"}
-                height={"150px"}
+                style={{ height: "150px", width: "200px" }}
                 src={item}
               />
             ))}
-          </div>
+          {!previewImage &&
+            getImages.map((item) => (
+              <img
+                key={item}
+                // onClick={handleRemoveImage}
+                alt="preview"
+                style={{ height: "150px", width: "200px" }}
+                src={productImagePath + code + "/" + item}
+              />
+            ))}
         </Grid>
 
         <Grid item xs={6}>
