@@ -1,9 +1,8 @@
-import { baseApiUrl } from "../configs/serverUrl";
 import axiosClient, { axiosMedia } from "./axiosClient";
 
 const subCategoryAdminApi = {
   getPaging(pageNum, params) {
-    const url = baseApiUrl + `/SubCategoryManagement/GetPaging/${pageNum}`;
+    const url = `/SubCategoryManagement/GetPaging/${pageNum}`;
     return axiosClient.get(url, { params: params });
   },
   getAll() {

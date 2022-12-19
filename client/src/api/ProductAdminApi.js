@@ -1,14 +1,9 @@
-import { baseApiUrl } from "../configs/serverUrl";
-import axiosClient, { axiosMedia } from "./axiosClient";
+import axiosClient from "./axiosClient";
 
 const productAdminApi = {
   getPaging(pageNum, params) {
-    const url = baseApiUrl + `/ProductManagement/GetPaging/${pageNum}`;
+    const url = `/ProductManagement/GetPaging/${pageNum}`;
     return axiosClient.get(url, { params: params });
-  },
-  getAll() {
-    const url = `/ProductManagement`;
-    return axiosClient.get(url);
   },
   get(id) {
     const url = `/ProductManagement/${id}`;
@@ -16,11 +11,11 @@ const productAdminApi = {
   },
   add(data) {
     const url = "/ProductManagement";
-    return axiosMedia.post(url, data);
+    return axiosClient.post(url, data);
   },
   update(data) {
     const url = "/ProductManagement";
-    return axiosMedia.put(url, data);
+    return axiosClient.put(url, data);
   },
   remove(id) {
     const url = `/ProductManagement/${id}`;

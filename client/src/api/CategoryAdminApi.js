@@ -1,9 +1,8 @@
-import { baseApiUrl } from "../configs/serverUrl";
 import axiosClient from "./axiosClient";
 
 const categoryAdminApi = {
     getPaging(pageNum, params) {
-        const url = baseApiUrl + `/CategoryManagement/GetPaging/${pageNum}`
+        const url = `/CategoryManagement/GetPaging/${pageNum}`
         return axiosClient.get(url, { params: params })
     },
     getAll() {

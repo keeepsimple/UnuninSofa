@@ -89,6 +89,9 @@ namespace UnuninSofa.API.Admin
             if (model.ImageUrl != null)
             {
                 string folderPath = _webHost.WebRootPath + "\\images\\Sliders\\";
+                var deleteImage = Path.Combine(_webHost.WebRootPath, folderPath, slider.ImageUrl);
+                System.IO.File.Delete(deleteImage);
+
                 var file = Path.Combine(_webHost.WebRootPath, folderPath, model.ImageUrl.FileName);
                 using (var fileStream = new FileStream(file, FileMode.Create))
                 {
@@ -110,10 +113,12 @@ namespace UnuninSofa.API.Admin
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var cate = await _sliderService.GetByIdAsync(id);
-            if (cate == null) return NotFound(cate);
-
-            var result = await _sliderService.DeleteAsync(cate);
+            var slider = await _sliderService.GetByIdAsync(id);
+            if (slider == null) return NotFound(slider);
+            string folderPath = _webHost.WebRootPath + "\\images\\Sliders\\";
+            var deleteImage = Path.Combine(_webHost.WebRootPath, folderPath, slider.ImageUrl);
+            System.IO.File.Delete(deleteImage);
+            var result = await _sliderService.DeleteAsync(slider);
             if (result) return Ok("Delete success");
             else return BadRequest(result);
         }

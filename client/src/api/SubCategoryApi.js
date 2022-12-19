@@ -1,13 +1,12 @@
-import { baseApiUrl } from "../configs/serverUrl";
 import axiosClient from "./axiosClient";
 
 const subCategoryApi = {
   getAll() {
-    const url = baseApiUrl + "/Subcategory";
+    const url = "/Subcategory";
     return axiosClient.get(url);
   },
   get(id) {
-    const url = baseApiUrl + `/SubCategory/${id}`;
+    const url = `/SubCategory/${id}`;
     return axiosClient.get(url);
   }
 };

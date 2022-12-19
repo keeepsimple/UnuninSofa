@@ -18,9 +18,7 @@ const CreateColor = () => {
     }
   };
 
-  return (
-    <ColorForm title="Tạo Chất Liệu" button="Tạo" handleSubmit={onSubmit} />
-  );
+  return <ColorForm title="Tạo Màu" button="Tạo" handleSubmit={onSubmit} />;
 };
 
 export default CreateColor;

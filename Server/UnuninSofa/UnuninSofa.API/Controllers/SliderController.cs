@@ -6,7 +6,6 @@ using UnuninSofa.BusinessLayer.IServices;
 namespace UnuninSofa.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
     [ApiController]
     public class SliderController : ControllerBase
     {

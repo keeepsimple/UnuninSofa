@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 using UnuninSofa.API.DTO;
 using UnuninSofa.BusinessLayer.IServices;
-using UnuninSofa.BusinessLayer.Services;
 using UnuninSofa.Models;
 
 namespace UnuninSofa.API.Admin
@@ -21,7 +19,6 @@ namespace UnuninSofa.API.Admin
         private readonly IMaterialService _materialService;
         private readonly ISubCategoryService _subCategoryService;
         private readonly IMapper _mapper;
-        private IWebHostEnvironment _webHost;
         private readonly IImageService _imageService;
 
         public ProductManagementController(IProductService productService,
@@ -30,7 +27,6 @@ namespace UnuninSofa.API.Admin
             IMaterialService materialService,
             ISubCategoryService subCategoryService,
             IMapper mapper,
-            IWebHostEnvironment webHost,
             IImageService imageService)
         {
             _productService = productService;
@@ -39,7 +35,6 @@ namespace UnuninSofa.API.Admin
             _materialService = materialService;
             _subCategoryService = subCategoryService;
             _mapper = mapper;
-            _webHost = webHost;
             _imageService = imageService;
         }
 
@@ -60,11 +55,8 @@ namespace UnuninSofa.API.Admin
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] MainProductDTO model)
+        public async Task<IActionResult> Create(MainProductDTO model)
         {
-            var subCate = await _subCategoryService.GetByIdAsync(model.Product.SubCategoryId);
-            if (subCate == null) return BadRequest(new { mess = "Không tìm thấy tiểu mục" });
-
             var product = _mapper.Map<Product>(model.Product);
             var productDetail = _mapper.Map<ProductDetail>(model.ProductDetail);
             productDetail.Materials = await AddMaterialsToProduct(model.ProductDetail.MaterialIds);
@@ -73,11 +65,6 @@ namespace UnuninSofa.API.Admin
             var resultProduct = await _productService.AddAsync(product);
             productDetail.ProductId = product.Id;
             var resultPDetail = await _productDetailService.AddAsync(productDetail);
-
-            foreach (var item in model.UploadFiles)
-            {
-                await AddImageToProduct(item, productDetail.Id, product.Code);
-            }
 
             if (resultProduct > 0 && resultPDetail > 0)
             {
@@ -119,24 +106,61 @@ namespace UnuninSofa.API.Admin
             return colors;
         }
 
-        private async Task AddImageToProduct(IFormFile upload, int productDetailId, string productCode)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
         {
-            string folderPath = _webHost.WebRootPath + "\\images\\Products\\" + productCode + "\\";
-            if (!Directory.Exists(folderPath))
+            var product = await _productService.GetByIdAsync(id);
+            await _productDetailService.GetProductDetailByProductAsync(id);
+            var images = await _imageService.GetImageByProductCode(product.Code);
+
+            return Ok(new { product, images });
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Edit(MainProductDTO model)
+        {
+            var product = await _productService.GetByIdAsync(model.Product.Id);
+            if (product == null) return NotFound(new { mess = "Không tìm thấy sản phẩm nào" });
+
+            var productDetail = await _productDetailService.GetByIdAsync(model.ProductDetail.Id);
+            _mapper.Map(model.Product, product);
+            _mapper.Map(model.ProductDetail, productDetail);
+            await UpdateMaterials(model.ProductDetail.MaterialIds, productDetail);
+            await UpdateColors(model.ProductDetail.ColorIds, productDetail);
+
+            var resultProduct = await _productService.UpdateAsync(product);
+            var resultPDetail = await _productDetailService.UpdateAsync(productDetail);
+
+            if (resultProduct && resultPDetail)
             {
-                Directory.CreateDirectory(folderPath);
+                return Ok("Update success");
             }
-            var file = Path.Combine(_webHost.WebRootPath, folderPath, upload.FileName);
-            using (var fileStream = new FileStream(file, FileMode.Create))
+            else
             {
-                await upload.CopyToAsync(fileStream);
+                return BadRequest(new { mess = "Sửa sản phẩm thất bại!" });
             }
-            var image = new Image
+        }
+
+        private async Task UpdateMaterials(List<int> materialIds, ProductDetail productDetail)
+        {
+            var materials = productDetail.Materials;
+            foreach (var item in materials)
             {
-                ImageUrl = upload.FileName,
-                ProductDetailId = productDetailId
-            };
-            await _imageService.AddAsync(image);
+                productDetail.Materials.Remove(item);
+            }
+
+            productDetail.Materials = await AddMaterialsToProduct(materialIds);
+        }
+
+        private async Task UpdateColors(List<int> colorIds, ProductDetail productDetail)
+        {
+            var colors = productDetail.Colors;
+            foreach (var item in colors)
+            {
+                productDetail.Colors.Remove(item);
+            }
+
+            productDetail.Colors = await AddColorsToProduct(colorIds);
         }
     }
 }

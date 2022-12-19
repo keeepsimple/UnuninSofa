@@ -16,13 +16,13 @@ namespace UnuninSofa.BusinessLayer.BaseServices
 
         Task<bool> UpdateAsync(T entity);
 
-        bool Delete(int id);
+        bool Delete(int id, bool isHardDelete = false);
 
-        Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteAsync(int id, bool isHardDelete = false);
 
-        bool Delete(T entity);
+        bool Delete(T entity, bool isHardDelete = false);
 
-        Task<bool> DeleteAsync(T entity);
+        Task<bool> DeleteAsync(T entity, bool isHardDelete = false);
 
         T GetById(int id);
 

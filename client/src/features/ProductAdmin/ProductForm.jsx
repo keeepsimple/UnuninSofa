@@ -3,6 +3,9 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import {
   Box,
   Button,
+  Card,
+  CardActions,
+  CardMedia,
   FormControlLabel,
   FormLabel,
   Grid,
@@ -13,10 +16,12 @@ import {
   Typography,
 } from "@mui/material";
 import { isEmpty } from "lodash";
+import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import colorAdminApi from "../../api/ColorAdminApi";
+import imageAdminApi from "../../api/ImageAdminApi";
 import materialAdminApi from "../../api/MaterialAdminApi";
 import subCategoryAdminApi from "../../api/SubCategoryAdminApi";
 import { productImagePath } from "../../configs/serverUrl";
@@ -52,7 +57,8 @@ export const ProductForm = (props) => {
   const [subCategories, setSubCategories] = useState([]);
   const [listMaterial, setListMaterial] = useState([]);
   const [listColor, setListColor] = useState([]);
-  const [previewImage, setPreviewImage] = useState([]);
+  const [preview, setPreview] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     setName(name ? name : "");
@@ -63,8 +69,20 @@ export const ProductForm = (props) => {
     setSubCategory(subCategory ? subCategory : 0);
     setDetail(detail ? detail : "");
     setSize(size ? size : "");
-    setMaterials(materials ? materials : []);
-    setColors(colors ? colors : []);
+    const materialOption = materials
+      ? materials.map((m) => ({
+          value: m.id,
+          label: m.name,
+        }))
+      : materials;
+    setMaterials(materials ? materialOption : []);
+    const colorOption = colors
+      ? colors.map((m) => ({
+          value: m.id,
+          label: m.name,
+        }))
+      : colors;
+    setColors(colors ? colorOption : []);
     setImages(images ? images : []);
   }, [
     name,
@@ -135,21 +153,29 @@ export const ProductForm = (props) => {
     const listImg = [];
     listImg.push(e.target.files);
     Object.values(listImg[0]).map((img) => {
-      setPreviewImage((x) => [...x, URL.createObjectURL(img)]);
+      setImages((x) => [...x, img]);
+      setPreview((x) => [...x, img]);
     });
-    getImages.push(...e.target.files);
   };
 
-  // const handleRemoveImage = (item) => {
-  //   getImages.map((val, index) => {
-  //     console.log("11111", val);
-  //     console.log("2222", item.target.value);
-  //     if (val === item) {
-  //       getImages.splice(index - 1, index);
-  //       previewImage.splice(index - 1, index);
-  //     }
-  //   });
-  // };
+  const handleRemoveImage = (data) => {
+    const index = data.target.value;
+    console.log(index);
+    getImages.splice(index - 1, 1, index);
+    preview.splice(index - 1, 1, index);
+  };
+
+  const handleRemoveExistedImage = async (data) => {
+    const id = data.target.value;
+    try {
+      await imageAdminApi.remove(id);
+      enqueueSnackbar("Xoá ảnh thành công reload để thấy", {
+        variant: "success",
+      });
+    } catch (err) {
+      enqueueSnackbar(err, { variant: "error" });
+    }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -168,7 +194,7 @@ export const ProductForm = (props) => {
         materialIds: getMaterials,
         colorIds: getColors,
       },
-      uploadFiles: getImages,
+      uploadImages: getImages,
     });
   };
   return (
@@ -195,6 +221,7 @@ export const ProductForm = (props) => {
               value={getCode}
               onChange={(e) => SetCode(e.target.value)}
               required
+              disabled={getCode ? true : false}
             />
             <TextField
               name="price"
@@ -268,11 +295,9 @@ export const ProductForm = (props) => {
                 isSearchable="true"
                 onChange={handleListMaterialChange}
                 name="materials"
-                value={
-                  !isEmpty(listMaterial)
-                    ? listMaterial.filter((c) => getMaterials.includes(c.value))
-                    : ""
-                }
+                value={listMaterial.filter((c) =>
+                  getMaterials.includes(c.value)
+                )}
                 styles={{
                   control: (baseStyles, state) => ({
                     ...baseStyles,
@@ -293,11 +318,7 @@ export const ProductForm = (props) => {
                 isSearchable="true"
                 onChange={handleListColorChange}
                 name="colors"
-                value={
-                  !isEmpty(listColor)
-                    ? listColor.filter((c) => getColors.includes(c.value))
-                    : ""
-                }
+                value={listColor.filter((c) => getColors.includes(c.value))}
                 styles={{
                   control: (baseStyles, state) => ({
                     ...baseStyles,
@@ -328,26 +349,54 @@ export const ProductForm = (props) => {
         </Grid>
 
         <Grid item xs={12}>
-          {previewImage &&
-            previewImage.map((item) => (
-              <img
-                key={item}
-                // onClick={handleRemoveImage}
-                alt="preview"
-                style={{ height: "150px", width: "200px" }}
-                src={item}
-              />
-            ))}
-          {!previewImage &&
-            getImages.map((item) => (
-              <img
-                key={item}
-                // onClick={handleRemoveImage}
-                alt="preview"
-                style={{ height: "150px", width: "200px" }}
-                src={productImagePath + code + "/" + item}
-              />
-            ))}
+          <Stack spacing={1} direction="row">
+            {preview &&
+              preview.map((item, index) => (
+                <Card key={index} sx={{ maxWidth: 300 }}>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={!item ? null : URL.createObjectURL(item)}
+                    alt="green iguana"
+                  />
+                  <CardActions>
+                    <Button
+                      size="small"
+                      color="error"
+                      value={index}
+                      onClick={handleRemoveImage}
+                    >
+                      Remove
+                    </Button>
+                  </CardActions>
+                </Card>
+              ))}
+            {images &&
+              images.map((item, index) => (
+                <Card key={index} sx={{ maxWidth: 300 }}>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={
+                      item.imageUrl
+                        ? productImagePath + code + "/" + item.imageUrl
+                        : ""
+                    }
+                    alt="preview"
+                  />
+                  <CardActions>
+                    <Button
+                      size="small"
+                      color="error"
+                      value={item.id}
+                      onClick={handleRemoveExistedImage}
+                    >
+                      Remove
+                    </Button>
+                  </CardActions>
+                </Card>
+              ))}
+          </Stack>
         </Grid>
 
         <Grid item xs={6}>

@@ -1,9 +1,8 @@
-import { baseApiUrl } from "../configs/serverUrl";
 import axiosClient from "./axiosClient";
 
 const materialAdminApi = {
     getPaging(pageNum, params) {
-        const url = baseApiUrl + `/MaterialManagement/GetPaging/${pageNum}`
+        const url = `/MaterialManagement/GetPaging/${pageNum}`
         return axiosClient.get(url, { params: params })
     },
     getAll() {

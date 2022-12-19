@@ -1,9 +1,8 @@
-import { baseApiUrl } from "../configs/serverUrl";
 import axiosClient, { axiosMedia } from "./axiosClient";
 
 const sliderAdminApi = {
     getPaging(pageNum, params) {
-        const url = baseApiUrl + `/SliderManagement/GetPaging/${pageNum}`
+        const url = `/SliderManagement/GetPaging/${pageNum}`
         return axiosClient.get(url, { params: params })
     },
     get(id) {

@@ -35,37 +35,37 @@ namespace UnuninSofa.BusinessLayer.BaseServices
             return await _unitOfWork.SaveChangesAsync();
         }
 
-        public bool Delete(int id)
+        public bool Delete(int id, bool isHardDelete = false)
         {
             var entity = _unitOfWork.CoreRepository<T>().GetById(id);
             if (entity == null)
             {
                 throw new ArgumentNullException();
             }
-            _unitOfWork.CoreRepository<T>().Delete(entity);
+            _unitOfWork.CoreRepository<T>().Delete(entity, isHardDelete);
             return _unitOfWork.SaveChanges() > 0;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id, bool isHardDelete = false)
         {
             var entity = _unitOfWork.CoreRepository<T>().GetById(id);
             if (entity == null)
             {
                 throw new ArgumentNullException();
             }
-            _unitOfWork.CoreRepository<T>().Delete(entity);
+            _unitOfWork.CoreRepository<T>().Delete(entity, isHardDelete);
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
 
-        public bool Delete(T entity)
+        public bool Delete(T entity, bool isHardDelete = false)
         {
-            _unitOfWork.CoreRepository<T>().Delete(entity);
+            _unitOfWork.CoreRepository<T>().Delete(entity, isHardDelete);
             return _unitOfWork.SaveChanges() > 0;
         }
 
-        public async Task<bool> DeleteAsync(T entity)
+        public async Task<bool> DeleteAsync(T entity, bool isHardDelete = false)
         {
-            _unitOfWork.CoreRepository<T>().Delete(entity);
+            _unitOfWork.CoreRepository<T>().Delete(entity, isHardDelete);
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
 

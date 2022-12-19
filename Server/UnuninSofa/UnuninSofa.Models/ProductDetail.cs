@@ -16,7 +16,5 @@ namespace UnuninSofa.Models
         public virtual ICollection<Material> Materials { get; set; }
 
         public virtual ICollection<Color> Colors { get; set; }
-
-        public virtual ICollection<Image> Images { get; set; }
     }
 }

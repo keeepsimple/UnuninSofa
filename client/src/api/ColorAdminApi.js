@@ -1,9 +1,8 @@
-import { baseApiUrl } from "../configs/serverUrl";
 import axiosClient from "./axiosClient";
 
 const colorAdminApi = {
     getPaging(pageNum, params) {
-        const url = baseApiUrl + `/ColorManagement/GetPaging/${pageNum}`
+        const url = `/ColorManagement/GetPaging/${pageNum}`
         return axiosClient.get(url, { params: params })
     },
     getAll() {

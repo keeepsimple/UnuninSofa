@@ -2,6 +2,7 @@ import { useSnackbar } from "notistack";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import productAdminApi from "../../api/ProductAdminApi";
+import imageAdminApi from "../../api/ImageAdminApi";
 import { ProductForm } from "./ProductForm";
 
 const CreateProduct = () => {
@@ -10,16 +11,18 @@ const CreateProduct = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    data.uploadFiles.forEach((x) => {
-      formData.append("uploadFiles", x);
+    Array.from(data.uploadImages).forEach((image) => {
+      formData.append("images", image);
     });
-    const create = {
+    formData.append("productCode", data.product.code);
+    const mainProduct = {
       product: data.product,
       productDetail: data.productDetail,
-      uploadFiles: formData,
     };
+
     try {
-      await productAdminApi.add(create);
+      await productAdminApi.add(mainProduct);
+      await imageAdminApi.add(formData);
       enqueueSnackbar("Tạo sản phẩm thành công!", { variant: "success" });
       navigate("/admin/product");
     } catch (err) {

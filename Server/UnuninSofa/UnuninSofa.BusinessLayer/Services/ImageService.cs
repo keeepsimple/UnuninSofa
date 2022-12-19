@@ -12,9 +12,9 @@ namespace UnuninSofa.BusinessLayer.Services
         {
         }
 
-        public async Task<IEnumerable<Image>> GetImagesByProductDetailIdAsync(int productDetailId)
+        public async Task<IEnumerable<Image>> GetImageByProductCode(string productCode)
         {
-            return await _unitOfWork.ImageRepository.GetQuery(x => x.ProductDetailId == productDetailId).ToListAsync();
+            return await _unitOfWork.ImageRepository.GetQuery(x=>x.ProductCode.Equals(productCode) && x.IsDeleted == false).ToListAsync();
         }
     }
 }

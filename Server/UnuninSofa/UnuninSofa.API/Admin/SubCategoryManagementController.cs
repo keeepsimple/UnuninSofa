@@ -96,6 +96,9 @@ namespace UnuninSofa.API.Admin
             if(model.ImageUrl != null)
             {
                 string folderPath = _webHost.WebRootPath + "\\images\\SubCategory\\";
+                var deleteImage = Path.Combine(_webHost.WebRootPath, folderPath, subCate.ImageUrl);
+                System.IO.File.Delete(deleteImage);
+
                 var file = Path.Combine(_webHost.WebRootPath, folderPath, model.ImageUrl.FileName);
                 using (var fileStream = new FileStream(file, FileMode.Create))
                 {
@@ -123,7 +126,9 @@ namespace UnuninSofa.API.Admin
         {
             var subCate = await _subCategoryService.GetByIdAsync(id);
             if (subCate == null) return NotFound(new { mess = "Không tìm thấy tiểu mục nào" });
-
+            string folderPath = _webHost.WebRootPath + "\\images\\SubCategory\\";
+            var deleteImage = Path.Combine(_webHost.WebRootPath, folderPath, subCate.ImageUrl);
+            System.IO.File.Delete(deleteImage);
             var result = await _subCategoryService.DeleteAsync(subCate);
             if (result) return Ok("Delete success");
             else return BadRequest(new { mess = "Xoá tiểu mục thất bại" });
