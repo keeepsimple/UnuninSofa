@@ -9,12 +9,24 @@ const CreateProduct = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
+  const bindSelectToList = (data) => {
+    var list = [];
+    data.forEach((item) => {
+      list.push(item.value);
+    });
+    return list;
+  };
   const onSubmit = async (data) => {
     const formData = new FormData();
     Array.from(data.uploadImages).forEach((image) => {
       formData.append("images", image);
     });
     formData.append("productCode", data.product.code);
+
+    data.productDetail.materialIds = bindSelectToList(
+      data.productDetail.materialIds
+    );
+    data.productDetail.colorIds = bindSelectToList(data.productDetail.colorIds);
     const mainProduct = {
       product: data.product,
       productDetail: data.productDetail,

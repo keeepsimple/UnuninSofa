@@ -15,7 +15,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { isEmpty } from "lodash";
+import { indexOf, isEmpty } from "lodash";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -74,15 +74,15 @@ export const ProductForm = (props) => {
           value: m.id,
           label: m.name,
         }))
-      : materials;
-    setMaterials(materials ? materialOption : []);
+      : [];
+    setMaterials(materialOption);
     const colorOption = colors
       ? colors.map((m) => ({
           value: m.id,
           label: m.name,
         }))
-      : colors;
-    setColors(colors ? colorOption : []);
+      : [];
+    setColors(colorOption);
     setImages(images ? images : []);
   }, [
     name,
@@ -142,11 +142,11 @@ export const ProductForm = (props) => {
   };
 
   const handleListMaterialChange = (e) => {
-    setMaterials(Array.isArray(e) ? e.map((x) => x.value) : []);
+    setMaterials(e);
   };
 
   const handleListColorChange = (e) => {
-    setColors(Array.isArray(e) ? e.map((x) => x.value) : []);
+    setColors(e);
   };
 
   const handleImagesChange = (e) => {
@@ -160,18 +160,19 @@ export const ProductForm = (props) => {
 
   const handleRemoveImage = (data) => {
     const index = data.target.value;
-    console.log(index);
-    getImages.splice(index - 1, 1, index);
-    preview.splice(index - 1, 1, index);
+    preview.splice(index, 1);
+    getImages.splice(index, 1);
   };
 
   const handleRemoveExistedImage = async (data) => {
     const id = data.target.value;
     try {
-      await imageAdminApi.remove(id);
-      enqueueSnackbar("Xoá ảnh thành công reload để thấy", {
+      // await imageAdminApi.remove(id);
+      enqueueSnackbar("Xoá ảnh thành công", {
         variant: "success",
       });
+      const image = getImages.map((image) => image.id).indexOf(id);
+      console.log(image);
     } catch (err) {
       enqueueSnackbar(err, { variant: "error" });
     }
@@ -221,7 +222,6 @@ export const ProductForm = (props) => {
               value={getCode}
               onChange={(e) => SetCode(e.target.value)}
               required
-              disabled={getCode ? true : false}
             />
             <TextField
               name="price"
@@ -295,9 +295,7 @@ export const ProductForm = (props) => {
                 isSearchable="true"
                 onChange={handleListMaterialChange}
                 name="materials"
-                value={listMaterial.filter((c) =>
-                  getMaterials.includes(c.value)
-                )}
+                value={getMaterials}
                 styles={{
                   control: (baseStyles, state) => ({
                     ...baseStyles,
@@ -318,7 +316,7 @@ export const ProductForm = (props) => {
                 isSearchable="true"
                 onChange={handleListColorChange}
                 name="colors"
-                value={listColor.filter((c) => getColors.includes(c.value))}
+                value={getColors}
                 styles={{
                   control: (baseStyles, state) => ({
                     ...baseStyles,
