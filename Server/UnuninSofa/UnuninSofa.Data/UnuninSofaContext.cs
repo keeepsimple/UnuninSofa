@@ -66,6 +66,7 @@ namespace UnuninSofa.Data
                     new User
                     {
                         Id = adminId,
+                        FullName = "Admin",
                         UserName = "admin",
                         Email = "admin@mail.com",
                         PhoneNumber = "09191991999",

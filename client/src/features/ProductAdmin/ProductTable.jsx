@@ -9,7 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import "moment/locale/vi";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { DeleteTable } from "./Delete";
+import DeleteProduct from "./Delete";
 
 const ProductTable = ({ listProduct }) => {
   const [openedDelete, setOpenDelete] = useState(false);
@@ -48,7 +48,9 @@ const ProductTable = ({ listProduct }) => {
                 <TableCell align="center" scope="row">
                   {product.rate}
                 </TableCell>
-                <TableCell align="center">{product.status}</TableCell>
+                <TableCell align="center">
+                  {product.status === 1 ? "Còn hàng" : "Hết hàng"}
+                </TableCell>
                 <TableCell align="center">
                   <Grid container spacing={2}>
                     <Grid item xs={2}>
@@ -81,7 +83,7 @@ const ProductTable = ({ listProduct }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <DeleteTable
+      <DeleteProduct
         open={openedDelete}
         close={() => setOpenDelete(false)}
         id={selectedId}

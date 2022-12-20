@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import jwtDecode from "jwt-decode";
 import { useSnackbar } from "notistack";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -28,7 +29,12 @@ function Login(props) {
     try {
       const response = await authenApi.login(data);
       localStorage.setItem(StorageKeys.TOKEN, response.token);
-      localStorage.setItem(StorageKeys.ROLE, response.userRoles[0]);
+      localStorage.setItem(StorageKeys.REFRESHTOKEN, response.refreshToken);
+      const decoded = jwtDecode(response.token);
+      localStorage.setItem(
+        StorageKeys.ROLE,
+        decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+      );
       enqueueSnackbar("Đăng nhập thành công!", { variant: "success" });
       navigate(-1);
     } catch (err) {

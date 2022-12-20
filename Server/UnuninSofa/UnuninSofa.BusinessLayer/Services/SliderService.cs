@@ -14,7 +14,7 @@ namespace UnuninSofa.BusinessLayer.Services
 
         public async Task<IEnumerable<Slider>> GetPublishedSliderAsync()
         {
-            return await _unitOfWork.SliderRepository.GetQuery(x=>x.IsPublished == true).ToListAsync();
+            return await _unitOfWork.SliderRepository.GetQuery(x=>x.IsPublished == true && x.IsDeleted == false).ToListAsync();
         }
     }
 }

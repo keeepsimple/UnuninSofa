@@ -3,6 +3,9 @@ using UnuninSofa.Models;
 
 namespace UnuninSofa.BusinessLayer.IServices
 {
-    public interface ISubCategoryService: IBaseService<SubCategory> { }
+    public interface ISubCategoryService : IBaseService<SubCategory>
+    {
+        Task<IEnumerable<SubCategory>> GetSubCategoriesByCateId(int cateId);
+    }
 
 }

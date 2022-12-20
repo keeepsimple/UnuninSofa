@@ -17,7 +17,6 @@ namespace UnuninSofa.API.Admin
         private readonly IProductDetailService _productDetailService;
         private readonly IColorService _colorService;
         private readonly IMaterialService _materialService;
-        private readonly ISubCategoryService _subCategoryService;
         private readonly IMapper _mapper;
         private readonly IImageService _imageService;
 
@@ -25,7 +24,6 @@ namespace UnuninSofa.API.Admin
             IProductDetailService productDetailService,
             IColorService colorService,
             IMaterialService materialService,
-            ISubCategoryService subCategoryService,
             IMapper mapper,
             IImageService imageService)
         {
@@ -33,7 +31,6 @@ namespace UnuninSofa.API.Admin
             _productDetailService = productDetailService;
             _colorService = colorService;
             _materialService = materialService;
-            _subCategoryService = subCategoryService;
             _mapper = mapper;
             _imageService = imageService;
         }
@@ -161,6 +158,22 @@ namespace UnuninSofa.API.Admin
             }
 
             productDetail.Colors = await AddColorsToProduct(colorIds);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await _productService.GetByIdAsync(id);
+            if (product == null) return BadRequest(new { mess = "Không tìm thấy sản phẩm" });
+            var result = await _productService.DeleteAsync(product);
+            if (result)
+            {
+                return Ok("Delete success");
+            }
+            else
+            {
+                return BadRequest(new { mess = "Xoá không thành công" });
+            }
         }
     }
 }

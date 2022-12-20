@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using UnuninSofa.BusinessLayer.IServices;
 
 namespace UnuninSofa.API.Controllers
@@ -27,6 +26,13 @@ namespace UnuninSofa.API.Controllers
         {
             var subCate = await _subCategoryService.GetByIdAsync(id);
             return Ok(subCate);
+        }
+
+        [HttpGet("GetByCateId/{cateId}")]
+        public async Task<IActionResult> GetByCate(int cateId)
+        {
+            var subCategories = await _subCategoryService.GetSubCategoriesByCateId(cateId);
+            return Ok(subCategories);
         }
     }
 }

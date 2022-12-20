@@ -29,7 +29,7 @@ function SubCategoryFeature(props) {
 
   const renderText = (text) => {
     return (
-      <p className="text">
+      <>
         {text === null ? (
           ""
         ) : isReadMore ? (
@@ -40,7 +40,7 @@ function SubCategoryFeature(props) {
         <span onClick={toggleReadMore} className="hideShow">
           {isReadMore ? <KeyboardArrowDown /> : <KeyboardArrowUp />}
         </span>
-      </p>
+      </>
     );
   };
 

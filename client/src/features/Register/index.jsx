@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import jwtDecode from "jwt-decode";
 import { useSnackbar } from "notistack";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -31,6 +32,7 @@ function Register(props) {
       .test("confirmPassword", "Mật khẩu không giống nhau!", function (value) {
         return this.parent.password === value;
       }),
+    fullname: yup.string().required("Họ và tên không được bỏ trống"),
   });
   document.title = "Đăng ký - Ununin Sofa";
 
@@ -42,6 +44,7 @@ function Register(props) {
       address: "",
       password: "",
       confirmPassword: "",
+      fullname: "",
     },
     resolver: yupResolver(schema),
   });
@@ -51,7 +54,12 @@ function Register(props) {
     try {
       const response = await authenApi.register(data);
       localStorage.setItem(StorageKeys.TOKEN, response.token);
-      localStorage.setItem(StorageKeys.ROLE, response.userRoles[0]);
+      localStorage.setItem(StorageKeys.REFRESHTOKEN, response.refreshToken);
+      const decoded = jwtDecode(response.token);
+      localStorage.setItem(
+        StorageKeys.ROLE,
+        decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+      );
       enqueueSnackbar("Đăng ký thành công!", { variant: "success" });
       navigate(-1);
     } catch (err) {

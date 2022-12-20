@@ -10,12 +10,13 @@ const CreateProduct = () => {
   const navigate = useNavigate();
 
   const bindSelectToList = (data) => {
-    var list = [];
+    const list = [];
     data.forEach((item) => {
       list.push(item.value);
     });
     return list;
   };
+
   const onSubmit = async (data) => {
     const formData = new FormData();
     Array.from(data.uploadImages).forEach((image) => {

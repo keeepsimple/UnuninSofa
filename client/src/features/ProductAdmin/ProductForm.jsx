@@ -15,7 +15,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { indexOf, isEmpty } from "lodash";
+import { isEmpty } from "lodash";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -160,19 +160,30 @@ export const ProductForm = (props) => {
 
   const handleRemoveImage = (data) => {
     const index = data.target.value;
-    preview.splice(index, 1);
-    getImages.splice(index, 1);
+    const temp = [...preview];
+    const tempImage = [...getImages];
+    temp.splice(index, 1);
+    tempImage.splice(
+      tempImage.indexOf((img) => !temp.includes(img)),
+      1
+    );
+
+    setPreview(temp);
+    setImages(tempImage);
   };
 
-  const handleRemoveExistedImage = async (data) => {
+  const handleRemoveExistedImage = (data) => {
     const id = data.target.value;
+    const tempImage = [...getImages];
+    tempImage.forEach((img, index) => {
+      if (img.id === parseInt(id)) tempImage.splice(index, 1);
+    });
+    setImages(tempImage);
     try {
-      // await imageAdminApi.remove(id);
+      imageAdminApi.remove(id);
       enqueueSnackbar("Xoá ảnh thành công", {
         variant: "success",
       });
-      const image = getImages.map((image) => image.id).indexOf(id);
-      console.log(image);
     } catch (err) {
       enqueueSnackbar(err, { variant: "error" });
     }
@@ -222,6 +233,7 @@ export const ProductForm = (props) => {
               value={getCode}
               onChange={(e) => SetCode(e.target.value)}
               required
+              disabled={button === "Sửa" ? true : false}
             />
             <TextField
               name="price"
@@ -370,7 +382,7 @@ export const ProductForm = (props) => {
                 </Card>
               ))}
             {images &&
-              images.map((item, index) => (
+              getImages.map((item, index) => (
                 <Card key={index} sx={{ maxWidth: 300 }}>
                   <CardMedia
                     component="img"

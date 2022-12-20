@@ -8,6 +8,10 @@ const subCategoryApi = {
   get(id) {
     const url = `/SubCategory/${id}`;
     return axiosClient.get(url);
+  },
+  getByCate(cateId) {
+    const url = `/SubCategory/GetByCateId/${cateId}`
+    return axiosClient.get(url);
   }
 };
 

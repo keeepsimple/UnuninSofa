@@ -9,6 +9,8 @@ namespace UnuninSofa.API.DTO
         [EmailAddress]
         public string Email { get; set; }
 
+        public string FullName { get; set; }
+
         [Phone]
         public string PhoneNumber { get; set; }
 

@@ -1,6 +1,7 @@
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import imageAdminApi from "../../api/ImageAdminApi";
 import productAdminApi from "../../api/ProductAdminApi";
 import { ProductForm } from "./ProductForm";
 
@@ -41,8 +42,45 @@ const EditProduct = () => {
     fetchProduct();
   }, [id]);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const bindSelectToList = (data) => {
+    const list = [];
+    data.forEach((item) => {
+      list.push(item.value);
+    });
+    return list;
+  };
+
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    const filteredImages = data.uploadImages.filter(
+      (img) => !images.includes(img)
+    );
+
+    data.uploadImages = filteredImages;
+    Array.from(data.uploadImages).forEach((image) => {
+      formData.append("images", image);
+    });
+    formData.append("productCode", data.product.code);
+
+    data.productDetail.materialIds = bindSelectToList(
+      data.productDetail.materialIds
+    );
+    data.productDetail.colorIds = bindSelectToList(data.productDetail.colorIds);
+    data.productDetail.id = detailId;
+    data.product.id = id;
+    const mainProduct = {
+      product: data.product,
+      productDetail: data.productDetail,
+    };
+
+    try {
+      await productAdminApi.update(mainProduct);
+      await imageAdminApi.add(formData);
+      enqueueSnackbar("Sửa sản phẩm thành công!", { variant: "success" });
+      navigate("/admin/product");
+    } catch (err) {
+      enqueueSnackbar(err, { variant: "error" });
+    }
   };
 
   return (

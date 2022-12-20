@@ -45,6 +45,15 @@ export default function SignUp() {
                 <Grid item xs={12}>
                   <InputField
                     fullWidth
+                    id="fullname"
+                    label="Họ và tên"
+                    name="fullname"
+                    autoComplete="fullname"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputField
+                    fullWidth
                     id="username"
                     label="Tên đăng nhập"
                     name="username"

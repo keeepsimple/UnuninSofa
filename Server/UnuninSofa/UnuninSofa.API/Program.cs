@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using UnuninSofa.API.IServices;
+using UnuninSofa.API.Services;
 using UnuninSofa.BusinessLayer.IServices;
 using UnuninSofa.BusinessLayer.Services;
 using UnuninSofa.Data;
@@ -47,6 +49,7 @@ builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<ISliderService, SliderService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers();

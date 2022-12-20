@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import { baseApiUrl } from "../configs/serverUrl";
 import StorageKeys from "../configs/storageKey";
 
@@ -18,7 +19,6 @@ export const axiosMedia = axios.create({
     "content-type": "multipart/form-data",
   },
 })
-
 // Add a request interceptor
 axiosClient.interceptors.request.use(
   function (config) {
@@ -27,28 +27,43 @@ axiosClient.interceptors.request.use(
   },
   function (error) {
     // Do something with request error
+
     return Promise.reject(error);
   }
 );
 
 // Add a response interceptor
-axiosClient.interceptors.response.use(
-  function (response) {
-    return response.data;
-  },
-  function (error) {
-    if (error.response.data.mess !== undefined) {
-      return Promise.reject(error.response.data.mess);
-    } else {
-      return Promise.reject(error.response.data.title);
+axiosClient.interceptors.response.use(res => res.data, async error => {
+  if (error.response.status === 401) {
+    const data = {
+      accessToken: localStorage.getItem(StorageKeys.TOKEN),
+      refreshToken: localStorage.getItem(StorageKeys.REFRESHTOKEN)
     }
+    const response = await axiosClient.post("/Token/refresh", data)
+    console.log(response.status, "111111111111")
+    localStorage.setItem(StorageKeys.TOKEN, response.token);
+    localStorage.setItem(StorageKeys.REFRESHTOKEN, response.refreshToken);
+    const decoded = jwtDecode(response.token);
+    localStorage.setItem(
+      StorageKeys.ROLE,
+      decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+    );
+    return axios(error.config)
   }
+
+  if (error.response.data.mess !== undefined) {
+    return Promise.reject(error.response.data.mess);
+  } else {
+    return Promise.reject(error.response.data.title);
+  }
+}
 );
 
 // Add a request interceptor
 axiosMedia.interceptors.request.use(
   function (config) {
     // Do something before request is sent
+
     return config;
   },
   function (error) {
@@ -58,17 +73,30 @@ axiosMedia.interceptors.request.use(
 );
 
 // Add a response interceptor
-axiosMedia.interceptors.response.use(
-  function (response) {
-    return response.data;
-  },
-  function (error) {
-    if (error.response.data.mess !== undefined) {
-      return Promise.reject(error.response.data.mess);
-    } else {
-      return Promise.reject(error.response.data.title);
+axiosMedia.interceptors.response.use(res => res.data, async error => {
+  if (error.response.status === 401) {
+    const data = {
+      accessToken: localStorage.getItem(StorageKeys.TOKEN),
+      refreshToken: localStorage.getItem(StorageKeys.REFRESHTOKEN)
     }
+    const response = await axiosClient.post("/Token/refresh", data)
+    console.log(response.status, "111111111111")
+    localStorage.setItem(StorageKeys.TOKEN, response.token);
+    localStorage.setItem(StorageKeys.REFRESHTOKEN, response.refreshToken);
+    const decoded = jwtDecode(response.token);
+    localStorage.setItem(
+      StorageKeys.ROLE,
+      decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+    );
+    return axios(error.config)
   }
+
+  if (error.response.data.mess !== undefined) {
+    return Promise.reject(error.response.data.mess);
+  } else {
+    return Promise.reject(error.response.data.title);
+  }
+}
 );
 
 export default axiosClient;

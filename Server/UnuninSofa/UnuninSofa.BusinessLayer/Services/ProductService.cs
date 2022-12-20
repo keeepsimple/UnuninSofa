@@ -12,9 +12,13 @@ namespace UnuninSofa.BusinessLayer.Services
         {
         }
 
-        public async Task<Product> GetProductByCode(string code)
+        public async Task<IEnumerable<Product>> TakeProductInSubCateAsync(int subCateId, int take)
         {
-            return await _unitOfWork.ProductRepository.GetQuery(x=>x.Code.Equals(code)).FirstOrDefaultAsync();
+            return await _unitOfWork.ProductRepository.GetQuery(x =>
+                                                                x.SubCategoryId == subCateId
+                                                                && x.IsDeleted == false)
+                                                                    .Take(take)
+                                                                    .ToListAsync();
         }
     }
 }

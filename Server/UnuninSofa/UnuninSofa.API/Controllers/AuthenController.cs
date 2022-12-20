@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using UnuninSofa.API.DTO;
+using UnuninSofa.API.IServices;
 using UnuninSofa.Models;
 
 namespace UnuninSofa.API.Controllers
@@ -16,18 +14,18 @@ namespace UnuninSofa.API.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly ITokenService _tokenService;
 
         public AuthenController(UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IConfiguration configuration,
-            IMapper mapper)
+            IMapper mapper,
+            ITokenService tokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _configuration = configuration;
             _mapper = mapper;
+            _tokenService = tokenService;
         }
 
         [HttpPost("Login")]
@@ -37,21 +35,26 @@ namespace UnuninSofa.API.Controllers
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(model.Username);
-                var userRoles = await _userManager.GetRolesAsync(user);
-                var token = GenerateToken(user, userRoles);
-                return Ok(new 
+
+                var accessToken = _tokenService.GenerateAccessToken(await GetClaim(user));
+                var refreshToken = _tokenService.GenerateRefreshToken();
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenExpiryTime = DateTime.Now.AddMonths(2);
+                await _userManager.UpdateAsync(user);
+
+                return Ok(new AuthenResponse
                 {
-                    token,
-                    userRoles
+                    RefreshToken = refreshToken,
+                    Token = accessToken,
                 });
             }
             if (result.IsLockedOut)
             {
-                return Ok(new {mess= "Tài khoản của bạn đã bị khoá!"});
+                return Ok(new { mess = "Tài khoản của bạn đã bị khoá!" });
             }
             else
             {
-                return Unauthorized(new {mess = "Mật khẩu hoặc tên đăng nhập sai!"});
+                return Unauthorized(new { mess = "Mật khẩu hoặc tên đăng nhập sai!" });
             }
         }
 
@@ -61,25 +64,31 @@ namespace UnuninSofa.API.Controllers
             var userExist = await _userManager.FindByNameAsync(model.Username);
             if (userExist != null)
             {
-                return BadRequest(new {mess = "Người dùng đã tồn tại vui lòng dùng tên đăng nhập khác!"});
+                return BadRequest(new { mess = "Người dùng đã tồn tại vui lòng dùng tên đăng nhập khác!" });
             }
-         
+
             var user = _mapper.Map<User>(model);
             var result = await _userManager.CreateAsync(user, model.Password);
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "User");
                 var userRoles = await _userManager.GetRolesAsync(user);
-                var token = GenerateToken(user, userRoles);
-                return Ok(new
+
+                var accessToken = _tokenService.GenerateAccessToken(await GetClaim(user));
+                var refreshToken = _tokenService.GenerateRefreshToken();
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenExpiryTime = DateTime.Now.AddMonths(2);
+                await _userManager.UpdateAsync(user);
+
+                return Ok(new AuthenResponse
                 {
-                    token,
-                    userRoles
+                    RefreshToken = refreshToken,
+                    Token = accessToken
                 });
             }
             else
             {
-                return BadRequest(new {mess= "Tạo tài khoản thất bại" });
+                return BadRequest(new { mess = "Tạo tài khoản thất bại" });
             }
         }
 
@@ -90,28 +99,24 @@ namespace UnuninSofa.API.Controllers
             return Ok(user.UserName);
         }
 
-        private string GenerateToken(User user, IList<string> userRoles)
+        private async Task<IEnumerable<Claim>> GetClaim(User user)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["APIConfig:SecretKey"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
             var claims = new List<Claim>
-            {
-                new Claim("UserId", user.Id),
-                new Claim("Username", user.UserName)
-            };
+                {
+                    new Claim("UserId", user.Id),
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim("FullName", user.FullName)
+                };
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
 
             foreach (var item in userRoles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, item));
             }
 
-            var token = new JwtSecurityToken(_configuration["APIConfig:Issuer"],
-                                            _configuration["APIConfig:Audience"],
-                                            claims,
-                                            expires: DateTime.Now.AddDays(5),
-                                            signingCredentials: credentials);
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return claims;
         }
     }
 }
