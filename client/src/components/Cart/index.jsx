@@ -1,17 +1,9 @@
-import {
-  Avatar,
-  Grid,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBackRounded";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForwardRounded";
+import { Avatar, Button, Grid, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
 import { productImagePath } from "../../configs/serverUrl";
+import "./style.css";
 
 const gridStyles = {
   paddingBottom: 10,
@@ -20,53 +12,108 @@ const gridStyles = {
   marginLeft: "100px",
   marginRight: "auto",
   maxWidth: 1650,
-  minHeight: "150vh",
 };
 
-export const Cart = ({ cartItem, addToCard, decreaseQuantity }) => {
+export const Cart = ({ cartItem, addToCart, decreaseQuantity }) => {
+  const totalPrice = cartItem.reduce((price, item) => {
+    if (item.salePrice) {
+      return price + item.quantity * item.salePrice;
+    } else {
+      return price + item.quantity * item.price;
+    }
+  }, 0);
+
   return (
     <Grid style={gridStyles} container spacing={4}>
       <Grid item xs={12}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Sản phẩm</TableCell>
-                <TableCell align="center">Chất liệu</TableCell>
-                <TableCell align="center">Màu</TableCell>
-                <TableCell align="center">Số lượng</TableCell>
-                <TableCell align="right">Giá</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {cartItem.map((item) => (
-                <TableRow
-                  key={item.name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    <Stack direction="row" spacing={6}>
-                      <Avatar
-                        sx={{ width: 100, height: 100 }}
-                        src={productImagePath + item.code + "/" + item.image}
-                      />
-                      <p>{item.name}</p>
-                    </Stack>
-                  </TableCell>
-                  <TableCell align="center">{item.material.name}</TableCell>
-                  <TableCell align="center">{item.color.name}</TableCell>
-                  <TableCell align="center">{item.quantity}</TableCell>
-                  <TableCell align="right">
-                    {new Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(item.price)}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <Stack
+          component={Paper}
+          direction="row"
+          style={{ paddingTop: 10, paddingBottom: 10, paddingLeft: 10 }}
+        >
+          <div className="t-product">
+            <Typography className="t-head">Sản phẩm</Typography>
+          </div>
+          <div className="t-title">
+            <Typography className="t-head">Chất liệu</Typography>
+          </div>
+          <div className="t-title">
+            <Typography className="t-head">Màu</Typography>
+          </div>
+          <div className="t-title">
+            <Typography className="t-head">Số lượng</Typography>
+          </div>
+          <div className="t-title">
+            <Typography className="t-head">Giá</Typography>
+          </div>
+        </Stack>
+      </Grid>
+      <Grid item xs={12}>
+        {cartItem.map((item) => {
+          const productPrice = item.salePrice
+            ? item.salePrice * item.quantity
+            : item.price * item.quantity;
+          return (
+            <Stack
+              key={item.id}
+              component={Paper}
+              direction="row"
+              style={{ paddingTop: 10, paddingBottom: 10 }}
+            >
+              <div className="tb-product">
+                <Avatar
+                  sx={{ width: 150, height: 150 }}
+                  src={productImagePath + item.code + "/" + item.image}
+                />
+              </div>
+              <div className="tb-title">
+                <Typography>{item.name}</Typography>
+              </div>
+              <div className="tb-title">
+                <Typography>{item.material.name}</Typography>
+              </div>
+              <div className="tb-title">
+                <Typography>{item.color.name}</Typography>
+              </div>
+              <div className="tb-quantity">
+                <Button onClick={() => decreaseQuantity(item)}>
+                  <ArrowBackIcon color="action" fontSize="small" />
+                </Button>
+                {item.quantity}
+                <Button onClick={() => addToCart(item)}>
+                  <ArrowForwardIcon color="action" fontSize="small" />
+                </Button>
+              </div>
+              <div className="tb-price">
+                <Typography>
+                  {new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(productPrice)}
+                </Typography>
+              </div>
+            </Stack>
+          );
+        })}
+      </Grid>
+      <Grid item xs={12}>
+        <Stack
+          component={Paper}
+          style={{ paddingTop: 15, paddingBottom: 10, paddingLeft: 15 }}
+          direction="row"
+          spacing={150}
+        >
+          <p style={{ fontWeight: 500 }}>
+            Tổng giá:{" "}
+            {new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(totalPrice)}
+          </p>
+          <Button variant="contained" color="error">
+            Thanh Toán
+          </Button>
+        </Stack>
       </Grid>
     </Grid>
   );
