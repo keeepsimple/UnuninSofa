@@ -1,0 +1,14 @@
+.imageGallery {
+    height: 50%;
+    width: 90%;
+}
+
+.hideShow{
+    display: block;
+    text-align: center;
+}
+
+.renderText{
+    font-weight: 400;
+    font-size: 18px;
+}

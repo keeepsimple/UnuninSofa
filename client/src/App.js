@@ -1,9 +1,11 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import { Cart } from "./components/Cart";
 import AdminLayout from "./components/Layout/AdminLayout";
 import UserLayout from "./components/Layout/UserLayout";
 import NoMatch from "./components/NoMatch/NoMatch";
+import StorageKeys from "./configs/storageKey";
 import CategoryAdmin from "./features/CategoryAdmin";
 import CreateCategory from "./features/CategoryAdmin/Create";
 import EditCategory from "./features/CategoryAdmin/Edit";
@@ -17,6 +19,7 @@ import EditMaterial from "./features/MaterialAdmin/Edit";
 import ProductAdminFeatures from "./features/ProductAdmin";
 import CreateProduct from "./features/ProductAdmin/Create";
 import EditProduct from "./features/ProductAdmin/Edit";
+import { ProductDetailFeatures } from "./features/ProductDetail";
 import Register from "./features/Register";
 import SliderFeatures from "./features/SliderAdmin";
 import CreateSlider from "./features/SliderAdmin/Create";
@@ -28,17 +31,46 @@ import EditSubCategory from "./features/SubCategoryAdmin/Edit";
 import DashBoardMain from "./pages/Dashboard";
 import Home from "./pages/Home/Home";
 
+const fetchCartFromLocalStorage = JSON.parse(localStorage.getItem(StorageKeys.CART) || '[]');
+
 function App() {
   const admin = "Admin";
+  const [cartItem, setCartItem] = useState(fetchCartFromLocalStorage);
+
+  const addToCart = (product) => {
+    const productExist = cartItem.find(item => item.id === product.id);
+    if (productExist) {
+      setCartItem(cartItem.map(item => (item.id === product.id ? { ...productExist, quantity: productExist.quantity + 1 } : item)));
+    } else {
+      setCartItem([...cartItem, { ...product, quantity: 1 }]);
+    }
+  }
+
+  const decreaseQuantity = (product) => {
+    const productExist = cartItem.find(item => item.id === product.id);
+    if (productExist.quantity === 1) {
+      setCartItem(cartItem.filter(item => item.id !== product.id))
+    } else {
+      setCartItem(cartItem.map(item => (item.id === product.id ? { ...productExist, quantity: productExist.quantity - 1 } : item)))
+      localStorage.setItem(StorageKeys.CART, JSON.stringify(cartItem));
+    }
+  }
+
+  useEffect(() => {
+    localStorage.setItem(StorageKeys.CART, JSON.stringify(cartItem));
+  }, [cartItem])
+
   return (
     <>
       <Routes>
-        <Route element={<UserLayout />}>
+        <Route element={<UserLayout cartItem={cartItem} />}>
           <Route path="/" element={<Home />} />
           <Route
             path="subcategory/:subcateId"
             element={<SubCategoryFeature />}
           />
+          <Route path="product/:productId" element={<ProductDetailFeatures addToCart={addToCart} />} />
+          <Route path="/cart" element={<Cart cartItem={cartItem} addToCart={addToCart} decreaseQuantity={decreaseQuantity} />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
         <Route element={<AdminLayout allowedRole={admin} />}>

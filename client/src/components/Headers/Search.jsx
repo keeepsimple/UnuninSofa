@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo/logo.svg";
 
-function Search(props) {
+function Search({ cartItem }) {
   return (
     <>
       <section className="navbar search">
@@ -24,7 +24,7 @@ function Search(props) {
             <div className="cart">
               <Link to="/cart">
                 <ShoppingCartIcon className="icon-circle" />
-                <span>0</span>
+                <span>{!cartItem ? 0 : cartItem.length}</span>
               </Link>
             </div>
           </div>

@@ -2,10 +2,10 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../Headers";
 
-function UserLayout() {
+function UserLayout({ cartItem }) {
   return (
     <div>
-      <Header />
+      <Header cartItem={cartItem} />
       <Outlet />
     </div>
   );

@@ -1,7 +1,8 @@
 const StorageKeys = {
   TOKEN: "token",
   ROLE: "role",
-  REFRESHTOKEN: "refresh"
+  REFRESHTOKEN: "refresh",
+  CART: "cart"
 };
 
 export default StorageKeys;

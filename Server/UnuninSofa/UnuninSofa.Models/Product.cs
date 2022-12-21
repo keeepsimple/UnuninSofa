@@ -16,9 +16,9 @@ namespace UnuninSofa.Models
 
         public decimal Price { get; set; }
 
-        public int View { get; set; }
-
         public int Status { get; set; }
+
+        public decimal? SalePrice { get; set; }
 
         public int? SaleId { get; set; }
 

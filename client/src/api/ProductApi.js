@@ -1,9 +1,13 @@
 import axiosClient from "./axiosClient";
 
 const productApi = {
-    getBySubCate(subId) {
-        const url = `Product/${subId}`;
-        return axiosClient.get(url);
+    getPaging(pageNum, params) {
+        const url = `Product/GetPaging/${pageNum}`;
+        return axiosClient.get(url, { params: params });
+    },
+    get(id) {
+        const url = `Product/${id}`;
+        return axiosClient.get(url)
     }
 }
 

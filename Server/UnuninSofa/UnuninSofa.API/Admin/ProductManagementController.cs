@@ -107,6 +107,7 @@ namespace UnuninSofa.API.Admin
         public async Task<IActionResult> Get(int id)
         {
             var product = await _productService.GetByIdAsync(id);
+            if (product == null) return NotFound(new { mess = "Không tìm thấy sản phẩm" });
             await _productDetailService.GetProductDetailByProductAsync(id);
             var images = await _imageService.GetImageByProductCode(product.Code);
 

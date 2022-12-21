@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import React from "react";
-import { HomeProduct } from "../../features/HomeProduct";
+import { HomeDetail } from "../../features/HomeDetail";
 import Slider from "../../features/SlideCard/Slider";
 
 function Home(props) {
@@ -10,7 +10,7 @@ function Home(props) {
         <div className="container">
           <Stack direction="column" spacing={4}>
             <Slider />
-            <HomeProduct />
+            <HomeDetail />
           </Stack>
         </div>
       </section>

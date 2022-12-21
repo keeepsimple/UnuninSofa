@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnuninSofa.Data;
 
@@ -11,9 +12,10 @@ using UnuninSofa.Data;
 namespace UnuninSofa.Data.Migrations
 {
     [DbContext(typeof(UnuninSofaContext))]
-    partial class UnuninSofaContextModelSnapshot : ModelSnapshot
+    [Migration("20221221014237_ModifyProduct")]
+    partial class ModifyProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,14 +84,14 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = "56016200-6e5a-41ae-83ba-a9759ac9e6b5",
-                            ConcurrencyStamp = "d0a28717-fd4e-43cb-ac86-4e0b93aa5c91",
+                            ConcurrencyStamp = "812743cf-561c-491e-96e4-1813f9263c4c",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "99e62bd0-505e-4c7c-9533-3d0177220cec",
-                            ConcurrencyStamp = "6c60eb3b-4863-4ea5-a3e5-50ded6faf453",
+                            ConcurrencyStamp = "df51fb25-e3f7-4088-b8ef-033ec27163a9",
                             Name = "User",
                             NormalizedName = "User"
                         });
@@ -308,7 +310,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 12, 21, 10, 34, 21, 816, DateTimeKind.Local).AddTicks(6344),
+                            CreatedAt = new DateTime(2022, 12, 21, 8, 42, 36, 881, DateTimeKind.Local).AddTicks(8648),
                             IsDeleted = false,
                             Name = "Sofa",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -316,7 +318,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 12, 21, 10, 34, 21, 816, DateTimeKind.Local).AddTicks(6360),
+                            CreatedAt = new DateTime(2022, 12, 21, 8, 42, 36, 881, DateTimeKind.Local).AddTicks(8664),
                             IsDeleted = false,
                             Name = "Phòng khách",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -324,7 +326,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 12, 21, 10, 34, 21, 816, DateTimeKind.Local).AddTicks(6362),
+                            CreatedAt = new DateTime(2022, 12, 21, 8, 42, 36, 881, DateTimeKind.Local).AddTicks(8665),
                             IsDeleted = false,
                             Name = "Phòng ăn",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -332,7 +334,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 12, 21, 10, 34, 21, 816, DateTimeKind.Local).AddTicks(6364),
+                            CreatedAt = new DateTime(2022, 12, 21, 8, 42, 36, 881, DateTimeKind.Local).AddTicks(8666),
                             IsDeleted = false,
                             Name = "Phòng ngủ",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -559,6 +561,9 @@ namespace UnuninSofa.Data.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("View")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -823,15 +828,15 @@ namespace UnuninSofa.Data.Migrations
                         {
                             Id = "8967c0da-1606-447b-b91b-10c9f7e87418",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "09d8d234-1716-4729-bcea-9e33c365f69c",
+                            ConcurrencyStamp = "fb395dd9-a433-4f79-9641-bfe6a869e028",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEB3QjGj3JI8mVyGCaZTAlHMaxPpaR66bFTrHYkfBoLXoWJc4ORAj2b5j+aXblb4v7w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEK27RMHu/0tJmtPQHW0cXWaece0op8ZP02jOqk1I1mJ++Z9McERPwjL2olpJzDvEew==",
                             PhoneNumber = "09191991999",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cafa476f-c43f-459f-8303-3d26a40763b1",
+                            SecurityStamp = "ff7999f8-3996-4d3d-9cae-169dd075f98a",
                             TwoFactorEnabled = false,
                             UserName = "admin",
                             Address = "O dau khong noi",
