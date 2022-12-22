@@ -31,8 +31,6 @@ namespace UnuninSofa.Data
 
         public DbSet<SubCategory> SubCategories { get; set; }
 
-        public DbSet<Sale> Sales { get; set; }
-
         public DbSet<Transaction> Transactions { get; set; }
 
         public DbSet<Order> Orders { get; set; }
@@ -115,7 +113,7 @@ namespace UnuninSofa.Data
                 }
                 );
 
-            
+
         }
 
         public override int SaveChanges()

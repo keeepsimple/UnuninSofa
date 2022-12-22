@@ -1,0 +1,12 @@
+.change-info{
+    font-size: 17px;
+    color: #dd4104;
+    width: 14rem;
+}
+
+ a.change-info:hover{
+    text-decoration: dotted;
+    border: 1px solid #f3b095;
+    border-radius: 5px;
+    padding: 15px 15px 15px 15px;
+}

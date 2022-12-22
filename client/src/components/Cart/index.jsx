@@ -1,9 +1,22 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBackRounded";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardRounded";
-import { Avatar, Button, Grid, Paper, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Grid,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 import { productImagePath } from "../../configs/serverUrl";
-import "./style.css";
+import StorageKeys from "../../configs/storageKey";
 
 const gridStyles = {
   paddingBottom: 10,
@@ -14,106 +27,107 @@ const gridStyles = {
   maxWidth: 1650,
 };
 
+const convertToVND = (price) => {
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(price);
+};
+
 export const Cart = ({ cartItem, addToCart, decreaseQuantity }) => {
-  const totalPrice = cartItem.reduce((price, item) => {
-    if (item.salePrice) {
-      return price + item.quantity * item.salePrice;
-    } else {
-      return price + item.quantity * item.price;
-    }
-  }, 0);
+  const totalPrice = cartItem.reduce(
+    (price, item) => price + item.quantity * item.price,
+    0
+  );
+
+  const isLogin = localStorage.getItem(StorageKeys.TOKEN) ? true : false;
 
   return (
     <Grid style={gridStyles} container spacing={4}>
       <Grid item xs={12}>
-        <Stack
-          component={Paper}
-          direction="row"
-          style={{ paddingTop: 10, paddingBottom: 10, paddingLeft: 10 }}
-        >
-          <div className="t-product">
-            <Typography className="t-head">Sản phẩm</Typography>
-          </div>
-          <div className="t-title">
-            <Typography className="t-head">Chất liệu</Typography>
-          </div>
-          <div className="t-title">
-            <Typography className="t-head">Màu</Typography>
-          </div>
-          <div className="t-title">
-            <Typography className="t-head">Số lượng</Typography>
-          </div>
-          <div className="t-title">
-            <Typography className="t-head">Giá</Typography>
-          </div>
-        </Stack>
-      </Grid>
-      <Grid item xs={12}>
-        {cartItem.map((item) => {
-          const productPrice = item.salePrice
-            ? item.salePrice * item.quantity
-            : item.price * item.quantity;
-          return (
-            <Stack
-              key={item.id}
-              component={Paper}
-              direction="row"
-              style={{ paddingTop: 10, paddingBottom: 10 }}
-            >
-              <div className="tb-product">
-                <Avatar
-                  sx={{ width: 150, height: 150 }}
-                  src={productImagePath + item.code + "/" + item.image}
-                />
-              </div>
-              <div className="tb-title">
-                <Typography>{item.name}</Typography>
-              </div>
-              <div className="tb-title">
-                <Typography>{item.material.name}</Typography>
-              </div>
-              <div className="tb-title">
-                <Typography>{item.color.name}</Typography>
-              </div>
-              <div className="tb-quantity">
-                <Button onClick={() => decreaseQuantity(item)}>
-                  <ArrowBackIcon color="action" fontSize="small" />
-                </Button>
-                {item.quantity}
-                <Button onClick={() => addToCart(item)}>
-                  <ArrowForwardIcon color="action" fontSize="small" />
-                </Button>
-              </div>
-              <div className="tb-price">
-                <Typography>
-                  {new Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  }).format(productPrice)}
-                </Typography>
-              </div>
-            </Stack>
-          );
-        })}
-      </Grid>
-      <Grid item xs={12}>
-        <Stack
-          component={Paper}
-          style={{ paddingTop: 15, paddingBottom: 10, paddingLeft: 15 }}
-          direction="row"
-          spacing={150}
-        >
-          <p style={{ fontWeight: 500 }}>
-            Tổng giá:{" "}
-            {new Intl.NumberFormat("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }).format(totalPrice)}
-          </p>
-          <Button variant="contained" color="error">
-            Thanh Toán
-          </Button>
-        </Stack>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Sản phẩm</TableCell>
+                <TableCell></TableCell>
+                <TableCell align="center">Chất liệu</TableCell>
+                <TableCell align="center">Màu</TableCell>
+                <TableCell align="center">Số lượng</TableCell>
+                <TableCell align="right">Giá</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cartItem.map((item, index) => {
+                const productPrice = item.price * item.quantity;
+                return (
+                  <TableRow
+                    key={index}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      <Stack direction="row" spacing={6}>
+                        <Avatar
+                          sx={{ width: 100, height: 100 }}
+                          src={productImagePath + item.code + "/" + item.image}
+                        />
+                      </Stack>
+                    </TableCell>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell align="center">{item.material}</TableCell>
+                    <TableCell align="center">{item.color}</TableCell>
+                    <TableCell align="center">
+                      <Button onClick={() => decreaseQuantity(item)}>
+                        <ArrowBackIcon color="action" fontSize="small" />
+                      </Button>
+                      {item.quantity}
+                      <Button onClick={() => addToCart(item)}>
+                        <ArrowForwardIcon color="action" fontSize="small" />
+                      </Button>
+                    </TableCell>
+                    <TableCell align="right">
+                      <p style={{ fontSize: 15, fontWeight: 500 }}>
+                        {convertToVND(productPrice)}
+                      </p>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+              <TableRow>
+                <TableCell colSpan={5} />
+                <TableCell align="right">
+                  <Stack direction="column" spacing={2}>
+                    <p style={{ fontSize: 15, fontWeight: 500 }}>
+                      Tổng giá: {"  "}
+                      {convertToVND(totalPrice)}
+                    </p>
+                    {isLogin ? (
+                      cartItem.length > 0 && (
+                        <Button
+                          component={Link}
+                          to="/order-confirm"
+                          variant="contained"
+                          color="error"
+                        >
+                          Thanh Toán
+                        </Button>
+                      )
+                    ) : (
+                      <Button
+                        component={Link}
+                        to="/login"
+                        variant="contained"
+                        color="error"
+                      >
+                        Đăng nhập để thanh toán
+                      </Button>
+                    )}
+                  </Stack>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Grid>
     </Grid>
   );

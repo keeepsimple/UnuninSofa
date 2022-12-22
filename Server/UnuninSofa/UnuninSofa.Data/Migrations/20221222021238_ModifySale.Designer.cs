@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnuninSofa.Data;
 
@@ -11,9 +12,10 @@ using UnuninSofa.Data;
 namespace UnuninSofa.Data.Migrations
 {
     [DbContext(typeof(UnuninSofaContext))]
-    partial class UnuninSofaContextModelSnapshot : ModelSnapshot
+    [Migration("20221222021238_ModifySale")]
+    partial class ModifySale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,14 +84,14 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = "56016200-6e5a-41ae-83ba-a9759ac9e6b5",
-                            ConcurrencyStamp = "47a3d93c-d4c3-445d-bd47-c59e300e9fa3",
+                            ConcurrencyStamp = "d1741835-0e9b-45a6-831f-25b8b26588f2",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "99e62bd0-505e-4c7c-9533-3d0177220cec",
-                            ConcurrencyStamp = "689e2ef1-77ba-4f7d-8bd7-20b0b9bd5920",
+                            ConcurrencyStamp = "430d2a47-43e9-4c71-a12a-9c9c2252be29",
                             Name = "User",
                             NormalizedName = "User"
                         });
@@ -308,7 +310,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 12, 22, 14, 22, 38, 223, DateTimeKind.Local).AddTicks(421),
+                            CreatedAt = new DateTime(2022, 12, 22, 9, 12, 37, 521, DateTimeKind.Local).AddTicks(9483),
                             IsDeleted = false,
                             Name = "Sofa",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -316,7 +318,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 12, 22, 14, 22, 38, 223, DateTimeKind.Local).AddTicks(434),
+                            CreatedAt = new DateTime(2022, 12, 22, 9, 12, 37, 521, DateTimeKind.Local).AddTicks(9498),
                             IsDeleted = false,
                             Name = "Phòng khách",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -324,7 +326,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 12, 22, 14, 22, 38, 223, DateTimeKind.Local).AddTicks(436),
+                            CreatedAt = new DateTime(2022, 12, 22, 9, 12, 37, 521, DateTimeKind.Local).AddTicks(9499),
                             IsDeleted = false,
                             Name = "Phòng ăn",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -332,7 +334,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 12, 22, 14, 22, 38, 223, DateTimeKind.Local).AddTicks(437),
+                            CreatedAt = new DateTime(2022, 12, 22, 9, 12, 37, 521, DateTimeKind.Local).AddTicks(9500),
                             IsDeleted = false,
                             Name = "Phòng ngủ",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -545,6 +547,12 @@ namespace UnuninSofa.Data.Migrations
                     b.Property<int>("RateCount")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SaleId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("SalePrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -555,6 +563,8 @@ namespace UnuninSofa.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SaleId");
 
                     b.HasIndex("SubCategoryId");
 
@@ -632,6 +642,41 @@ namespace UnuninSofa.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("UnuninSofa.Models.Sale", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Percent")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sales");
                 });
 
             modelBuilder.Entity("UnuninSofa.Models.Slider", b =>
@@ -776,15 +821,15 @@ namespace UnuninSofa.Data.Migrations
                         {
                             Id = "8967c0da-1606-447b-b91b-10c9f7e87418",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2778007f-b2d1-4b00-b7c0-320aa8302aac",
+                            ConcurrencyStamp = "12a0dc5a-f1b6-4c3e-a8b7-e075a9381e40",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAECSOvCnQF9HsLKsBH7kanXzGYzLV9nCjAWvFaYuc6h4pAmSD78ixQKARNafXQF0BSw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL1IByvBhjM222zx7045fWDKyQyOEMXgfuoMkMnBWDuEaWKMSmiMeCGWSjVrynu50Q==",
                             PhoneNumber = "09191991999",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9085b90f-ed85-4fb6-b412-1b67703d27a4",
+                            SecurityStamp = "caab5388-72c4-46e1-932a-1416c03b34fe",
                             TwoFactorEnabled = false,
                             UserName = "admin",
                             Address = "O dau khong noi",
@@ -898,11 +943,17 @@ namespace UnuninSofa.Data.Migrations
 
             modelBuilder.Entity("UnuninSofa.Models.Product", b =>
                 {
+                    b.HasOne("UnuninSofa.Models.Sale", "Sale")
+                        .WithMany("Products")
+                        .HasForeignKey("SaleId");
+
                     b.HasOne("UnuninSofa.Models.SubCategory", "SubCategory")
                         .WithMany("Products")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Sale");
 
                     b.Navigation("SubCategory");
                 });
@@ -983,6 +1034,11 @@ namespace UnuninSofa.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("UnuninSofa.Models.Sale", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("UnuninSofa.Models.SubCategory", b =>

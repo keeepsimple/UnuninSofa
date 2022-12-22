@@ -1,0 +1,19 @@
+.order-num{
+    font-size: 20px;
+    color: white;
+    background-color: green;
+    padding: 10px 30px 10px 30px;
+    border-radius: 5px;
+}
+
+.qrcode{
+    width: 15%;
+    height: 15%;
+}
+
+.user-info {
+    text-align: left;
+    background-color: grey;
+    padding: 10px 50px 10px 50px;
+    border-radius: 5px;
+}

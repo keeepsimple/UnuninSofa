@@ -23,10 +23,10 @@ export const Detail = ({ product, detail, addToCart, image }) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    setMaterialSelect(detail.materials ? detail.materials[0] : 0);
-    setMaterialAlignment(detail.materials ? detail.materials[0] : null);
-    setColorSelect(detail.colors ? detail.colors[0] : 0);
-    setColorAlignment(detail.colors ? detail.colors[0] : null);
+    setMaterialSelect(detail.materials ? detail.materials[0].name : 0);
+    setMaterialAlignment(detail.materials ? detail.materials[0].name : null);
+    setColorSelect(detail.colors ? detail.colors[0].name : 0);
+    setColorAlignment(detail.colors ? detail.colors[0].name : null);
   }, [detail]);
 
   const handleBuy = () => {
@@ -121,7 +121,7 @@ export const Detail = ({ product, detail, addToCart, image }) => {
               <ToggleButton
                 key={material.id}
                 onClick={handleMaterialChange}
-                value={material}
+                value={material.name}
               >
                 {material.name}
               </ToggleButton>
@@ -144,7 +144,7 @@ export const Detail = ({ product, detail, addToCart, image }) => {
               <ToggleButton
                 key={color.id}
                 onClick={handleColorChange}
-                value={color}
+                value={color.name}
               >
                 {color.name}
               </ToggleButton>
@@ -153,34 +153,14 @@ export const Detail = ({ product, detail, addToCart, image }) => {
       </Grid>
       <Grid item xs={12}>
         <Stack direction="column" spacing={3}>
-          {product.sale ? (
-            <>
-              <p style={{ textDecoration: "line-through" }}>
-                {" "}
-                Giá gốc :{" "}
-                {new Intl.NumberFormat("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                }).format(product.price)}
-              </p>
-              <p style={{ fontSize: 20, color: "red", fontWeight: 500 }}>
-                Giá giảm:{" "}
-                {new Intl.NumberFormat("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                }).format(product.salePrice)}
-              </p>
-            </>
-          ) : (
-            <p style={{ fontSize: 20, color: "red", fontWeight: 500 }}>
-              {" "}
-              Giá :{" "}
-              {new Intl.NumberFormat("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              }).format(product.price)}
-            </p>
-          )}
+          <p style={{ fontSize: 20, color: "red", fontWeight: 500 }}>
+            {" "}
+            Giá :{" "}
+            {new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(product.price)}
+          </p>
           <Button
             variant="contained"
             style={{ color: "white", backgroundColor: "black" }}

@@ -31,6 +31,7 @@ export const ProductDetailFeatures = ({ addToCart }) => {
       setDetail(data.product.productDetail);
       setImages(data.images);
       setImage(data.images[0].imageUrl);
+      document.title = `${data.product.name} - Ununin Sofa`;
     };
 
     fetchProduct();

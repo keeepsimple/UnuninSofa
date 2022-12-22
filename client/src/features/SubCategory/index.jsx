@@ -14,7 +14,7 @@ const gridStyles = {
   marginLeft: "150px",
   marginRight: "auto",
   maxWidth: 1650,
-  minHeight: "150vh",
+  minHeight: "100vh",
 };
 
 function SubCategoryFeature(props) {

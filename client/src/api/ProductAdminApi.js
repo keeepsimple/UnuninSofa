@@ -5,6 +5,10 @@ const productAdminApi = {
     const url = `/ProductManagement/GetPaging/${pageNum}`;
     return axiosClient.get(url, { params: params });
   },
+  getBySubCate(subId) {
+    const url = `/ProductManagement/GetBySub/${subId}`
+    return axiosClient.get(url);
+  },
   get(id) {
     const url = `/ProductManagement/${id}`;
     return axiosClient.get(url);

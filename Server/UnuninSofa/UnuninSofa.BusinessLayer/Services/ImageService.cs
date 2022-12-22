@@ -19,7 +19,10 @@ namespace UnuninSofa.BusinessLayer.Services
 
         public async Task<Image> GetImageThumbByProductCode(string productCode)
         {
-            return await _unitOfWork.ImageRepository.GetQuery(x => x.ProductCode.Equals(productCode) && x.IsDeleted == false).FirstOrDefaultAsync();
+            return await _unitOfWork.ImageRepository
+                .GetQuery(x => x.ProductCode.Equals(productCode) && x.IsDeleted == false)
+                .OrderBy(x => x.ImageUrl)
+                .FirstOrDefaultAsync();
         }
     }
 }

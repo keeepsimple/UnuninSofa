@@ -4,6 +4,7 @@ import "./App.css";
 import { Cart } from "./components/Cart";
 import AdminLayout from "./components/Layout/AdminLayout";
 import UserLayout from "./components/Layout/UserLayout";
+import UserLoginLayout from "./components/Layout/UserLoginLayout";
 import NoMatch from "./components/NoMatch/NoMatch";
 import StorageKeys from "./configs/storageKey";
 import CategoryAdmin from "./features/CategoryAdmin";
@@ -16,6 +17,9 @@ import Login from "./features/Login";
 import MaterialFeatures from "./features/MaterialAdmin";
 import CreateMaterial from "./features/MaterialAdmin/Create";
 import EditMaterial from "./features/MaterialAdmin/Edit";
+import OrderConfirm from "./features/OrderConfirm";
+import { ByCreditCard } from "./features/Payment/ByCreditCard";
+import { ByTransfer } from "./features/Payment/ByTransfer";
 import ProductAdminFeatures from "./features/ProductAdmin";
 import CreateProduct from "./features/ProductAdmin/Create";
 import EditProduct from "./features/ProductAdmin/Edit";
@@ -38,20 +42,30 @@ function App() {
   const [cartItem, setCartItem] = useState(fetchCartFromLocalStorage);
 
   const addToCart = (product) => {
-    const productExist = cartItem.find(item => item.id === product.id);
+    const productExist = cartItem.find(item => item.id === product.id
+      && item.material === product.material
+      && item.color === product.color);
     if (productExist) {
-      setCartItem(cartItem.map(item => (item.id === product.id ? { ...productExist, quantity: productExist.quantity + 1 } : item)));
+      setCartItem(cartItem.map(item => (item.id === product.id
+        && item.material === product.material
+        && item.color === product.color ? { ...productExist, quantity: productExist.quantity + 1 } : item)));
     } else {
       setCartItem([...cartItem, { ...product, quantity: 1 }]);
     }
   }
 
   const decreaseQuantity = (product) => {
-    const productExist = cartItem.find(item => item.id === product.id);
+    const productExist = cartItem.find(item => item.id === product.id
+      && item.material === product.material
+      && item.color === product.color);
     if (productExist.quantity === 1) {
-      setCartItem(cartItem.filter(item => item.id !== product.id))
+      setCartItem(cartItem.filter(item => item.id !== product.id
+        && item.material === product.material
+        && item.color === product.color))
     } else {
-      setCartItem(cartItem.map(item => (item.id === product.id ? { ...productExist, quantity: productExist.quantity - 1 } : item)))
+      setCartItem(cartItem.map(item => (item.id === product.id
+        && item.material === product.material
+        && item.color === product.color ? { ...productExist, quantity: productExist.quantity - 1 } : item)))
       localStorage.setItem(StorageKeys.CART, JSON.stringify(cartItem));
     }
   }
@@ -72,6 +86,11 @@ function App() {
           <Route path="product/:productId" element={<ProductDetailFeatures addToCart={addToCart} />} />
           <Route path="/cart" element={<Cart cartItem={cartItem} addToCart={addToCart} decreaseQuantity={decreaseQuantity} />} />
           <Route path="*" element={<NoMatch />} />
+        </Route>
+        <Route element={<UserLoginLayout cartItem={cartItem} />}>
+          <Route path="/order-confirm" element={<OrderConfirm cartItem={cartItem} />} />
+          <Route path="/transfer" element={<ByTransfer cartItem={cartItem} />} />
+          <Route path="/credit-card" element={<ByCreditCard />} />
         </Route>
         <Route element={<AdminLayout allowedRole={admin} />}>
           <Route path="/admin/dashboard" element={<DashBoardMain />} />
@@ -96,7 +115,6 @@ function App() {
           <Route path="/admin/color" element={<ColorFeatures />} />
           <Route path="/admin/color/create" element={<CreateColor />} />
           <Route path="/admin/color/edit/:id" element={<EditColor />} />
-
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

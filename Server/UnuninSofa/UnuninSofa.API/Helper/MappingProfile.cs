@@ -19,7 +19,6 @@ namespace UnuninSofa.API.Helper
             CreateMap<ProductDetail, ProductDetailDTO>()
                 .ForMember(des => des.MaterialIds, act => act.Ignore())
                 .ForMember(des => des.ColorIds, act => act.Ignore()).ReverseMap();
-
         }
     }
 }

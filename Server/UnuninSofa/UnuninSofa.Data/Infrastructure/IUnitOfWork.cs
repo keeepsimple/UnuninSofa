@@ -34,8 +34,6 @@ namespace UnuninSofa.Data.Infrastructure
 
         ICoreRepository<OrderDetail> OrderDetailRepository { get; }
 
-        ICoreRepository<Sale> SaleRepository { get; }
-
         ICoreRepository<Transaction> TransactionRepository { get; }
 
         ICoreRepository<Color> ColorRepository { get; }

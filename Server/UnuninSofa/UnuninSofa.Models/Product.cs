@@ -18,12 +18,6 @@ namespace UnuninSofa.Models
 
         public int Status { get; set; }
 
-        public decimal? SalePrice { get; set; }
-
-        public int? SaleId { get; set; }
-
-        public virtual Sale Sale { get; set; }
-
         public int SubCategoryId { get; set; }
 
         public virtual SubCategory SubCategory { get; set; }

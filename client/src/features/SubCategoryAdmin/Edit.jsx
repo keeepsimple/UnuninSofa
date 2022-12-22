@@ -139,7 +139,7 @@ const EditSubCategory = () => {
             <div>
               <img
                 alt="not found"
-                width={"500px"}
+                style={{ width: 500, height: 300 }}
                 src={URL.createObjectURL(image)}
               />
             </div>
@@ -148,7 +148,7 @@ const EditSubCategory = () => {
             <div>
               <img
                 alt="not found"
-                width={"500px"}
+                style={{ width: 500, height: 300 }}
                 src={
                   !isEmpty(subCategory)
                     ? baseImagePath + "/SubCategory/" + subCategory.imageUrl

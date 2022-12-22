@@ -35,6 +35,7 @@ function Navbar(props) {
             >
               <li>
                 <NavLink
+                  className="link-item"
                   style={({ isActive }) => ({
                     color: isActive ? "white" : "black",
                     backgroundColor: isActive ? "#ff014f" : "#fff",
@@ -52,6 +53,7 @@ function Navbar(props) {
               {isLoggedIn() ? (
                 <li>
                   <NavLink
+                    className="link-item"
                     style={({ isActive }) => ({
                       color: isActive ? "white" : "black",
                       backgroundColor: isActive ? "#ff014f" : "#fff",
@@ -78,6 +80,7 @@ function Navbar(props) {
               ) : null}
               <li>
                 <NavLink
+                  className="link-item"
                   style={({ isActive }) => ({
                     color: isActive ? "white" : "black",
                     backgroundColor: isActive ? "#ff014f" : "#fff",
@@ -89,6 +92,7 @@ function Navbar(props) {
               </li>
               <li>
                 <NavLink
+                  className="link-item"
                   style={({ isActive }) => ({
                     color: isActive ? "white" : "black",
                     backgroundColor: isActive ? "#ff014f" : "#fff",

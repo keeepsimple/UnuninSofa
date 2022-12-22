@@ -42,9 +42,6 @@ namespace UnuninSofa.Data.Infrastructure
         private ICoreRepository<OrderDetail> _orderDetailRepository;
         public ICoreRepository<OrderDetail> OrderDetailRepository => _orderDetailRepository ?? new CoreRepository<OrderDetail>(_dbContext);
 
-        private ICoreRepository<Sale> _saleRepository;
-        public ICoreRepository<Sale> SaleRepository => _saleRepository ?? new CoreRepository<Sale>(_dbContext);
-
         private ICoreRepository<Transaction> _transactionRepository;
         public ICoreRepository<Transaction> TransactionRepository => _transactionRepository ?? new CoreRepository<Transaction>(_dbContext);
 

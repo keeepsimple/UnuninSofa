@@ -51,6 +51,14 @@ namespace UnuninSofa.API.Admin
             return Ok(paging);
         }
 
+        [HttpGet("GetBySub/{subId}")]
+        public async Task<IActionResult> GetBySub(int subId)
+        {
+            var products = await _productService.GetProductsBySubCateAsync(subId);
+            return Ok(products);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Create(MainProductDTO model)
         {
