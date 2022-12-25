@@ -1,12 +1,14 @@
 import { Button, Grid, Paper, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import StorageKeys from "../../configs/storageKey";
 import Divider from "@mui/material/Divider";
-import { Stack } from "@mui/system";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import { Stack } from "@mui/system";
+import { useSnackbar } from "notistack";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import orderApi from "../../api/OrderApi";
+import StorageKeys from "../../configs/storageKey";
 
 const convertToVND = (price) => {
   return new Intl.NumberFormat("vi-VN", {
@@ -15,13 +17,48 @@ const convertToVND = (price) => {
   }).format(price);
 };
 
-const PaymentMethod = ({ totalProduct }) => {
+const PaymentMethod = ({ totalProduct, cartItem }) => {
   const totalPrice = localStorage.getItem(StorageKeys.TOTALPRICE);
   const [isTransfer, setTransfer] = useState(true);
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClick = () => {
-    isTransfer === true ? navigate("/transfer") : navigate("/credit-card");
+    // isTransfer === true ? navigate("/transfer") : navigate("/credit-card");
+    const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
+    const orderDetails = cartItem.map((item) => ({
+      productName: item.name,
+      productCode: item.code,
+      materialName: item.material,
+      colorName: item.color,
+      price: item.price,
+      quantity: item.quantity,
+    }));
+
+    console.log(orderDetails);
+
+    if (isTransfer === true) {
+      const data = {
+        order: {
+          address: user.address,
+          status: 0,
+          totalPrice: totalPrice,
+          fullName: user.fullName,
+          username: user.userName,
+        },
+        orderDetails: orderDetails,
+        transaction: {
+          mode: 0,
+        },
+      };
+
+      try {
+        const response = orderApi.create(data);
+        localStorage.setItem(StorageKeys.ORDER, JSON.stringify(response));
+      } catch (err) {
+        enqueueSnackbar(err, { variant: "error" });
+      }
+    }
   };
 
   return (

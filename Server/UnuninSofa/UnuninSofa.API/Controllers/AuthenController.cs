@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -92,11 +93,11 @@ namespace UnuninSofa.API.Controllers
             }
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> Get(string userId)
+        [HttpGet("GetUser/{username}"), Authorize]
+        public async Task<IActionResult> GetUser(string username)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            return Ok(user.UserName);
+            var user = await _userManager.FindByNameAsync(username);
+            return Ok(user);
         }
 
         private async Task<IEnumerable<Claim>> GetClaim(User user)

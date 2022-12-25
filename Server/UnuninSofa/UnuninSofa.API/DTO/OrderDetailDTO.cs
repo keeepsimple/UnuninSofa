@@ -1,12 +1,8 @@
-﻿using UnuninSofa.Models.BaseEntities;
-
-namespace UnuninSofa.Models
+﻿namespace UnuninSofa.API.DTO
 {
-    public class OrderDetail : BaseEntity
+    public class OrderDetailDTO
     {
-        public int OrderId { get; set; }
-
-        public virtual Order Order { get; set; }
+        public int Id { get; set; }
 
         public string ProductName { get; set; }
 

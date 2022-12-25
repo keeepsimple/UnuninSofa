@@ -1,5 +1,5 @@
 import { Button, Grid, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import subCategoryApi from "../../api/SubCategoryApi";
 import { ListProductFeatures } from "../GetProductByCate/index";
@@ -27,8 +27,8 @@ export const HomeDetail = () => {
     <>
       <Grid style={gridStyles} container rowSpacing={3}>
         {subCategories.map((subCate) => (
-          <>
-            <Grid key={subCate.id} item xs={12}>
+          <Fragment key={subCate.id}>
+            <Grid item xs={12}>
               <Typography
                 variant="h4"
                 align="center"
@@ -45,15 +45,15 @@ export const HomeDetail = () => {
                 </Button>
               </Typography>
             </Grid>
-            <Grid key={subCate.name} item xs={12}></Grid>
-            <Grid key={subCate.createdAt} item xs={12}>
+            <Grid item xs={12}></Grid>
+            <Grid item xs={12}>
               <ListProductFeatures
                 subId={subCate.id}
                 isPaging={false}
                 pageSize={3}
               />
             </Grid>
-          </>
+          </Fragment>
         ))}
       </Grid>
     </>

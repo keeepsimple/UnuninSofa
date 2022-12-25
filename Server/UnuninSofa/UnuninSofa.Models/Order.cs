@@ -11,6 +11,8 @@ namespace UnuninSofa.Models
 
         public decimal TotalPrice { get; set; }
 
+        public string FullName { get; set; }
+
         public string UserId { get; set; }
 
         public virtual User User { get; set; }

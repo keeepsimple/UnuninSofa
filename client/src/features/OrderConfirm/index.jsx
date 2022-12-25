@@ -29,7 +29,7 @@ const OrderConfirm = ({ cartItem }) => {
         </Stack>
       </Grid>
       <Grid item xs={4}>
-        <PaymentMethod totalProduct={cartItem.length} />
+        <PaymentMethod totalProduct={cartItem.length} cartItem={cartItem} />
       </Grid>
     </Grid>
   ) : (

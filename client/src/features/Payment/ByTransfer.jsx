@@ -30,9 +30,13 @@ export const ByTransfer = ({ cartItem }) => {
           <Typography>Mã đơn hàng của quý khách là:</Typography>
           <Typography className="order-num">#01</Typography>
           <Typography>
+            Khi chúng tôi xác nhận được thanh toán chúng tôi sẽ gọi điện để xác
+            nhận
+          </Typography>
+          <Typography>
             VUI LÒNG QUÉT MÃ BÊN DƯỚI ĐỂ THANH TOÁN CHUYỂN KHOẢN
           </Typography>
-          <img className="qrcode" src={qrcode} />
+          <img className="qrcode" src={qrcode} alt="QRCODE" />
         </Stack>
       </Grid>
       <Grid item xs={12}>

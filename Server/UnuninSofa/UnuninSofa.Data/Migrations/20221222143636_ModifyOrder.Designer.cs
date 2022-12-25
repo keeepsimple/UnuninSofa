@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnuninSofa.Data;
 
@@ -11,9 +12,10 @@ using UnuninSofa.Data;
 namespace UnuninSofa.Data.Migrations
 {
     [DbContext(typeof(UnuninSofaContext))]
-    partial class UnuninSofaContextModelSnapshot : ModelSnapshot
+    [Migration("20221222143636_ModifyOrder")]
+    partial class ModifyOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,14 +84,14 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = "56016200-6e5a-41ae-83ba-a9759ac9e6b5",
-                            ConcurrencyStamp = "d3ca9d08-fd85-4dfa-a303-ee6705921d5d",
+                            ConcurrencyStamp = "577075c6-4045-43c3-83ce-ac0b88faa584",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "99e62bd0-505e-4c7c-9533-3d0177220cec",
-                            ConcurrencyStamp = "9230539e-e86b-44f3-adef-771127d0fe6b",
+                            ConcurrencyStamp = "6f3b7693-ab75-4c79-a1ed-2aa6065e4504",
                             Name = "User",
                             NormalizedName = "User"
                         });
@@ -308,7 +310,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 12, 25, 18, 39, 52, 814, DateTimeKind.Local).AddTicks(5335),
+                            CreatedAt = new DateTime(2022, 12, 22, 21, 36, 36, 538, DateTimeKind.Local).AddTicks(824),
                             IsDeleted = false,
                             Name = "Sofa",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -316,7 +318,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 12, 25, 18, 39, 52, 814, DateTimeKind.Local).AddTicks(5352),
+                            CreatedAt = new DateTime(2022, 12, 22, 21, 36, 36, 538, DateTimeKind.Local).AddTicks(836),
                             IsDeleted = false,
                             Name = "Phòng khách",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -324,7 +326,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 12, 25, 18, 39, 52, 814, DateTimeKind.Local).AddTicks(5353),
+                            CreatedAt = new DateTime(2022, 12, 22, 21, 36, 36, 538, DateTimeKind.Local).AddTicks(837),
                             IsDeleted = false,
                             Name = "Phòng ăn",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -332,7 +334,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 12, 25, 18, 39, 52, 814, DateTimeKind.Local).AddTicks(5354),
+                            CreatedAt = new DateTime(2022, 12, 22, 21, 36, 36, 538, DateTimeKind.Local).AddTicks(838),
                             IsDeleted = false,
                             Name = "Phòng ngủ",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -501,9 +503,6 @@ namespace UnuninSofa.Data.Migrations
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -729,8 +728,9 @@ namespace UnuninSofa.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Mode")
-                        .HasColumnType("int");
+                    b.Property<string>("Mode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -779,15 +779,15 @@ namespace UnuninSofa.Data.Migrations
                         {
                             Id = "8967c0da-1606-447b-b91b-10c9f7e87418",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "58dcfcc1-cc2b-4d0f-8dc0-1bcf17f7fc0c",
+                            ConcurrencyStamp = "1431f84f-0bd8-4005-b89f-209aaffc4aba",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFO4DL8L+ZuJk/jUlVvEkccmta9OWhSt7oQNMt4AJ8WI02Sfz/PmZ7U0Go/27JoedA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAZ4O+c4DhpVt6+kF4p2O3lVr/2JlulZE/3uM0eVxs3sMGBOFgf8o9OUDb/4DFAwBg==",
                             PhoneNumber = "09191991999",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "32f85e19-be18-4c6f-ba88-2b6d834c12f3",
+                            SecurityStamp = "c548ee24-1b51-4c18-b01f-b81dd9e4096b",
                             TwoFactorEnabled = false,
                             UserName = "admin",
                             Address = "O dau khong noi",
