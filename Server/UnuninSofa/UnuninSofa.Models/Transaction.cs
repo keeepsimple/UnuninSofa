@@ -8,9 +8,9 @@ namespace UnuninSofa.Models
 
         public virtual User User { get; set; }
 
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
 
-        public Order Order { get; set; }
+        public virtual Order Order { get; set; }
 
         public int Status { get; set; }
 

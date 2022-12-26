@@ -2,11 +2,22 @@ import { Box, Button, Grid, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import qrcode from "../../assets/images/qrcode/qrcode.png";
+import StorageKeys from "../../configs/storageKey";
 import { CartInfo } from "./CartInfo";
 import "./style.css";
 
 export const ByTransfer = ({ cartItem }) => {
-  return (
+  const order = JSON.parse(localStorage.getItem(StorageKeys.ORDER));
+  window.addEventListener(
+    "beforeunload",
+    function (e) {
+      localStorage.removeItem(StorageKeys.ORDER);
+      localStorage.removeItem(StorageKeys.USER);
+      localStorage.removeItem(StorageKeys.CART);
+    },
+    false
+  );
+  return order ? (
     <Grid style={{ paddingTop: 80 }} direction="row" container spacing={3}>
       <Grid item xs={12}>
         <Stack
@@ -28,7 +39,7 @@ export const ByTransfer = ({ cartItem }) => {
             Cảm ơn quý khách đã đặt hàng tại Ununin
           </Typography>
           <Typography>Mã đơn hàng của quý khách là:</Typography>
-          <Typography className="order-num">#01</Typography>
+          <Typography className="order-num">#{order.id}</Typography>
           <Typography>
             Khi chúng tôi xác nhận được thanh toán chúng tôi sẽ gọi điện để xác
             nhận
@@ -59,10 +70,10 @@ export const ByTransfer = ({ cartItem }) => {
             Thông tin đơn hàng
           </Typography>
           <Box className="user-info">
-            <Typography>Khách hàng: abc</Typography>
-            <Typography>Email: abc</Typography>
-            <Typography>Số điện thoại: abc</Typography>
-            <Typography>Địa chỉ: abc</Typography>
+            <Typography>Khách hàng: {order.user.fullName}</Typography>
+            <Typography>Email: {order.user.email}</Typography>
+            <Typography>Số điện thoại: {order.user.phoneNumber}</Typography>
+            <Typography>Địa chỉ: {order.user.address}</Typography>
           </Box>
           <CartInfo cartItem={cartItem} />
           <Button component={Link} to="/" variant="contained" color="error">
@@ -71,5 +82,7 @@ export const ByTransfer = ({ cartItem }) => {
         </Stack>
       </Grid>
     </Grid>
+  ) : (
+    <h1>Not Found</h1>
   );
 };

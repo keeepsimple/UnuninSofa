@@ -82,14 +82,14 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = "56016200-6e5a-41ae-83ba-a9759ac9e6b5",
-                            ConcurrencyStamp = "d3ca9d08-fd85-4dfa-a303-ee6705921d5d",
+                            ConcurrencyStamp = "bff7c84d-8a68-439c-b903-a67cda05cb5d",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "99e62bd0-505e-4c7c-9533-3d0177220cec",
-                            ConcurrencyStamp = "9230539e-e86b-44f3-adef-771127d0fe6b",
+                            ConcurrencyStamp = "896eadb4-37e0-466c-95e4-87f4c7d34504",
                             Name = "User",
                             NormalizedName = "User"
                         });
@@ -308,7 +308,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 12, 25, 18, 39, 52, 814, DateTimeKind.Local).AddTicks(5335),
+                            CreatedAt = new DateTime(2022, 12, 26, 9, 46, 50, 910, DateTimeKind.Local).AddTicks(7895),
                             IsDeleted = false,
                             Name = "Sofa",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -316,7 +316,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 12, 25, 18, 39, 52, 814, DateTimeKind.Local).AddTicks(5352),
+                            CreatedAt = new DateTime(2022, 12, 26, 9, 46, 50, 910, DateTimeKind.Local).AddTicks(7908),
                             IsDeleted = false,
                             Name = "Phòng khách",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -324,7 +324,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 12, 25, 18, 39, 52, 814, DateTimeKind.Local).AddTicks(5353),
+                            CreatedAt = new DateTime(2022, 12, 26, 9, 46, 50, 910, DateTimeKind.Local).AddTicks(7909),
                             IsDeleted = false,
                             Name = "Phòng ăn",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -332,7 +332,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 12, 25, 18, 39, 52, 814, DateTimeKind.Local).AddTicks(5354),
+                            CreatedAt = new DateTime(2022, 12, 26, 9, 46, 50, 910, DateTimeKind.Local).AddTicks(7910),
                             IsDeleted = false,
                             Name = "Phòng ngủ",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -732,7 +732,7 @@ namespace UnuninSofa.Data.Migrations
                     b.Property<int>("Mode")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -779,15 +779,15 @@ namespace UnuninSofa.Data.Migrations
                         {
                             Id = "8967c0da-1606-447b-b91b-10c9f7e87418",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "58dcfcc1-cc2b-4d0f-8dc0-1bcf17f7fc0c",
+                            ConcurrencyStamp = "c12d9955-e266-48ad-a60d-d6ffb98a720f",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFO4DL8L+ZuJk/jUlVvEkccmta9OWhSt7oQNMt4AJ8WI02Sfz/PmZ7U0Go/27JoedA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEERRyZYorxDllb3CGYs77vFXgcrkHLhPd5wD6P8IiFYYetC8TWtkZ9hjnRrol7+AlQ==",
                             PhoneNumber = "09191991999",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "32f85e19-be18-4c6f-ba88-2b6d834c12f3",
+                            SecurityStamp = "a3b76798-0615-40b3-9216-08dfe0f4dbde",
                             TwoFactorEnabled = false,
                             UserName = "admin",
                             Address = "O dau khong noi",
@@ -955,9 +955,7 @@ namespace UnuninSofa.Data.Migrations
                 {
                     b.HasOne("UnuninSofa.Models.Order", "Order")
                         .WithMany("Transactions")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("UnuninSofa.Models.User", "User")
                         .WithMany("Transactions")

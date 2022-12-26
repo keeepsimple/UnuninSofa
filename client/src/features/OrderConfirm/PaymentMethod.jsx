@@ -24,7 +24,7 @@ const PaymentMethod = ({ totalProduct, cartItem }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleClick = () => {
-    // isTransfer === true ? navigate("/transfer") : navigate("/credit-card");
+    isTransfer === true ? navigate("/transfer") : navigate("/credit-card");
     const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
     const orderDetails = cartItem.map((item) => ({
       productName: item.name,
@@ -35,15 +35,12 @@ const PaymentMethod = ({ totalProduct, cartItem }) => {
       quantity: item.quantity,
     }));
 
-    console.log(orderDetails);
-
     if (isTransfer === true) {
       const data = {
         order: {
           address: user.address,
           status: 0,
           totalPrice: totalPrice,
-          fullName: user.fullName,
           username: user.userName,
         },
         orderDetails: orderDetails,
@@ -52,12 +49,16 @@ const PaymentMethod = ({ totalProduct, cartItem }) => {
         },
       };
 
-      try {
-        const response = orderApi.create(data);
-        localStorage.setItem(StorageKeys.ORDER, JSON.stringify(response));
-      } catch (err) {
-        enqueueSnackbar(err, { variant: "error" });
-      }
+      createOrder(data);
+    }
+  };
+
+  const createOrder = async (data) => {
+    try {
+      const response = await orderApi.create(data);
+      localStorage.setItem(StorageKeys.ORDER, JSON.stringify(response));
+    } catch (err) {
+      enqueueSnackbar(err, { variant: "error" });
     }
   };
 

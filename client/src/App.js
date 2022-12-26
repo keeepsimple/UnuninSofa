@@ -35,44 +35,69 @@ import EditSubCategory from "./features/SubCategoryAdmin/Edit";
 import DashBoardMain from "./pages/Dashboard";
 import Home from "./pages/Home/Home";
 
-const fetchCartFromLocalStorage = JSON.parse(localStorage.getItem(StorageKeys.CART) || '[]');
+const fetchCartFromLocalStorage = JSON.parse(
+  localStorage.getItem(StorageKeys.CART) || "[]"
+);
 
 function App() {
   const admin = "Admin";
   const [cartItem, setCartItem] = useState(fetchCartFromLocalStorage);
 
   const addToCart = (product) => {
-    const productExist = cartItem.find(item => item.id === product.id
-      && item.material === product.material
-      && item.color === product.color);
+    const productExist = cartItem.find(
+      (item) =>
+        item.id === product.id &&
+        item.material === product.material &&
+        item.color === product.color
+    );
     if (productExist) {
-      setCartItem(cartItem.map(item => (item.id === product.id
-        && item.material === product.material
-        && item.color === product.color ? { ...productExist, quantity: productExist.quantity + 1 } : item)));
+      setCartItem(
+        cartItem.map((item) =>
+          item.id === product.id &&
+          item.material === product.material &&
+          item.color === product.color
+            ? { ...productExist, quantity: productExist.quantity + 1 }
+            : item
+        )
+      );
     } else {
       setCartItem([...cartItem, { ...product, quantity: 1 }]);
     }
-  }
+  };
 
   const decreaseQuantity = (product) => {
-    const productExist = cartItem.find(item => item.id === product.id
-      && item.material === product.material
-      && item.color === product.color);
+    const productExist = cartItem.find(
+      (item) =>
+        item.id === product.id &&
+        item.material === product.material &&
+        item.color === product.color
+    );
     if (productExist.quantity === 1) {
-      setCartItem(cartItem.filter(item => item.id !== product.id
-        && item.material === product.material
-        && item.color === product.color))
+      setCartItem(
+        cartItem.filter(
+          (item) =>
+            item.id !== product.id &&
+            item.material === product.material &&
+            item.color === product.color
+        )
+      );
     } else {
-      setCartItem(cartItem.map(item => (item.id === product.id
-        && item.material === product.material
-        && item.color === product.color ? { ...productExist, quantity: productExist.quantity - 1 } : item)))
+      setCartItem(
+        cartItem.map((item) =>
+          item.id === product.id &&
+          item.material === product.material &&
+          item.color === product.color
+            ? { ...productExist, quantity: productExist.quantity - 1 }
+            : item
+        )
+      );
       localStorage.setItem(StorageKeys.CART, JSON.stringify(cartItem));
     }
-  }
+  };
 
   useEffect(() => {
     localStorage.setItem(StorageKeys.CART, JSON.stringify(cartItem));
-  }, [cartItem])
+  }, [cartItem]);
 
   return (
     <>
@@ -83,13 +108,31 @@ function App() {
             path="subcategory/:subcateId"
             element={<SubCategoryFeature />}
           />
-          <Route path="product/:productId" element={<ProductDetailFeatures addToCart={addToCart} />} />
-          <Route path="/cart" element={<Cart cartItem={cartItem} addToCart={addToCart} decreaseQuantity={decreaseQuantity} />} />
+          <Route
+            path="product/:productId"
+            element={<ProductDetailFeatures addToCart={addToCart} />}
+          />
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                cartItem={cartItem}
+                addToCart={addToCart}
+                decreaseQuantity={decreaseQuantity}
+              />
+            }
+          />
           <Route path="*" element={<NoMatch />} />
         </Route>
         <Route element={<UserLoginLayout cartItem={cartItem} />}>
-          <Route path="/order-confirm" element={<OrderConfirm cartItem={cartItem} />} />
-          <Route path="/transfer" element={<ByTransfer cartItem={cartItem} />} />
+          <Route
+            path="/order-confirm"
+            element={<OrderConfirm cartItem={cartItem} />}
+          />
+          <Route
+            path="/transfer"
+            element={<ByTransfer cartItem={cartItem} />}
+          />
           <Route path="/credit-card" element={<ByCreditCard />} />
         </Route>
         <Route element={<AdminLayout allowedRole={admin} />}>
@@ -101,8 +144,14 @@ function App() {
           />
           <Route path="/admin/category/create" element={<CreateCategory />} />
           <Route path="/admin/subcategory" element={<SubCategoryAdmin />} />
-          <Route path="/admin/subcategory/create" element={<CreateSubCategory />} />
-          <Route path="/admin/subcategory/edit/:id" element={<EditSubCategory />} />
+          <Route
+            path="/admin/subcategory/create"
+            element={<CreateSubCategory />}
+          />
+          <Route
+            path="/admin/subcategory/edit/:id"
+            element={<EditSubCategory />}
+          />
           <Route path="/admin/product" element={<ProductAdminFeatures />} />
           <Route path="/admin/product/create" element={<CreateProduct />} />
           <Route path="/admin/product/edit/:id" element={<EditProduct />} />

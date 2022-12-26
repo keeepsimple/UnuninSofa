@@ -40,6 +40,7 @@ namespace UnuninSofa.API.Controllers
 
             var order = _mapper.Map<Order>(model.Order);
             order.UserId = user.Id;
+            order.FullName = user.FullName;
             order.Status = 0;
             var resultOrder = await _orderService.AddAsync(order);
             if (resultOrder < 0) return BadRequest(new { mess = "Đặt hàng không thành công! Vui lòng thử lại" });
@@ -54,9 +55,11 @@ namespace UnuninSofa.API.Controllers
                     OrderId = order.Id,
                     ProductCode = item.ProductCode,
                     ProductName = item.ProductName,
-                    Price = item.Price
+                    Price = item.Price,
+                    Quantity = item.Quantity
                 };
                 await _orderDetailService.AddAsync(orderDetail);
+                listOrderDetail.Add(orderDetail);
             }
 
             var transaction = CreateTransactionByStatus(model.Transaction);
@@ -65,12 +68,7 @@ namespace UnuninSofa.API.Controllers
             var resultTransaction = await _transactionService.AddAsync(transaction);
             if(resultTransaction < 0) return BadRequest(new { mess = "Thanh toán không thành công! Vui lòng thử lại" });
 
-            return Ok(new
-            {
-                Order = order,
-                OrderDetails = listOrderDetail,
-                Transaction = transaction
-            });
+            return Ok(order);
         }
 
         private Transaction CreateTransactionByStatus(TransactionDTO transactionDTO)

@@ -12,8 +12,8 @@ using UnuninSofa.Data;
 namespace UnuninSofa.Data.Migrations
 {
     [DbContext(typeof(UnuninSofaContext))]
-    [Migration("20221214095637_RemoveImageCategoryAddSlider")]
-    partial class RemoveImageCategoryAddSlider
+    [Migration("20221226024651_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,14 +84,14 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = "56016200-6e5a-41ae-83ba-a9759ac9e6b5",
-                            ConcurrencyStamp = "f2530a4b-3202-42a0-8693-6155fb4a28d9",
+                            ConcurrencyStamp = "bff7c84d-8a68-439c-b903-a67cda05cb5d",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "99e62bd0-505e-4c7c-9533-3d0177220cec",
-                            ConcurrencyStamp = "1a007b75-9fb2-4d74-958f-1b7ab6214ed9",
+                            ConcurrencyStamp = "896eadb4-37e0-466c-95e4-87f4c7d34504",
                             Name = "User",
                             NormalizedName = "User"
                         });
@@ -310,7 +310,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 12, 14, 16, 56, 36, 935, DateTimeKind.Local).AddTicks(4434),
+                            CreatedAt = new DateTime(2022, 12, 26, 9, 46, 50, 910, DateTimeKind.Local).AddTicks(7895),
                             IsDeleted = false,
                             Name = "Sofa",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -318,7 +318,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 12, 14, 16, 56, 36, 935, DateTimeKind.Local).AddTicks(4452),
+                            CreatedAt = new DateTime(2022, 12, 26, 9, 46, 50, 910, DateTimeKind.Local).AddTicks(7908),
                             IsDeleted = false,
                             Name = "Phòng khách",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -326,7 +326,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 12, 14, 16, 56, 36, 935, DateTimeKind.Local).AddTicks(4454),
+                            CreatedAt = new DateTime(2022, 12, 26, 9, 46, 50, 910, DateTimeKind.Local).AddTicks(7909),
                             IsDeleted = false,
                             Name = "Phòng ăn",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -334,7 +334,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 12, 14, 16, 56, 36, 935, DateTimeKind.Local).AddTicks(4455),
+                            CreatedAt = new DateTime(2022, 12, 26, 9, 46, 50, 910, DateTimeKind.Local).AddTicks(7910),
                             IsDeleted = false,
                             Name = "Phòng ngủ",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -385,19 +385,14 @@ namespace UnuninSofa.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("ProductCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProductDetailId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductDetailId");
 
                     b.ToTable("Images");
                 });
@@ -414,7 +409,6 @@ namespace UnuninSofa.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -446,6 +440,10 @@ namespace UnuninSofa.Data.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -506,7 +504,7 @@ namespace UnuninSofa.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SalePercent")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -553,9 +551,6 @@ namespace UnuninSofa.Data.Migrations
                     b.Property<int>("RateCount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SaleId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -565,12 +560,7 @@ namespace UnuninSofa.Data.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("View")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SaleId");
 
                     b.HasIndex("SubCategoryId");
 
@@ -650,45 +640,6 @@ namespace UnuninSofa.Data.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("UnuninSofa.Models.Sale", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Percent")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Sales");
-                });
-
             modelBuilder.Entity("UnuninSofa.Models.Slider", b =>
                 {
                     b.Property<int>("Id")
@@ -705,6 +656,9 @@ namespace UnuninSofa.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublished")
                         .HasColumnType("bit");
 
                     b.Property<string>("Link")
@@ -777,9 +731,8 @@ namespace UnuninSofa.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Mode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Mode")
+                        .HasColumnType("int");
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
@@ -811,6 +764,16 @@ namespace UnuninSofa.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
+
                     b.HasDiscriminator().HasValue("User");
 
                     b.HasData(
@@ -818,18 +781,20 @@ namespace UnuninSofa.Data.Migrations
                         {
                             Id = "8967c0da-1606-447b-b91b-10c9f7e87418",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "95776ef3-529f-4712-9608-6945dcdea913",
+                            ConcurrencyStamp = "c12d9955-e266-48ad-a60d-d6ffb98a720f",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKwziroGsgGxpgVLtlOqp0+IdXqKcnSMxr9px825fkRcpn6RfrW+ulqlk3HP2Zi1uQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEERRyZYorxDllb3CGYs77vFXgcrkHLhPd5wD6P8IiFYYetC8TWtkZ9hjnRrol7+AlQ==",
                             PhoneNumber = "09191991999",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "70898ab6-1e31-40cd-b5fb-09db88f613b5",
+                            SecurityStamp = "a3b76798-0615-40b3-9216-08dfe0f4dbde",
                             TwoFactorEnabled = false,
                             UserName = "admin",
-                            Address = "O dau khong noi"
+                            Address = "O dau khong noi",
+                            FullName = "Admin",
+                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -914,15 +879,6 @@ namespace UnuninSofa.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("UnuninSofa.Models.Image", b =>
-                {
-                    b.HasOne("UnuninSofa.Models.ProductDetail", "ProductDetail")
-                        .WithMany("Images")
-                        .HasForeignKey("ProductDetailId");
-
-                    b.Navigation("ProductDetail");
-                });
-
             modelBuilder.Entity("UnuninSofa.Models.Order", b =>
                 {
                     b.HasOne("UnuninSofa.Models.User", "User")
@@ -947,17 +903,11 @@ namespace UnuninSofa.Data.Migrations
 
             modelBuilder.Entity("UnuninSofa.Models.Product", b =>
                 {
-                    b.HasOne("UnuninSofa.Models.Sale", "Sale")
-                        .WithMany("Products")
-                        .HasForeignKey("SaleId");
-
                     b.HasOne("UnuninSofa.Models.SubCategory", "SubCategory")
                         .WithMany("Products")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Sale");
 
                     b.Navigation("SubCategory");
                 });
@@ -1038,16 +988,6 @@ namespace UnuninSofa.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("UnuninSofa.Models.ProductDetail", b =>
-                {
-                    b.Navigation("Images");
-                });
-
-            modelBuilder.Entity("UnuninSofa.Models.Sale", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("UnuninSofa.Models.SubCategory", b =>
