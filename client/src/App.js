@@ -17,14 +17,18 @@ import Login from "./features/Login";
 import MaterialFeatures from "./features/MaterialAdmin";
 import CreateMaterial from "./features/MaterialAdmin/Create";
 import EditMaterial from "./features/MaterialAdmin/Edit";
+import OrderFeatures from "./features/OrderAdmin";
+import EditOrder from "./features/OrderAdmin/Edit";
 import OrderConfirm from "./features/OrderConfirm";
 import { ByCreditCard } from "./features/Payment/ByCreditCard";
 import { ByTransfer } from "./features/Payment/ByTransfer";
+import { PaySuccess } from "./features/Payment/PaySuccess";
 import ProductAdminFeatures from "./features/ProductAdmin";
 import CreateProduct from "./features/ProductAdmin/Create";
 import EditProduct from "./features/ProductAdmin/Edit";
 import { ProductDetailFeatures } from "./features/ProductDetail";
 import Register from "./features/Register";
+import { RevenueReport } from "./features/RevenueReport";
 import SliderFeatures from "./features/SliderAdmin";
 import CreateSlider from "./features/SliderAdmin/Create";
 import EditSlider from "./features/SliderAdmin/Edit";
@@ -54,8 +58,8 @@ function App() {
       setCartItem(
         cartItem.map((item) =>
           item.id === product.id &&
-          item.material === product.material &&
-          item.color === product.color
+            item.material === product.material &&
+            item.color === product.color
             ? { ...productExist, quantity: productExist.quantity + 1 }
             : item
         )
@@ -72,21 +76,12 @@ function App() {
         item.material === product.material &&
         item.color === product.color
     );
-    if (productExist.quantity === 1) {
-      setCartItem(
-        cartItem.filter(
-          (item) =>
-            item.id !== product.id &&
-            item.material === product.material &&
-            item.color === product.color
-        )
-      );
-    } else {
+    if (productExist.quantity !== 1) {
       setCartItem(
         cartItem.map((item) =>
           item.id === product.id &&
-          item.material === product.material &&
-          item.color === product.color
+            item.material === product.material &&
+            item.color === product.color
             ? { ...productExist, quantity: productExist.quantity - 1 }
             : item
         )
@@ -94,6 +89,17 @@ function App() {
       localStorage.setItem(StorageKeys.CART, JSON.stringify(cartItem));
     }
   };
+
+  const deleteItem = (product) => {
+    const temp = [...cartItem];
+    temp.forEach((item, index) => {
+      if (item.id === product.id && item.material === product.material && item.color === product.color) {
+        temp.splice(index, 1);
+      }
+    });
+    setCartItem([...temp]);
+    localStorage.setItem(StorageKeys.CART, JSON.stringify(cartItem));
+  }
 
   useEffect(() => {
     localStorage.setItem(StorageKeys.CART, JSON.stringify(cartItem));
@@ -119,6 +125,7 @@ function App() {
                 cartItem={cartItem}
                 addToCart={addToCart}
                 decreaseQuantity={decreaseQuantity}
+                deleteItem={deleteItem}
               />
             }
           />
@@ -133,7 +140,8 @@ function App() {
             path="/transfer"
             element={<ByTransfer cartItem={cartItem} />}
           />
-          <Route path="/credit-card" element={<ByCreditCard />} />
+          <Route path="/credit-card" element={<ByCreditCard cartItem={cartItem} />} />
+          <Route path="/paysuccess" element={<PaySuccess cartItem={cartItem} />} />
         </Route>
         <Route element={<AdminLayout allowedRole={admin} />}>
           <Route path="/admin/dashboard" element={<DashBoardMain />} />
@@ -164,6 +172,9 @@ function App() {
           <Route path="/admin/color" element={<ColorFeatures />} />
           <Route path="/admin/color/create" element={<CreateColor />} />
           <Route path="/admin/color/edit/:id" element={<EditColor />} />
+          <Route path="/admin/order" element={<OrderFeatures />} />
+          <Route path="/admin/order/edit/:id" element={<EditOrder />} />
+          <Route path="/admin/report" element={<RevenueReport />} />
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

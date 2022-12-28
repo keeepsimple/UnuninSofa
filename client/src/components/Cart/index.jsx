@@ -1,5 +1,6 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBackRounded";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardRounded";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Avatar,
   Button,
@@ -34,7 +35,7 @@ const convertToVND = (price) => {
   }).format(price);
 };
 
-export const Cart = ({ cartItem, addToCart, decreaseQuantity }) => {
+export const Cart = ({ cartItem, addToCart, decreaseQuantity, deleteItem }) => {
   const totalPrice = cartItem.reduce(
     (price, item) => price + item.quantity * item.price,
     0
@@ -77,12 +78,18 @@ export const Cart = ({ cartItem, addToCart, decreaseQuantity }) => {
                     <TableCell align="center">{item.material}</TableCell>
                     <TableCell align="center">{item.color}</TableCell>
                     <TableCell align="center">
-                      <Button onClick={() => decreaseQuantity(item)}>
+                      <Button
+                        onClick={() => decreaseQuantity(item)}
+                        disabled={item.quantity <= 1 ? true : false}
+                      >
                         <ArrowBackIcon color="action" fontSize="small" />
                       </Button>
                       {item.quantity}
                       <Button onClick={() => addToCart(item)}>
                         <ArrowForwardIcon color="action" fontSize="small" />
+                      </Button>
+                      <Button onClick={() => deleteItem(item)}>
+                        <DeleteIcon color="error" fontSize="medium" />
                       </Button>
                     </TableCell>
                     <TableCell align="right">

@@ -24,7 +24,6 @@ const ProductTable = ({ listProduct }) => {
             <TableRow>
               <TableCell align="center">Tên</TableCell>
               <TableCell align="center">Giá</TableCell>
-              <TableCell align="center">Lượt xem</TableCell>
               <TableCell align="center">Đánh Giá</TableCell>
               <TableCell align="center">Trạng thái</TableCell>
               <TableCell align="left">Quản lý</TableCell>
@@ -41,9 +40,6 @@ const ProductTable = ({ listProduct }) => {
                 </TableCell>
                 <TableCell align="center" scope="row">
                   {product.price}
-                </TableCell>
-                <TableCell align="center" scope="row">
-                  {product.view}
                 </TableCell>
                 <TableCell align="center" scope="row">
                   {product.rate}

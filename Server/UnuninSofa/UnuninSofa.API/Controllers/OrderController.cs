@@ -36,17 +36,18 @@ namespace UnuninSofa.API.Controllers
         public async Task<IActionResult> CreateOrder(CreateOrderDTO model)
         {
             var user = await _userManager.FindByNameAsync(model.Order.Username);
-            if(user == null) return BadRequest(new {mess="Không tìm thấy khách hàng"});
+            if (user == null) return BadRequest(new { mess = "Không tìm thấy khách hàng" });
 
             var order = _mapper.Map<Order>(model.Order);
             order.UserId = user.Id;
             order.FullName = user.FullName;
+            order.PhoneNumber = user.PhoneNumber;
             order.Status = 0;
             var resultOrder = await _orderService.AddAsync(order);
             if (resultOrder < 0) return BadRequest(new { mess = "Đặt hàng không thành công! Vui lòng thử lại" });
 
             var listOrderDetail = new List<OrderDetail>();
-            foreach(var item in model.OrderDetails)
+            foreach (var item in model.OrderDetails)
             {
                 var orderDetail = new OrderDetail
                 {
@@ -65,8 +66,13 @@ namespace UnuninSofa.API.Controllers
             var transaction = CreateTransactionByStatus(model.Transaction);
             transaction.OrderId = order.Id;
             transaction.UserId = user.Id;
+            if (transaction.Status == 1)
+            {
+                order.Status = 2;
+                await _orderService.UpdateAsync(order);
+            }
             var resultTransaction = await _transactionService.AddAsync(transaction);
-            if(resultTransaction < 0) return BadRequest(new { mess = "Thanh toán không thành công! Vui lòng thử lại" });
+            if (resultTransaction < 0) return BadRequest(new { mess = "Thanh toán không thành công! Vui lòng thử lại" });
 
             return Ok(order);
         }

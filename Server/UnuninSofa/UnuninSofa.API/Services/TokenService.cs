@@ -47,7 +47,7 @@ namespace UnuninSofa.API.Services
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["APIConfig:SecretKey"])),
-                ValidateLifetime = false
+                ValidateLifetime = true
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;

@@ -1,5 +1,7 @@
 import { Container, Grid, Paper } from "@mui/material";
 import * as React from "react";
+import { OrderSuccessChart } from "./OrderSuccessChart";
+import { RevenueAndOrderChart } from "./RevenueAndOrderChart";
 
 export default function DashBoardMain() {
   document.title = `Dashboard - Ununin Sofa`;
@@ -7,16 +9,16 @@ export default function DashBoardMain() {
     <div>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={8} lg={9}>
+          <Grid item xs={12} md={4} lg={9}>
             <Paper
               sx={{
                 p: 2,
                 display: "flex",
                 flexDirection: "column",
-                height: 240,
+                height: 450,
               }}
             >
-              Chart
+              <RevenueAndOrderChart timeFilter={1} />
             </Paper>
           </Grid>
           {/* Recent Deposits */}
@@ -26,10 +28,11 @@ export default function DashBoardMain() {
                 p: 2,
                 display: "flex",
                 flexDirection: "column",
-                height: 240,
+                height: 300,
               }}
             >
-              Revenue
+              Tỉ lệ đặt đơn
+              <OrderSuccessChart />
             </Paper>
           </Grid>
           {/* Recent Orders */}

@@ -11,6 +11,7 @@ import WindowIcon from '@mui/icons-material/Window';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import MoneyIcon from '@mui/icons-material/Money';
 import * as React from 'react';
 
 export const mainListItems = (
@@ -27,18 +28,24 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Dashboard"></ListItemText>
         </ListItemButton></a>
-        <ListItemButton>
+        <a href='/admin/order'> <ListItemButton>
             <ListItemIcon>
                 <ShoppingCartIcon />
             </ListItemIcon>
             <ListItemText primary="Đơn hàng" />
-        </ListItemButton>
+        </ListItemButton></a>
         <ListItemButton>
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Khách hàng" />
         </ListItemButton>
+        <a href='/admin/report'> <ListItemButton>
+            <ListItemIcon>
+                <MoneyIcon />
+            </ListItemIcon>
+            <ListItemText primary="Báo cáo doanh thu" />
+        </ListItemButton></a>
     </React.Fragment>
 );
 

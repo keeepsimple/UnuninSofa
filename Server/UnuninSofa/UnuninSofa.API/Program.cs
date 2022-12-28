@@ -11,6 +11,7 @@ using UnuninSofa.BusinessLayer.IServices;
 using UnuninSofa.BusinessLayer.Services;
 using UnuninSofa.Data;
 using UnuninSofa.Data.Infrastructure;
+using UnuninSofa.Data.Infrastructure.Repositories;
 using UnuninSofa.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,6 +50,10 @@ builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<ISliderService, SliderService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICoreRepository<Order>, CoreRepository<Order>>();
+builder.Services.AddScoped<ICoreRepository<Product>, CoreRepository<Product>>();
+builder.Services.AddScoped<ICoreRepository<OrderDetail>, CoreRepository<OrderDetail>>();
+builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers();
@@ -88,7 +93,9 @@ builder.Services.AddAuthentication(opt =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["APIConfig:Issuer"],
         ValidAudience = builder.Configuration["APIConfig:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
     };
 });
 

@@ -1,12 +1,11 @@
 import { Box, Button, Grid, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import qrcode from "../../assets/images/qrcode/qrcode.png";
 import StorageKeys from "../../configs/storageKey";
 import { CartInfo } from "./CartInfo";
 import "./style.css";
 
-export const ByTransfer = ({ cartItem }) => {
+export const PaySuccess = ({ cartItem }) => {
   const order = JSON.parse(localStorage.getItem(StorageKeys.ORDER));
 
   window.addEventListener(
@@ -46,10 +45,6 @@ export const ByTransfer = ({ cartItem }) => {
             Khi chúng tôi xác nhận được thanh toán chúng tôi sẽ gọi điện để xác
             nhận
           </Typography>
-          <Typography>
-            VUI LÒNG QUÉT MÃ BÊN DƯỚI ĐỂ THANH TOÁN CHUYỂN KHOẢN
-          </Typography>
-          <img className="qrcode" src={qrcode} alt="QRCODE" />
         </Stack>
       </Grid>
       <Grid item xs={12}>
