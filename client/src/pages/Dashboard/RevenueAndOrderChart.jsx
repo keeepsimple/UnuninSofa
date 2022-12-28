@@ -11,6 +11,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import dashboardApi from "../../api/DashboardApi";
 import moment from "moment/moment";
+import { Typography } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -57,7 +58,14 @@ export const RevenueAndOrderChart = ({ timeFilter }) => {
   const dataRevenue = Object.keys(revenue).map(
     (key) => revenue[key] / 1000000000
   );
+
+  const totalRevenue = Object.keys(revenue)
+    .map((key) => revenue[key])
+    .reduce((sum, value) => sum + value, 0);
+
   const dataNumOrder = Object.keys(numOrder).map((key) => numOrder[key]);
+
+  const totalOrder = dataNumOrder.reduce((sum, value) => sum + value, 0);
 
   const labels = timeFilter === 1 ? labelWeek : labelMonthAndYear;
 
@@ -77,5 +85,20 @@ export const RevenueAndOrderChart = ({ timeFilter }) => {
     ],
   };
 
-  return <Bar options={options} data={data} updateMode="resize" />;
+  return (
+    <>
+      <Bar options={options} data={data} />
+      <Typography
+        style={{ paddingTop: 30, fontWeight: 600 }}
+        textAlign="center"
+      >
+        Tổng doanh thu:{" "}
+        {new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }).format(totalRevenue)}{" "}
+        - trong {totalOrder} đơn hàng
+      </Typography>
+    </>
+  );
 };

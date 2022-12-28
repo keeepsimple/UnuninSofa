@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import dashboardApi from "../../api/DashboardApi";
+import { Typography } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -54,6 +55,13 @@ export const OrderAndRevenueOfAllTime = () => {
   const dataRevenue = Object.keys(revenue).map(
     (key) => revenue[key] / 1000000000
   );
+
+  const totalOrder = dataOrder.reduce((sum, value) => sum + value, 0);
+
+  const totalRevenue = Object.keys(revenue)
+    .map((key) => revenue[key])
+    .reduce((sum, value) => sum + value, 0);
+
   const data = {
     labels,
     datasets: [
@@ -72,5 +80,20 @@ export const OrderAndRevenueOfAllTime = () => {
     ],
   };
 
-  return <Line options={options} data={data} />;
+  return (
+    <>
+      <Line options={options} data={data} />
+      <Typography
+        style={{ paddingTop: 10, fontWeight: 600 }}
+        textAlign="center"
+      >
+        Tổng doanh thu:{" "}
+        {new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }).format(totalRevenue)}{" "}
+        - trong {totalOrder} đơn hàng
+      </Typography>
+    </>
+  );
 };

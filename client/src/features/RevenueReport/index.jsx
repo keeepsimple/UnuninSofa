@@ -24,7 +24,7 @@ export const RevenueReport = () => {
             p: 2,
             display: "flex",
             flexDirection: "column",
-            height: 450,
+            height: 500,
             width: 900,
           }}
         >
@@ -37,7 +37,7 @@ export const RevenueReport = () => {
             p: 5,
             display: "flex",
             flexDirection: "column",
-            height: 450,
+            height: 500,
           }}
         >
           Tỉ lệ đặt đơn
