@@ -68,7 +68,7 @@ namespace UnuninSofa.API.Controllers
             transaction.UserId = user.Id;
             if (transaction.Status == 1)
             {
-                order.Status = 2;
+                order.Status = 1;
                 await _orderService.UpdateAsync(order);
             }
             var resultTransaction = await _transactionService.AddAsync(transaction);

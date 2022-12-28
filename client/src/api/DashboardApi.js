@@ -12,6 +12,10 @@ const dashboardApi = {
     numOfProductSale() {
         const url = '/Dashboard/NumOfProductSale'
         return axiosClient.get(url);
+    },
+    newestOrder() {
+        const url = '/Dashboard/NewestOrder'
+        return axiosClient.get(url);
     }
 }
 

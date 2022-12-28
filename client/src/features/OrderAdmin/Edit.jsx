@@ -181,18 +181,29 @@ const EditOrder = () => {
           </Stack>
         </Grid>
         <Grid item xs={12}>
-          <Typography>
-            {" "}
-            {order.status < 0
-              ? "Huỷ đơn"
-              : order.status === 0
-              ? "Chờ xác nhận"
-              : order.status === 1
-              ? "Đã thanh toán"
-              : order.status === 2
-              ? "Đang giao hàng"
-              : "Giao hàng thành công"}
-          </Typography>
+          <TextField
+            name="status"
+            className="order"
+            value={
+              order.status < 0
+                ? "Huỷ đơn"
+                : order.status === 0
+                ? "Chờ xác nhận"
+                : order.status === 1
+                ? "Đã thanh toán"
+                : order.status === 2
+                ? "Đang giao hàng"
+                : "Giao hàng thành công"
+            }
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  Trạng thái đơn hàng
+                </InputAdornment>
+              ),
+              readOnly: true,
+            }}
+          />
         </Grid>
         <Grid item xs={12}>
           <TableContainer style={{ width: 1100 }} component={Paper}>
