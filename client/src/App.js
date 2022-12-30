@@ -36,6 +36,10 @@ import SubCategoryFeature from "./features/SubCategory/index";
 import SubCategoryAdmin from "./features/SubCategoryAdmin";
 import CreateSubCategory from "./features/SubCategoryAdmin/Create";
 import EditSubCategory from "./features/SubCategoryAdmin/Edit";
+import { UserAdminFeatures } from "./features/UserAdmin";
+import { EditUser } from "./features/UserAdmin/Edit";
+import { UserDetailFreature } from "./features/UserDetail";
+import { OrderDetail } from "./features/UserDetail/OrderDetail";
 import DashBoardMain from "./pages/Dashboard";
 import Home from "./pages/Home/Home";
 
@@ -132,6 +136,8 @@ function App() {
           <Route path="*" element={<NoMatch />} />
         </Route>
         <Route element={<UserLoginLayout cartItem={cartItem} />}>
+          <Route path="/user" element={<UserDetailFreature />} />
+          <Route path="/user/order/:id" element={<OrderDetail />} />
           <Route
             path="/order-confirm"
             element={<OrderConfirm cartItem={cartItem} />}
@@ -175,6 +181,8 @@ function App() {
           <Route path="/admin/order" element={<OrderFeatures />} />
           <Route path="/admin/order/edit/:id" element={<EditOrder />} />
           <Route path="/admin/report" element={<RevenueReport />} />
+          <Route path="/admin/users" element={<UserAdminFeatures />} />
+          <Route path="/admin/users/edit/:id" element={<EditUser />} />
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

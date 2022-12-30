@@ -19,5 +19,20 @@ namespace UnuninSofa.BusinessLayer.Services
                 .OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
         }
+
+        public async Task<bool> IsOrderedProduct(string userId, string productCode)
+        {
+            var product = await _unitOfWork.OrderRepository
+                .GetQuery(x => x.UserId == userId
+                && x.OrderDetails.Any(o => o.ProductCode == productCode)
+                && x.Status == 3)
+                .FirstOrDefaultAsync();
+
+            if (product != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

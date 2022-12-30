@@ -10,6 +10,7 @@ const OrderFeatures = () => {
   const [pageNum, setPageNum] = useState(1);
   const [totalItem, setTotalItem] = useState(1);
   const [searchString, setSearchString] = useState("");
+  const [orderBy, setOrderBy] = useState("");
   const delay = useDebounceCallback(1000);
   const pageSize = 6;
   const totalPage = Math.ceil(totalItem / pageSize);
@@ -23,18 +24,27 @@ const OrderFeatures = () => {
       const data = await orderAdminApi.getPaging(pageNum, {
         pageSize: `${pageSize}`,
         searchString: `${searchString}`,
+        sortOrder: `${orderBy}`,
       });
       setOrders(data.list);
       setTotalItem(data.count);
     };
 
     fetchOrders();
-  }, [pageNum, searchString]);
+  }, [pageNum, searchString, orderBy]);
 
   const handleSearchChange = (e) => {
     e.preventDefault();
     const data = e.target.value;
     delay(() => setSearchString(data.trim()));
+  };
+
+  const onSort = (isCreatedAt) => {
+    if (isCreatedAt) {
+      setOrderBy("createdAt_asc");
+    } else {
+      setOrderBy("");
+    }
   };
 
   return (
@@ -56,7 +66,7 @@ const OrderFeatures = () => {
           <Grid item xs></Grid>
 
           <Grid item xs={12}>
-            <OrderTable listOrder={orders} />
+            <OrderTable listOrder={orders} orderBy={orderBy} onSort={onSort} />
           </Grid>
           <Grid item xs></Grid>
           <Grid item xs={4} alignItems="center">

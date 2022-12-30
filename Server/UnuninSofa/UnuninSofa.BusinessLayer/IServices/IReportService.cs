@@ -9,5 +9,7 @@
         Task<Dictionary<string, decimal>> GetOrder(int timeFilter = 0);
 
         Task<Dictionary<string, int>> NumOfProductSale();
+
+        Task<Dictionary<string, decimal>> RateSuccessOfUser(string userId);
     }
 }

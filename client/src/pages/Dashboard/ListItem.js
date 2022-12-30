@@ -34,12 +34,12 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Đơn hàng" />
         </ListItemButton></a>
-        <ListItemButton>
+        <a href='/admin/users'><ListItemButton>
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Khách hàng" />
-        </ListItemButton>
+        </ListItemButton></a>
         <a href='/admin/report'> <ListItemButton>
             <ListItemIcon>
                 <MoneyIcon />

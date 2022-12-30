@@ -1,12 +1,14 @@
 import { Dehaze } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import logo from "../../assets/images/logo/logo.svg";
 import StorageKeys from "../../configs/storageKey";
 import Categories from "../../features/Categories/Categories";
 
 function Navbar(props) {
   const [isMobileToggle, setMobileToggle] = useState(false);
+
   const isLoggedIn = () => {
     if (localStorage.getItem(StorageKeys.TOKEN) !== null) return true;
     else return false;
@@ -19,11 +21,22 @@ function Navbar(props) {
   function handleClickToggleModible() {
     return setMobileToggle(!isMobileToggle);
   }
+
   return (
     <>
+      <section className="search">
+        <div className="container d-flex">
+          <div className="left row"></div>
+          <div className="logo width center row">
+            <Link to="/">
+              <img src={logo} alt="" />
+            </Link>
+          </div>
+          <div className="right row RText"></div>
+        </div>
+      </section>
       <header className="navbar">
         <div className="container-nav d-flex">
-          <div className="categories d-flex"></div>
           <div className="navlink">
             <ul
               className={
@@ -58,7 +71,7 @@ function Navbar(props) {
                       color: isActive ? "white" : "black",
                       backgroundColor: isActive ? "#ff014f" : "#fff",
                     })}
-                    to="/users"
+                    to="/user"
                   >
                     Tài khoản
                   </NavLink>
@@ -78,30 +91,6 @@ function Navbar(props) {
                   <Link to="/admin/dashboard">Dashboard</Link>
                 </li>
               ) : null}
-              <li>
-                <NavLink
-                  className="link-item"
-                  style={({ isActive }) => ({
-                    color: isActive ? "white" : "black",
-                    backgroundColor: isActive ? "#ff014f" : "#fff",
-                  })}
-                  to="/track"
-                >
-                  Theo dõi đơn hàng
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  className="link-item"
-                  style={({ isActive }) => ({
-                    color: isActive ? "white" : "black",
-                    backgroundColor: isActive ? "#ff014f" : "#fff",
-                  })}
-                  to="/contact"
-                >
-                  Liên hệ
-                </NavLink>
-              </li>
             </ul>
             <button
               className="toggle"

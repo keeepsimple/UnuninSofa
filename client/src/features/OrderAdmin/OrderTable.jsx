@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, TableSortLabel } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,10 +8,16 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import "moment/locale/vi";
 import moment from "moment/moment";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const OrderTable = ({ listOrder }) => {
+const OrderTable = ({ listOrder, orderBy, onSort }) => {
+  const [isCreatedAt, setIsCreatedAt] = useState(false);
+
+  const handleClick = () => {
+    orderBy === "" ? setIsCreatedAt(true) : setIsCreatedAt(false);
+    onSort(isCreatedAt);
+  };
   return (
     <>
       <TableContainer component={Paper}>
@@ -21,7 +27,15 @@ const OrderTable = ({ listOrder }) => {
               <TableCell align="center">Mã đơn hàng</TableCell>
               <TableCell align="center">Tên khách hàng</TableCell>
               <TableCell align="center">Trạng thái</TableCell>
-              <TableCell align="center">Ngày mua</TableCell>
+              <TableCell align="center">
+                <TableSortLabel
+                  active={orderBy === ""}
+                  direction={orderBy === "createdAt_asc" ? "asc" : "desc"}
+                  onClick={handleClick}
+                >
+                  Ngày mua
+                </TableSortLabel>
+              </TableCell>
               <TableCell align="left">Quản lý</TableCell>
             </TableRow>
           </TableHead>

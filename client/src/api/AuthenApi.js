@@ -7,11 +7,7 @@ const authenApi = {
   login(data) {
     const url = "/Authen/login";
     return axiosClient.post(url, data);
-  },
-  getUser(username) {
-    const url = `/Authen/GetUser/${username}`;
-    return axiosClient.get(url);
-  },
+  }
 };
 
 export default authenApi;

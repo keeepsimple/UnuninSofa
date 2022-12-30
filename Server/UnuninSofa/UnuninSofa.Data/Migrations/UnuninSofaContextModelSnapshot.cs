@@ -82,14 +82,14 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = "56016200-6e5a-41ae-83ba-a9759ac9e6b5",
-                            ConcurrencyStamp = "306162ef-766f-41d3-8bd0-66f08a681bc0",
+                            ConcurrencyStamp = "516db18c-8b52-489d-a787-62c81b0e2a66",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "99e62bd0-505e-4c7c-9533-3d0177220cec",
-                            ConcurrencyStamp = "c43270c2-af46-4e53-8631-7b7ef8d1a9a9",
+                            ConcurrencyStamp = "44e3eb9e-b7eb-4fa4-9f74-1ae772290f4e",
                             Name = "User",
                             NormalizedName = "User"
                         });
@@ -308,7 +308,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 12, 27, 13, 59, 32, 550, DateTimeKind.Local).AddTicks(6715),
+                            CreatedAt = new DateTime(2022, 12, 30, 8, 58, 23, 389, DateTimeKind.Local).AddTicks(4548),
                             IsDeleted = false,
                             Name = "Sofa",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -316,7 +316,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 12, 27, 13, 59, 32, 550, DateTimeKind.Local).AddTicks(6735),
+                            CreatedAt = new DateTime(2022, 12, 30, 8, 58, 23, 389, DateTimeKind.Local).AddTicks(4571),
                             IsDeleted = false,
                             Name = "Phòng khách",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -324,7 +324,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 12, 27, 13, 59, 32, 550, DateTimeKind.Local).AddTicks(6736),
+                            CreatedAt = new DateTime(2022, 12, 30, 8, 58, 23, 389, DateTimeKind.Local).AddTicks(4572),
                             IsDeleted = false,
                             Name = "Phòng ăn",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -332,7 +332,7 @@ namespace UnuninSofa.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 12, 27, 13, 59, 32, 550, DateTimeKind.Local).AddTicks(6738),
+                            CreatedAt = new DateTime(2022, 12, 30, 8, 58, 23, 389, DateTimeKind.Local).AddTicks(4573),
                             IsDeleted = false,
                             Name = "Phòng ngủ",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -620,10 +620,17 @@ namespace UnuninSofa.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalRate")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -783,15 +790,15 @@ namespace UnuninSofa.Data.Migrations
                         {
                             Id = "8967c0da-1606-447b-b91b-10c9f7e87418",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ab91f477-b2e8-4da5-a593-8e862c553d41",
+                            ConcurrencyStamp = "8f596152-71fd-4a6c-98e7-e87d945d2176",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN/7BLpwOlN0u6YwFPkKKrfRoazlFM5YdrrqE+wSs7HRkSmok4FzgJ4IH3ZS1R/7Lw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHSie1xZZRUj6KRvOOlCx/iW0NZoD0pCRg/LjZlLfrPEy4HPU/++uyxWGWWfC5J+zQ==",
                             PhoneNumber = "09191991999",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8cd45cb2-53e3-4230-b08f-95ab68bf302d",
+                            SecurityStamp = "247ae4ca-b895-427a-8cba-3869cebf79d2",
                             TwoFactorEnabled = false,
                             UserName = "admin",
                             Address = "O dau khong noi",

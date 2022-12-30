@@ -39,6 +39,7 @@ function Login(props) {
         StorageKeys.USERNAME,
         decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]
       );
+      localStorage.setItem(StorageKeys.USERID, decoded["UserId"]);
       enqueueSnackbar("Đăng nhập thành công!", { variant: "success" });
       navigate(-1);
     } catch (err) {

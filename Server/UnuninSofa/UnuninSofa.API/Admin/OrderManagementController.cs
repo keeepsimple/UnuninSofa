@@ -34,7 +34,7 @@ namespace UnuninSofa.API.Admin
         }
 
         [HttpGet("GetPaging/{pageNum}")]
-        public async Task<IActionResult> Get(string? searchString, int? pageNum = 1, int pageSize = 5)
+        public async Task<IActionResult> Get(string? sortOrder, string? searchString, int? pageNum = 1, int pageSize = 5)
         {
             Expression<Func<Order, bool>> filter = null;
             if (!string.IsNullOrEmpty(searchString))
@@ -42,7 +42,13 @@ namespace UnuninSofa.API.Admin
                 filter = f => f.FullName.Contains(searchString);
             }
 
-            Func<IQueryable<Order>, IOrderedQueryable<Order>> orderBy = o => o.OrderByDescending(x => x.CreatedAt);
+            Func<IQueryable<Order>, IOrderedQueryable<Order>> orderBy = null;
+            switch (sortOrder)
+            {
+                case "createdAt_asc": orderBy = o => o.OrderBy(x => x.CreatedAt); break;
+                default: orderBy = o => o.OrderByDescending(x => x.CreatedAt); break;
+            }
+
             var orders = await _orderService.GetAsync(filter, orderBy, pageNum ?? 1, pageSize);
             var count = await _orderService.Count(filter);
             var paging = new PagingModel<Order> { Count = count, List = orders };

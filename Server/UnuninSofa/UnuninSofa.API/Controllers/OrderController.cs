@@ -92,5 +92,45 @@ namespace UnuninSofa.API.Controllers
                 return transaction;
             }
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id, string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null) return NotFound(new { mess = "Không tìm thấy người dùng" });
+            var order = await _orderService.GetByIdAsync(id);
+
+            if (order == null || user.Id != order.UserId) return BadRequest(new { mess = "Không tìm thấy đơn hàng" });
+
+            await _orderDetailService.GetOrderDetailAsync(order.Id);
+            await _transactionService.GetByOrderAsync(order.Id);
+
+            return Ok(order);
+        }
+
+        [HttpPut("Cancel/{id}")]
+        public async Task<IActionResult> CancelOrder(int id, string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null) return NotFound(new { mess = "Không tìm thấy tài khoản" });
+
+            var order = await _orderService.GetByIdAsync(id);
+            if (order == null || order.UserId != user.Id) return BadRequest(new { mess = "Không tìm thấy đơn hàng" });
+
+            if (order.Status < 0)
+            {
+                return BadRequest(new { mess = "Không thể huỷ đơn hàng" });
+            }
+            order.Status = -1;
+            var result = await _orderService.UpdateAsync(order);
+            if (result)
+            {
+                return Ok("Huỷ đơn thành công");
+            }
+            else
+            {
+                return BadRequest(new { mess = "Huỷ đơn thất bại! Vui lòng thử lại!!" });
+            }
+        }
     }
 }

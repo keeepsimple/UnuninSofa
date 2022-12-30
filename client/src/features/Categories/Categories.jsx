@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import categoryApi from "../../api/CategoryApi";
@@ -19,7 +20,7 @@ function Categories(props) {
       <ul className="menu">
         {categories.map((category) => (
           <li key={category.id}>
-            <Link to={"/category/" + category.id}>{category.name}</Link>
+            <Link to="">{category.name}</Link>
             <SubCategory cateId={category.id} />
           </li>
         ))}

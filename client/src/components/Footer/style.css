@@ -1,0 +1,13 @@
+.footer-logo {
+    width: 200px;
+    height: 200px;
+}
+
+.policy {
+    padding-top: 40px;
+}
+
+.policy p{
+    font-size: 13px;
+    font-weight: 450;
+}

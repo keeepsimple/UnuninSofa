@@ -21,13 +21,15 @@ export const Detail = ({ product, detail, addToCart, image }) => {
   const [isReadDetailMore, setIsReadDetailMore] = useState(true);
   const [isReadSizeMore, setIsReadSizeMore] = useState(true);
   const [show, setShow] = useState(false);
+  const [rate, setRate] = useState(0);
 
   useEffect(() => {
     setMaterialSelect(detail.materials ? detail.materials[0].name : 0);
     setMaterialAlignment(detail.materials ? detail.materials[0].name : null);
     setColorSelect(detail.colors ? detail.colors[0].name : 0);
     setColorAlignment(detail.colors ? detail.colors[0].name : null);
-  }, [detail]);
+    setRate(product.rate > 0 ? product.rate : 0);
+  }, [detail, product.rate]);
 
   const handleBuy = () => {
     const productItem = {
@@ -103,7 +105,13 @@ export const Detail = ({ product, detail, addToCart, image }) => {
         <Typography component="legend">
           Đánh giá trong {product.rateCount} lượt
         </Typography>
-        {/* <Rating name="read-only" value={product.rate} readOnly /> */}
+        <Rating
+          name="read-only"
+          aria-label={product.rate + " Stars"}
+          value={rate}
+          readOnly
+          precision={0.5}
+        />
       </Grid>
       <Grid item xs={12}>
         <Typography>Chất liệu</Typography>

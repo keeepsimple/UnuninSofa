@@ -54,6 +54,7 @@ builder.Services.AddScoped<ICoreRepository<Order>, CoreRepository<Order>>();
 builder.Services.AddScoped<ICoreRepository<Product>, CoreRepository<Product>>();
 builder.Services.AddScoped<ICoreRepository<OrderDetail>, CoreRepository<OrderDetail>>();
 builder.Services.AddScoped<IReportService, ReportService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers();

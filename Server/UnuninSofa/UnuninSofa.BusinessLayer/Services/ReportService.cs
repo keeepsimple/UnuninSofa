@@ -213,5 +213,16 @@ namespace UnuninSofa.BusinessLayer.Services
             dictionary.Add("cancel", (decimal)cancel / (decimal)total);
             return dictionary;
         }
+
+        public async Task<Dictionary<string, decimal>> RateSuccessOfUser(string userId)
+        {
+            var total = await _orderRepository.GetQuery(x => x.UserId == userId).CountAsync();
+            var success = await _orderRepository.GetQuery(x => x.Status == 3 && x.UserId == userId).CountAsync();
+            var cancel = await _orderRepository.GetQuery(x => x.Status < 0 && x.UserId == userId).CountAsync();
+            var dictionary = new Dictionary<string, decimal>();
+            dictionary.Add("success", (decimal)success / (decimal)total);
+            dictionary.Add("cancel", (decimal)cancel / (decimal)total);
+            return dictionary;
+        }
     }
 }

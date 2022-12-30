@@ -22,6 +22,24 @@ namespace UnuninSofa.API.Helper
             CreateMap<OrderDTO, Order>().ForMember(des => des.CreatedAt, act => act.Ignore()).ReverseMap();
             CreateMap<OrderDetailDTO, OrderDetail>().ForMember(des => des.CreatedAt, act => act.Ignore()).ReverseMap();
             CreateMap<TransactionDTO, Transaction>().ForMember(des => des.CreatedAt, act => act.Ignore()).ReverseMap();
+            CreateMap<ReviewDTO, Review>().ForMember(des => des.CreatedAt, act => act.Ignore()).ReverseMap();
+            CreateMap<UserDTO, User>()
+                .ForMember(des => des.Reviews, act => act.Ignore())
+                .ForMember(des => des.RefreshToken, act => act.Ignore())
+                .ForMember(des => des.RefreshTokenExpiryTime, act => act.Ignore())
+                .ForMember(des => des.AccessFailedCount, act => act.Ignore())
+                .ForMember(des => des.ConcurrencyStamp, act => act.Ignore())
+                .ForMember(des => des.LockoutEnabled, act => act.Ignore())
+                .ForMember(des => des.LockoutEnd, act => act.Ignore())
+                .ForMember(des => des.NormalizedEmail, act => act.Ignore())
+                .ForMember(des => des.NormalizedUserName, act => act.Ignore())
+                .ForMember(des => des.Orders, act => act.Ignore())
+                .ForMember(des => des.PasswordHash, act => act.Ignore())
+                .ForMember(des => des.PhoneNumberConfirmed, act => act.Ignore())
+                .ForMember(des => des.SecurityStamp, act => act.Ignore())
+                .ForMember(des => des.Transactions, act => act.Ignore())
+                .ForMember(des => des.TwoFactorEnabled, act => act.Ignore())
+                .ReverseMap();
         }
     }
 }

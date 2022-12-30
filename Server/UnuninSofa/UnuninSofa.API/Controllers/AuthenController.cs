@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -51,7 +50,7 @@ namespace UnuninSofa.API.Controllers
             }
             if (result.IsLockedOut)
             {
-                return Ok(new { mess = "Tài khoản của bạn đã bị khoá!" });
+                return BadRequest(new { mess = "Tài khoản của bạn đã bị khoá!" });
             }
             else
             {
@@ -91,13 +90,6 @@ namespace UnuninSofa.API.Controllers
             {
                 return BadRequest(new { mess = "Tạo tài khoản thất bại" });
             }
-        }
-
-        [HttpGet("GetUser/{username}"), Authorize]
-        public async Task<IActionResult> GetUser(string username)
-        {
-            var user = await _userManager.FindByNameAsync(username);
-            return Ok(user);
         }
 
         private async Task<IEnumerable<Claim>> GetClaim(User user)

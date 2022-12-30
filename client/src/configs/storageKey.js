@@ -7,6 +7,7 @@ const StorageKeys = {
   TOTALPRICE: "total_price",
   USER: "user",
   ORDER: "order",
+  USERID: "user_id"
 };
 
 export default StorageKeys;

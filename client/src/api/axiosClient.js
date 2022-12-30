@@ -39,16 +39,20 @@ axiosClient.interceptors.response.use(res => res.data, async error => {
       accessToken: localStorage.getItem(StorageKeys.TOKEN),
       refreshToken: localStorage.getItem(StorageKeys.REFRESHTOKEN)
     }
-    const response = await axiosClient.post("/Token/refresh", data)
-    console.log(response.status, "111111111111")
-    localStorage.setItem(StorageKeys.TOKEN, response.token);
-    localStorage.setItem(StorageKeys.REFRESHTOKEN, response.refreshToken);
-    const decoded = jwtDecode(response.token);
-    localStorage.setItem(
-      StorageKeys.ROLE,
-      decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
-    );
-    return axios(error.config)
+    try {
+      const response = await axiosClient.post("/Token/refresh", data)
+
+      localStorage.setItem(StorageKeys.TOKEN, response.token);
+      localStorage.setItem(StorageKeys.REFRESHTOKEN, response.refreshToken);
+      const decoded = jwtDecode(response.token);
+      localStorage.setItem(
+        StorageKeys.ROLE,
+        decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+      );
+      return axiosClient(error.config)
+    } catch (err) {
+      return Promise.reject(err);
+    }
   }
 
   if (error.response.data.mess !== undefined) {
@@ -79,16 +83,20 @@ axiosMedia.interceptors.response.use(res => res.data, async error => {
       accessToken: localStorage.getItem(StorageKeys.TOKEN),
       refreshToken: localStorage.getItem(StorageKeys.REFRESHTOKEN)
     }
-    const response = await axiosClient.post("/Token/refresh", data)
-    console.log(response.status, "111111111111")
-    localStorage.setItem(StorageKeys.TOKEN, response.token);
-    localStorage.setItem(StorageKeys.REFRESHTOKEN, response.refreshToken);
-    const decoded = jwtDecode(response.token);
-    localStorage.setItem(
-      StorageKeys.ROLE,
-      decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
-    );
-    return axios(error.config)
+    try {
+      const response = await axiosClient.post("/Token/refresh", data)
+      localStorage.setItem(StorageKeys.TOKEN, response.token);
+      localStorage.setItem(StorageKeys.REFRESHTOKEN, response.refreshToken);
+      const decoded = jwtDecode(response.token);
+      localStorage.setItem(
+        StorageKeys.ROLE,
+        decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+      );
+      return axiosClient(error.config)
+    }
+    catch (err) {
+      return Promise.reject(err);
+    }
   }
 
   if (error.response.data.mess !== undefined) {

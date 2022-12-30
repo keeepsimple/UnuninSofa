@@ -23,8 +23,21 @@ const PaymentMethod = ({ totalProduct, cartItem }) => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
+  const asyncLocalStorage = {
+    setItem: function (key, value) {
+      return Promise.resolve().then(function () {
+        localStorage.setItem(key, value);
+      });
+    },
+    getItem: function (key) {
+      return Promise.resolve().then(function () {
+        return localStorage.getItem(key);
+      });
+    },
+  };
+
   const handleClick = () => {
-    isTransfer === true ? navigate("/transfer") : navigate("/credit-card");
+    if (isTransfer === true) navigate("/credit-card");
     const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
     const orderDetails = cartItem.map((item) => ({
       productName: item.name,
@@ -56,7 +69,11 @@ const PaymentMethod = ({ totalProduct, cartItem }) => {
   const createOrder = async (data) => {
     try {
       const response = await orderApi.create(data);
-      localStorage.setItem(StorageKeys.ORDER, JSON.stringify(response));
+      asyncLocalStorage
+        .setItem(StorageKeys.ORDER, JSON.stringify(response))
+        .then(() => {
+          navigate("/transfer");
+        });
     } catch (err) {
       enqueueSnackbar(err, { variant: "error" });
     }
@@ -122,7 +139,12 @@ const PaymentMethod = ({ totalProduct, cartItem }) => {
           direction="column"
           spacing={2}
         >
-          <Button onClick={handleClick} variant="contained" color="error">
+          <Button
+            type="submit"
+            onClick={handleClick}
+            variant="contained"
+            color="error"
+          >
             ĐẶT HÀNG
           </Button>
           <Button component={Link} to="/" variant="contained" color="warning">

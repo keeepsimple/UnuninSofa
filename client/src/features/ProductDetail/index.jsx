@@ -2,6 +2,8 @@ import { Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import productApi from "../../api/ProductApi";
+import reviewApi from "../../api/ReviewApi";
+import { CustomerReviews } from "./CustomerReviews";
 import { Detail } from "./Detail";
 import { ImageGallery } from "./ImageGallery";
 import "./style.css";
@@ -23,6 +25,7 @@ export const ProductDetailFeatures = ({ addToCart }) => {
   const [detail, setDetail] = useState({});
   const [images, setImages] = useState([]);
   const [image, setImage] = useState({});
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -34,8 +37,15 @@ export const ProductDetailFeatures = ({ addToCart }) => {
       document.title = `${data.product.name} - Ununin Sofa`;
     };
 
+    const fetchReviews = async () => {
+      const data = await reviewApi.get(id);
+      setReviews(data);
+    };
+
+    fetchReviews();
     fetchProduct();
   }, [id]);
+
   return (
     <Grid style={gridStyles} container spacing={2}>
       <Grid item xs={6}>
@@ -55,6 +65,7 @@ export const ProductDetailFeatures = ({ addToCart }) => {
         >
           Nhận xét của khách hàng
         </Typography>
+        <CustomerReviews listReviews={reviews} productId={product.id} />
       </Grid>
     </Grid>
   );

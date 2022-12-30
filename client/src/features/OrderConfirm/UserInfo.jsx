@@ -1,7 +1,7 @@
 import { Grid, Paper, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import authenApi from "../../api/AuthenApi";
+import userApi from "../../api/UserApi";
 import StorageKeys from "../../configs/storageKey";
 
 export const UserInfo = () => {
@@ -9,7 +9,7 @@ export const UserInfo = () => {
   const username = localStorage.getItem(StorageKeys.USERNAME);
   useEffect(() => {
     const fetchUser = async () => {
-      const data = await authenApi.getUser(username);
+      const data = await userApi.getUser(username);
       setUser(data);
       localStorage.setItem(StorageKeys.USER, JSON.stringify(data));
     };
