@@ -37,7 +37,6 @@ const PaymentMethod = ({ totalProduct, cartItem }) => {
   };
 
   const handleClick = () => {
-    if (isTransfer === true) navigate("/credit-card");
     const user = JSON.parse(localStorage.getItem(StorageKeys.USER));
     const orderDetails = cartItem.map((item) => ({
       productName: item.name,
@@ -63,6 +62,8 @@ const PaymentMethod = ({ totalProduct, cartItem }) => {
       };
 
       createOrder(data);
+    } else {
+      navigate("/credit-card");
     }
   };
 
